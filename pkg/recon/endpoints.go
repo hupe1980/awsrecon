@@ -242,7 +242,7 @@ func (rec *EndpointsRecon) enumerateAPIGatewayAPIsPerRegion(region string) {
 						}
 
 						for k := range item.ResourceMethods {
-							var hints []string
+							hints := []string{k}
 
 							if setting, ok := stage.MethodSettings["*/*"]; ok {
 								hints = append(hints, fmt.Sprintf("RateLimit_%s", strconv.FormatFloat(setting.ThrottlingRateLimit, 'f', -1, 64)))
@@ -292,7 +292,7 @@ func (rec *EndpointsRecon) enumerateAPIGatewayAPIsPerRegion(region string) {
 								Port:       443,
 								Protocol:   "https",
 								Visibility: visibility,
-								Hints:      append([]string{k}, hints...),
+								Hints:      hints,
 							})
 						}
 					}
