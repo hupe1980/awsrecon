@@ -11,11 +11,12 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// type endpointsOptions struct {
-// }
+type endpointsOptions struct {
+	ignoreServices []string
+}
 
 func newEndpointsCmd(globalOpts *globalOptions) *cobra.Command {
-	// opts := &endpointsOptions{}
+	opts := &endpointsOptions{}
 	cmd := &cobra.Command{
 		Use:           "endpoints",
 		Short:         "Enumerate endpoints",
@@ -27,7 +28,9 @@ func newEndpointsCmd(globalOpts *globalOptions) *cobra.Command {
 				return err
 			}
 
-			recon := recon.NewEndpointsRecon(cfg)
+			recon := recon.NewEndpointsRecon(cfg, func(o *recon.EndpointOptions) {
+				o.IgnoreServices = opts.ignoreServices
+			})
 
 			endpoints := recon.Run()
 
@@ -47,7 +50,16 @@ func newEndpointsCmd(globalOpts *globalOptions) *cobra.Command {
 			})
 
 			for _, e := range endpoints {
-				output.Add([]string{e.AWSService, e.Region, e.Name, e.Endpoint, fmt.Sprintf("%d", e.Port), e.Protocol, string(e.Visibility), strings.Join(e.Hints, ",\n")})
+				output.Add([]string{
+					e.AWSService,
+					e.Region,
+					e.Name,
+					e.Endpoint,
+					fmt.Sprintf("%d", e.Port),
+					e.Protocol,
+					string(e.Visibility),
+					strings.Join(e.Hints, ",\n"),
+				})
 			}
 
 			output.Print()
@@ -55,6 +67,8 @@ func newEndpointsCmd(globalOpts *globalOptions) *cobra.Command {
 			return nil
 		},
 	}
+
+	cmd.PersistentFlags().StringSliceVarP(&opts.ignoreServices, "ignore-service", "", nil, "ignore services when enumeration")
 
 	return cmd
 }

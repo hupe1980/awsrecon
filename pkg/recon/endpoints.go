@@ -28,6 +28,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/opensearch"
 	"github.com/aws/aws-sdk-go-v2/service/rds"
 	"github.com/aws/aws-sdk-go-v2/service/redshift"
+	"github.com/hupe1980/awsrecon/pkg/common"
 	"github.com/hupe1980/awsrecon/pkg/config"
 )
 
@@ -38,6 +39,10 @@ const (
 	VisibiltyPrivate  Visibility = "private"
 	VisibilityUnknown Visibility = "unknown"
 )
+
+type EndpointOptions struct {
+	IgnoreServices []string
+}
 
 type Endpoint struct {
 	AWSService string
@@ -69,7 +74,13 @@ type EndpointsRecon struct {
 	redshiftClient     *redshift.Client
 }
 
-func NewEndpointsRecon(cfg *config.Config) *EndpointsRecon {
+func NewEndpointsRecon(cfg *config.Config, optFns ...func(o *EndpointOptions)) *EndpointsRecon {
+	opts := EndpointOptions{}
+
+	for _, fn := range optFns {
+		fn(&opts)
+	}
+
 	r := &EndpointsRecon{
 		apigatewayClient:   apigateway.NewFromConfig(cfg.AWSConfig),
 		apigatewayv2Client: apigatewayv2.NewFromConfig(cfg.AWSConfig),
@@ -89,65 +100,95 @@ func NewEndpointsRecon(cfg *config.Config) *EndpointsRecon {
 	}
 
 	r.recon = newRecon[Endpoint](func() {
-		r.runEnumeratePerRegion(cfg.Regions, func(region string) {
-			r.enumerateAPIGatewayAPIsPerRegion(region)
-		})
+		if !common.SliceContains(opts.IgnoreServices, "apigateway") {
+			r.runEnumeratePerRegion(cfg.Regions, func(region string) {
+				r.enumerateAPIGatewayAPIsPerRegion(region)
+			})
+		}
 
-		r.runEnumeratePerRegion(cfg.Regions, func(region string) {
-			r.enumerateAPIGatewayV2APIsPerRegion(region)
-		})
+		if !common.SliceContains(opts.IgnoreServices, "apigatewayv2") {
+			r.runEnumeratePerRegion(cfg.Regions, func(region string) {
+				r.enumerateAPIGatewayV2APIsPerRegion(region)
+			})
+		}
 
-		r.runEnumeratePerRegion(cfg.Regions, func(region string) {
-			r.enumerateApprunnerEndpointsPerRegion(region)
-		})
+		if !common.SliceContains(opts.IgnoreServices, "apprunner") {
+			r.runEnumeratePerRegion(cfg.Regions, func(region string) {
+				r.enumerateApprunnerEndpointsPerRegion(region)
+			})
+		}
 
-		r.runEnumeratePerRegion(cfg.Regions, func(region string) {
-			r.enumerateAppsyncEndpointsPerRegion(region)
-		})
+		if !common.SliceContains(opts.IgnoreServices, "appsync") {
+			r.runEnumeratePerRegion(cfg.Regions, func(region string) {
+				r.enumerateAppsyncEndpointsPerRegion(region)
+			})
+		}
 
-		r.runEnumerate(func() {
-			r.enumerateCloudfrontDistributions()
-		})
+		if !common.SliceContains(opts.IgnoreServices, "cloudfront") {
+			r.runEnumerate(func() {
+				r.enumerateCloudfrontDistributions()
+			})
+		}
 
-		r.runEnumeratePerRegion(cfg.Regions, func(region string) {
-			r.enumerateEKSClusterPerRegion(region)
-		})
+		if !common.SliceContains(opts.IgnoreServices, "eks") {
+			r.runEnumeratePerRegion(cfg.Regions, func(region string) {
+				r.enumerateEKSClusterPerRegion(region)
+			})
+		}
 
-		r.runEnumeratePerRegion(cfg.Regions, func(region string) {
-			r.enumerateELBListenerPerRegion(region)
-		})
+		if !common.SliceContains(opts.IgnoreServices, "elb") {
+			r.runEnumeratePerRegion(cfg.Regions, func(region string) {
+				r.enumerateELBListenerPerRegion(region)
+			})
+		}
 
-		r.runEnumeratePerRegion(cfg.Regions, func(region string) {
-			r.enumerateELBv2ListenerPerRegion(region)
-		})
+		if !common.SliceContains(opts.IgnoreServices, "elbv2") {
+			r.runEnumeratePerRegion(cfg.Regions, func(region string) {
+				r.enumerateELBv2ListenerPerRegion(region)
+			})
+		}
 
-		r.runEnumeratePerRegion(cfg.Regions, func(region string) {
-			r.enumerateGrafanaEndpointsPerRegion(region)
-		})
+		if !common.SliceContains(opts.IgnoreServices, "grafana") {
+			r.runEnumeratePerRegion(cfg.Regions, func(region string) {
+				r.enumerateGrafanaEndpointsPerRegion(region)
+			})
+		}
 
-		r.runEnumeratePerRegion(cfg.Regions, func(region string) {
-			r.enumerateLambdaFunctionsPerRegion(region)
-		})
+		if !common.SliceContains(opts.IgnoreServices, "lambda") {
+			r.runEnumeratePerRegion(cfg.Regions, func(region string) {
+				r.enumerateLambdaFunctionsPerRegion(region)
+			})
+		}
 
-		r.runEnumeratePerRegion(cfg.Regions, func(region string) {
-			r.enumerateLightsailEndpointsPerRegion(region)
-		})
+		if !common.SliceContains(opts.IgnoreServices, "lightsail") {
+			r.runEnumeratePerRegion(cfg.Regions, func(region string) {
+				r.enumerateLightsailEndpointsPerRegion(region)
+			})
+		}
 
-		r.runEnumeratePerRegion(cfg.Regions, func(region string) {
-			r.enumerateMQBrokersPerRegion(region)
-		})
+		if !common.SliceContains(opts.IgnoreServices, "mq") {
+			r.runEnumeratePerRegion(cfg.Regions, func(region string) {
+				r.enumerateMQBrokersPerRegion(region)
+			})
+		}
 
-		r.runEnumeratePerRegion(cfg.Regions, func(region string) {
-			r.enumerateOpensearchDomainsPerRegion(region)
-		})
+		if !common.SliceContains(opts.IgnoreServices, "opensearch") {
+			r.runEnumeratePerRegion(cfg.Regions, func(region string) {
+				r.enumerateOpensearchDomainsPerRegion(region)
+			})
+		}
 
-		r.runEnumeratePerRegion(cfg.Regions, func(region string) {
-			r.enumerateRDSEndpointsPerRegion(region)
-		})
+		if !common.SliceContains(opts.IgnoreServices, "rds") {
+			r.runEnumeratePerRegion(cfg.Regions, func(region string) {
+				r.enumerateRDSEndpointsPerRegion(region)
+			})
+		}
 
-		r.runEnumeratePerRegion(cfg.Regions, func(region string) {
-			r.enumerateRedshiftEndpointsPerRegion(region)
-		})
+		if !common.SliceContains(opts.IgnoreServices, "redshift") {
+			r.runEnumeratePerRegion(cfg.Regions, func(region string) {
+				r.enumerateRedshiftEndpointsPerRegion(region)
+			})
+		}
 	})
 
 	return r
@@ -472,26 +513,26 @@ func (rec *EndpointsRecon) enumerateCloudfrontDistributions() {
 			hints = append(hints, string(item.PriceClass))
 
 			rec.addResult(Endpoint{
-				AWSService: "Cloudfront [Distribution]",
+				AWSService: "Cloudfront",
 				Region:     "global",
 				Name:       aws.ToString(item.Id),
 				Endpoint:   fmt.Sprintf("https://%s", aws.ToString(item.DomainName)),
 				Port:       443,
 				Protocol:   "https",
 				Visibility: VisibilityPublic,
-				Hints:      hints,
+				Hints:      append([]string{"Distribution"}, hints...),
 			})
 
 			for _, alias := range item.Aliases.Items {
 				rec.addResult(Endpoint{
-					AWSService: "Cloudfront [Alias]",
+					AWSService: "Cloudfront",
 					Region:     "global",
 					Name:       aws.ToString(item.Id),
 					Endpoint:   fmt.Sprintf("https://%s", alias),
 					Port:       443,
 					Protocol:   "https",
 					Visibility: VisibilityPublic,
-					Hints:      hints,
+					Hints:      append([]string{"Alias"}, hints...),
 				})
 			}
 
@@ -509,14 +550,14 @@ func (rec *EndpointsRecon) enumerateCloudfrontDistributions() {
 				}
 
 				rec.addResult(Endpoint{
-					AWSService: "Cloudfront [Origin]",
+					AWSService: "Cloudfront",
 					Region:     "global",
 					Name:       aws.ToString(item.Id),
 					Endpoint:   fmt.Sprintf("https://%s/%s", aws.ToString(origin.DomainName), aws.ToString(origin.OriginPath)),
 					Port:       443,
 					Protocol:   "https",
 					Visibility: VisibilityUnknown,
-					Hints:      originHints,
+					Hints:      append([]string{"Origin"}, originHints...),
 				})
 			}
 		}
