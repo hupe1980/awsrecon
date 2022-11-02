@@ -59,14 +59,14 @@ func (s *Statement) NotActionEffectiveActions() []iam.Action {
 	return effectiveActions
 }
 
-func (s *Statement) Services() common.Set[string] {
+func (s *Statement) Services() []string {
 	services := common.NewSet[string]()
 
 	for _, a := range s.Actions() {
 		services.Put(a.ServicePrefix())
 	}
 
-	return services
+	return services.ToSlice()
 }
 
 func (s *Statement) Resources() []iam.Resource {
