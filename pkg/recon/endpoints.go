@@ -257,8 +257,6 @@ func (rec *EndpointsRecon) enumerateAPIGatewayAPIsPerRegion(region string) {
 
 							endpoint := fmt.Sprintf("%s%s", baseEndpoint, aws.ToString(item.Path))
 
-							hints = append(hints, k)
-
 							method, err := rec.apigatewayClient.GetMethod(context.TODO(), &apigateway.GetMethodInput{
 								RestApiId:  api.Id,
 								ResourceId: item.Id,
@@ -294,7 +292,7 @@ func (rec *EndpointsRecon) enumerateAPIGatewayAPIsPerRegion(region string) {
 								Port:       443,
 								Protocol:   "https",
 								Visibility: visibility,
-								Hints:      hints,
+								Hints:      append([]string{k}, hints...),
 							})
 						}
 					}
