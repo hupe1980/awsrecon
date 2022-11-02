@@ -1,5 +1,28 @@
 # awsrecon
+![Build Status](https://github.com/hupe1980/awsrecon/workflows/build/badge.svg) 
+[![Go Reference](https://pkg.go.dev/badge/github.com/hupe1980/awsrecon.svg)](https://pkg.go.dev/github.com/hupe1980/awsrecon)
 > AWSrecon is a tool for reconnaissance AWS cloud environments. It helps security professionals find possible vulnerabilities and exploitable attack paths in AWS cloud infrastructures.
+
+## Installing
+You can install the pre-compiled binary in several different ways
+
+### homebrew tap:
+```bash
+brew tap hupe1980/awsrecon
+brew install awsrecon
+```
+### scoop:
+```bash
+scoop bucket add awsrecon https://github.com/hupe1980/awsrecon-bucket.git
+scoop install awsrecon
+```
+
+### deb/rpm/apk:
+Download the .deb, .rpm or .apk from the [releases page](https://github.com/hupe1980/awsrecon/releases) and install them with the appropriate tools.
+
+### manually:
+Download the pre-compiled binaries from the [releases page](https://github.com/hupe1980/awsrecon/releases) and copy to the desired location.
+
 
 ## How to use
 ```
