@@ -1,6 +1,7 @@
 package audit
 
 import (
+	"math"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -19,6 +20,20 @@ func TestShannonEntropy(t *testing.T) {
 
 	t.Run("aaabbbccc", func(t *testing.T) {
 		entropy := ShannonEntropy("aaabbbccc")
-		assert.Equal(t, 1.5849625007211563, entropy)
+		assert.Equal(t, true, withinTolerance(1.584962500721156, entropy, 1e-12))
 	})
+}
+
+func withinTolerance(a, b, e float64) bool {
+	if a == b {
+		return true
+	}
+
+	d := math.Abs(a - b)
+
+	if b == 0 {
+		return d < e
+	}
+
+	return (d / math.Abs(b)) < e
 }
