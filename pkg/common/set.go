@@ -55,3 +55,12 @@ func (s Set[K]) Each(fn func(key K)) {
 		fn(k)
 	}
 }
+
+func (s Set[K]) ToSlice() []K {
+	keys := make([]K, 0, len(s.m))
+	for elem := range s.m {
+		keys = append(keys, elem)
+	}
+
+	return keys
+}
