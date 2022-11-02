@@ -1,0 +1,89 @@
+env:
+  - GO111MODULE=on
+before:
+  hooks:
+    - go mod tidy
+    - ./scripts/completions.sh
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - 386
+      - amd64
+      - arm
+      - arm64
+    ignore:
+      - goos: windows
+        goarch: arm64
+      - goos: windows
+        goarch: arm
+    ldflags:
+      - -s -w -X main.version={{.Version}}
+archives:
+  - name_template: '{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
+    replacements:
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+      386: i386
+      amd64: x86_64
+    format_overrides:
+      - goos: windows
+        format: zip
+    files:
+      - README.md
+      - LICENSE
+      - completions/*  
+checksum:
+  name_template: '{{ .ProjectName }}_checksums.txt'
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - Merge pull request
+      - Merge branch
+      - go mod tidy
+brews:
+  - tap:
+      owner: hupe1980
+      name: homebrew-awsrecon
+    homepage:  https://github.com/hupe1980/awsrecon
+    description: AWSrecon is a tool for reconnaissance AWS cloud environments
+    license: MIT
+    test: |
+      system "#{bin}/awsrecon -v"
+    install: |-
+      bin.install "awsrecon"
+      bash_completion.install "completions/awsrecon.bash" => "awsrecon"
+      zsh_completion.install "completions/awsrecon.zsh" => "_awsrecon"
+      fish_completion.install "completions/awsrecon.fish"
+scoop:
+  bucket:
+    owner: hupe1980
+    name: awsrecon-bucket
+  homepage:  https://github.com/hupe1980/awsrecon
+  description: AWSrecon is a tool for reconnaissance AWS cloud environments
+  license: MIT
+nfpms:
+  - file_name_template: '{{ .ProjectName }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
+    homepage:  https://github.com/hupe1980/awsrecon
+    maintainer: Frank Hübner <frankhuebner1980@gmail.com>
+    description: AWSrecon is a tool for reconnaissance AWS cloud environments
+    license: MIT
+    contents:
+      - src: ./completions/awsrecon.bash
+        dst: /etc/bash_completion.d/awsrecon
+      - src: ./completions/awsrecon.fish
+        dst: /usr/share/fish/completions/awsrecon.fish
+      - src: ./completions/awsrecon.zsh
+        dst: /usr/local/share/zsh/site-functions/_awsrecon
+    formats:
+    - apk
+    - deb
+    - rpm
