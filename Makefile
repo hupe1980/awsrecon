@@ -23,10 +23,15 @@ build:
 ## ci: Run all the tests and code checks
 ci: build test
 
+.PHONY: download-iam
+## download-iam: Download iam definitions
+download-iam: 
+	go run main.go download-iam -o pkg/iam/resource/iam-definition.json
+
 .PHONY: run
 ## run: Runs awsrecon
 run:
-	go run main.go -h
+	go run main.go endpoints
 
 .PHONY: help
 ## help: Prints this help message
