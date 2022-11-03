@@ -1,6 +1,8 @@
 package iam
 
 import (
+	"bytes"
+	"compress/gzip"
 	"embed"
 	"encoding/json"
 	"fmt"
@@ -63,17 +65,32 @@ type Definitions struct {
 }
 
 func NewDefinitions() (*Definitions, error) {
-	return NewDefinitionsFromFS("resource/iam-definition.json", embedFS)
+	return NewDefinitionsFromFS("resource/iam-definition.gz", embedFS, true)
 }
 
-func NewDefinitionsFromFS(filename string, fs fs.ReadFileFS) (*Definitions, error) {
+func NewDefinitionsFromFS(filename string, fs fs.ReadFileFS, gzipFile bool) (*Definitions, error) {
 	data, err := fs.ReadFile(filename)
 	if err != nil {
 		return nil, err
 	}
 
-	var definitions map[string]*ServiceDefinition
+	if gzipFile {
+		b := bytes.NewBuffer(data)
 
+		r, err := gzip.NewReader(b)
+		if err != nil {
+			return nil, err
+		}
+
+		var resB bytes.Buffer
+		if _, err = resB.ReadFrom(r); err != nil {
+			return nil, err
+		}
+
+		data = resB.Bytes()
+	}
+
+	var definitions map[string]*ServiceDefinition
 	if err := json.Unmarshal(data, &definitions); err != nil {
 		return nil, err
 	}
@@ -214,8 +231,30 @@ func (d *Definitions) GetActions(input *GetActionsInput) []Action {
 	return actions
 }
 
-func (d *Definitions) Save(filename string) error {
-	file, _ := json.MarshalIndent(d.definitions, "", " ")
+func (d *Definitions) Save(filename string, gzipFile bool) error {
+	file, err := json.MarshalIndent(d.definitions, "", " ")
+	if err != nil {
+		return err
+	}
+
+	if gzipFile {
+		var b bytes.Buffer
+		gz := gzip.NewWriter(&b)
+
+		if _, err = gz.Write(file); err != nil {
+			return err
+		}
+
+		if err = gz.Flush(); err != nil {
+			return err
+		}
+
+		if err = gz.Close(); err != nil {
+			return err
+		}
+
+		return os.WriteFile(filename, b.Bytes(), 0600)
+	}
 
 	return os.WriteFile(filename, file, 0600)
 }
