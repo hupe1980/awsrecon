@@ -11,6 +11,7 @@ import (
 )
 
 type instancesOptions struct {
+	instanceStates       []string
 	verify               bool
 	highEntropyThreshold float64
 }
@@ -29,6 +30,7 @@ func newInstancesCmd(globalOpts *globalOptions) *cobra.Command {
 			}
 
 			recon := recon.NewInstancesRecon(cfg, func(o *recon.InstancesOptions) {
+				o.InstanceStates = opts.instanceStates
 				o.Verify = opts.verify
 				o.HighEntropyThreshold = opts.highEntropyThreshold
 			})
@@ -89,6 +91,7 @@ func newInstancesCmd(globalOpts *globalOptions) *cobra.Command {
 		},
 	}
 
+	cmd.PersistentFlags().StringSliceVarP(&opts.instanceStates, "states", "s", nil, "instance states (default all states)")
 	cmd.Flags().BoolVarP(&opts.verify, "verify", "", false, "verify secrets")
 	cmd.Flags().Float64VarP(&opts.highEntropyThreshold, "high-entropy-threshold", "", 3.5, "high entropy threshold")
 

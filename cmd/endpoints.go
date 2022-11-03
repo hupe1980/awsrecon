@@ -41,8 +41,8 @@ func newEndpointsCmd(globalOpts *globalOptions) *cobra.Command {
 				"Type",
 				"Endpoint",
 				"Port",
-				"Pro-\ntocol",
-				"Visi-\nbility",
+				"Pro\ntocol",
+				"Visi\nbility",
 				"Hints",
 			})
 

@@ -44,6 +44,7 @@ type Instance struct {
 }
 
 type InstancesOptions struct {
+	InstanceStates       []string
 	Verify               bool
 	HighEntropyThreshold float64
 }
@@ -57,6 +58,7 @@ type InstancesRecon struct {
 
 func NewInstancesRecon(cfg *config.Config, optFns ...func(o *InstancesOptions)) *InstancesRecon {
 	opts := InstancesOptions{
+		InstanceStates:       []string{"pending", "running", "shutting-down", "terminated", "stopping", "stopped"},
 		Verify:               false,
 		HighEntropyThreshold: 3.5,
 	}
@@ -81,7 +83,14 @@ func NewInstancesRecon(cfg *config.Config, optFns ...func(o *InstancesOptions)) 
 }
 
 func (rec *InstancesRecon) enumerateInstancesPerRegion(region string) {
-	p := ec2.NewDescribeInstancesPaginator(rec.ec2Client, &ec2.DescribeInstancesInput{})
+	instanceStateFilter := ec2Types.Filter{
+		Name:   aws.String("instance-state-name"),
+		Values: rec.opts.InstanceStates,
+	}
+
+	p := ec2.NewDescribeInstancesPaginator(rec.ec2Client, &ec2.DescribeInstancesInput{
+		Filters: []ec2Types.Filter{instanceStateFilter},
+	})
 	for p.HasMorePages() {
 		page, err := p.NextPage(context.TODO(), func(o *ec2.Options) {
 			o.Region = region
