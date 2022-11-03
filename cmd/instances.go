@@ -3,6 +3,7 @@ package cmd
 import (
 	"strings"
 
+	"github.com/hupe1980/awsrecon/pkg/common"
 	"github.com/hupe1980/awsrecon/pkg/config"
 	"github.com/hupe1980/awsrecon/pkg/output"
 	"github.com/hupe1980/awsrecon/pkg/recon"
@@ -45,6 +46,8 @@ func newInstancesCmd(globalOpts *globalOptions) *cobra.Command {
 				//"VPC",
 				"AZ",
 				"PublicIP",
+				"OpenPorts\n(Ingress)",
+				"OpenPorts\n(Egress)",
 				"PrivateIP",
 				"Profile",
 				"UserData",
@@ -53,10 +56,12 @@ func newInstancesCmd(globalOpts *globalOptions) *cobra.Command {
 			})
 
 			for _, instance := range instances {
+				name := common.InsertStringEveryNth(instance.Name, "\n", 20)
+
 				output.Add([]string{
 					instance.AWSService,
 					instance.Region,
-					instance.Name,
+					name,
 					instance.State,
 					instance.Platform,
 					instance.Architecture,
@@ -64,11 +69,13 @@ func newInstancesCmd(globalOpts *globalOptions) *cobra.Command {
 					//instance.VPCID,
 					instance.AvailabilityZone,
 					instance.PublicIP,
+					strings.Join(instance.SGAudit.OpenFromAnywhereIngressPorts(), "\n"),
+					strings.Join(instance.SGAudit.OpenToAnywhereEgressPorts(), "\n"),
 					instance.PrivateIP,
 					instance.InstanceProfile,
 					instance.UserDataState,
 					string(instance.IMDS),
-					strings.Join(instance.Hints, ",\n"),
+					strings.Join(instance.Hints, "\n"),
 				})
 			}
 

@@ -11,6 +11,7 @@ import (
 	ec2Types "github.com/aws/aws-sdk-go-v2/service/ec2/types"
 	"github.com/hupe1980/awsrecon/pkg/audit"
 	"github.com/hupe1980/awsrecon/pkg/audit/secret"
+	"github.com/hupe1980/awsrecon/pkg/audit/securitygroup"
 	"github.com/hupe1980/awsrecon/pkg/config"
 )
 
@@ -31,6 +32,7 @@ type Instance struct {
 	AvailabilityZone  string
 	PublicIP          string
 	PrivateIP         string
+	SGAudit           *securitygroup.Audit
 	Platform          string
 	Architecture      string
 	InstanceType      string
@@ -109,6 +111,11 @@ func (rec *InstancesRecon) enumerateInstancesPerRegion(region string) {
 
 				userDataState := "Unknown"
 
+				var groupIDs []string
+				for _, sg := range inst.SecurityGroups {
+					groupIDs = append(groupIDs, aws.ToString(sg.GroupId))
+				}
+
 				if userData, ok := rec.getUserData(inst.InstanceId, region); ok {
 					if userData != "" {
 						userDataState = fmt.Sprintf("%d", len(userData))
@@ -149,6 +156,16 @@ func (rec *InstancesRecon) enumerateInstancesPerRegion(region string) {
 					publicIP = aws.ToString(inst.PublicIpAddress)
 				}
 
+				sgAudit := securitygroup.NewAudit(rec.ec2Client, region, groupIDs)
+
+				if sgAudit.IsSSHOpenToAnywhere() {
+					hints = append(hints, "OpenSSH")
+				}
+
+				if sgAudit.IsRDPOpenToAnywhere() {
+					hints = append(hints, "OpenRDP")
+				}
+
 				rec.addResult(Instance{
 					AWSService:        "EC2",
 					Region:            region,
@@ -156,6 +173,7 @@ func (rec *InstancesRecon) enumerateInstancesPerRegion(region string) {
 					AvailabilityZone:  aws.ToString(inst.Placement.AvailabilityZone),
 					PublicIP:          publicIP,
 					PrivateIP:         aws.ToString(inst.PrivateIpAddress),
+					SGAudit:           sgAudit,
 					Name:              name,
 					State:             string(inst.State.Name),
 					NitroEnclaveState: enclaveState,
