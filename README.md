@@ -1,4 +1,4 @@
-# awsrecon
+# AWSrecon
 ![Build Status](https://github.com/hupe1980/awsrecon/workflows/build/badge.svg) 
 [![Go Reference](https://pkg.go.dev/badge/github.com/hupe1980/awsrecon.svg)](https://pkg.go.dev/github.com/hupe1980/awsrecon)
 > AWSrecon is a tool for reconnaissance AWS cloud environments. It helps security professionals find possible vulnerabilities and exploitable attack paths in AWS cloud infrastructures.
