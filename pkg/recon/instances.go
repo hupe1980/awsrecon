@@ -31,6 +31,7 @@ type Instance struct {
 	AvailabilityZone  string
 	PublicIP          string
 	PrivateIP         string
+	Platform          string
 	Architecture      string
 	InstanceType      string
 	NitroEnclaveState string
@@ -155,6 +156,7 @@ func (rec *InstancesRecon) enumerateInstancesPerRegion(region string) {
 					NitroEnclaveState: enclaveState,
 					UserDataState:     userDataState,
 					IMDS:              imds,
+					Platform:          aws.ToString(inst.PlatformDetails),
 					Architecture:      string(inst.Architecture),
 					InstanceType:      string(inst.InstanceType),
 					InstanceProfile:   instanceProfile,

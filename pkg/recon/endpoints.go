@@ -48,6 +48,7 @@ type Endpoint struct {
 	AWSService string
 	Region     string
 	Name       string
+	Type       string
 	Endpoint   string
 	Port       int32
 	Protocol   string
@@ -241,8 +242,8 @@ func (rec *EndpointsRecon) enumerateAPIGatewayAPIsPerRegion(region string) {
 							continue
 						}
 
-						for k := range item.ResourceMethods {
-							hints := []string{k}
+						for httpMethod := range item.ResourceMethods {
+							var hints []string
 
 							if setting, ok := stage.MethodSettings["*/*"]; ok {
 								hints = append(hints, fmt.Sprintf("RateLimit_%s", strconv.FormatFloat(setting.ThrottlingRateLimit, 'f', -1, 64)))
@@ -255,12 +256,10 @@ func (rec *EndpointsRecon) enumerateAPIGatewayAPIsPerRegion(region string) {
 								hints = append(hints, "NoWAF")
 							}
 
-							endpoint := fmt.Sprintf("%s%s", baseEndpoint, aws.ToString(item.Path))
-
 							method, err := rec.apigatewayClient.GetMethod(context.TODO(), &apigateway.GetMethodInput{
 								RestApiId:  api.Id,
 								ResourceId: item.Id,
-								HttpMethod: aws.String(k),
+								HttpMethod: aws.String(httpMethod),
 							}, func(o *apigateway.Options) {
 								o.Region = region
 							})
@@ -288,7 +287,8 @@ func (rec *EndpointsRecon) enumerateAPIGatewayAPIsPerRegion(region string) {
 								AWSService: "APIGateway",
 								Region:     region,
 								Name:       aws.ToString(api.Name),
-								Endpoint:   endpoint,
+								Type:       httpMethod,
+								Endpoint:   fmt.Sprintf("%s%s", baseEndpoint, aws.ToString(item.Path)),
 								Port:       443,
 								Protocol:   "https",
 								Visibility: visibility,
@@ -337,16 +337,15 @@ func (rec *EndpointsRecon) enumerateAPIGatewayV2APIsPerRegion(region string) {
 					routeKey := aws.ToString(route.RouteKey)
 
 					var (
-						path   string
-						method string
+						path         string
+						endpointType string
 					)
 
 					if len(strings.Fields(routeKey)) == 2 {
-						method = strings.Fields(routeKey)[0]
+						endpointType = strings.Fields(routeKey)[0]
 						path = strings.Fields(routeKey)[1]
-
-						hints = append(hints, method)
 					} else {
+						endpointType = "WSS"
 						hints = append(hints, "Websocket")
 					}
 
@@ -357,6 +356,7 @@ func (rec *EndpointsRecon) enumerateAPIGatewayV2APIsPerRegion(region string) {
 					if route.AuthorizationType == apigatewayv2Types.AuthorizationTypeNone {
 						hints = append(hints, "NoAuthorization")
 					} else {
+						// TODO
 						hints = append(hints, string(route.AuthorizationType))
 					}
 
@@ -366,6 +366,7 @@ func (rec *EndpointsRecon) enumerateAPIGatewayV2APIsPerRegion(region string) {
 						AWSService: "APIGatewayv2",
 						Region:     region,
 						Name:       aws.ToString(api.Name),
+						Type:       endpointType,
 						Endpoint:   endpoint,
 						Port:       443,
 						Protocol:   "https",
@@ -421,6 +422,7 @@ func (rec *EndpointsRecon) enumerateApprunnerEndpointsPerRegion(region string) {
 				AWSService: "Apprunner",
 				Region:     region,
 				Name:       fmt.Sprintf("%s [distribution]", aws.ToString(item.ServiceName)),
+				Type:       "URL",
 				Endpoint:   fmt.Sprintf("https://%s", aws.ToString(item.ServiceUrl)),
 				Port:       443,
 				Protocol:   "https",
@@ -463,11 +465,12 @@ func (rec *EndpointsRecon) enumerateAppsyncEndpointsPerRegion(region string) {
 			hints = append(hints, "NoWAF")
 		}
 
-		for _, uri := range item.Uris {
+		for endpointType, uri := range item.Uris {
 			rec.addResult(Endpoint{
 				AWSService: "Appsync",
 				Region:     region,
 				Name:       aws.ToString(item.Name),
+				Type:       endpointType,
 				Endpoint:   uri,
 				Port:       443,
 				Protocol:   "https",
@@ -514,11 +517,12 @@ func (rec *EndpointsRecon) enumerateCloudfrontDistributions() {
 				AWSService: "Cloudfront",
 				Region:     "global",
 				Name:       aws.ToString(item.Id),
+				Type:       "Distribution",
 				Endpoint:   fmt.Sprintf("https://%s", aws.ToString(item.DomainName)),
 				Port:       443,
 				Protocol:   "https",
 				Visibility: VisibilityPublic,
-				Hints:      append([]string{"Distribution"}, hints...),
+				Hints:      hints,
 			})
 
 			for _, alias := range item.Aliases.Items {
@@ -526,11 +530,12 @@ func (rec *EndpointsRecon) enumerateCloudfrontDistributions() {
 					AWSService: "Cloudfront",
 					Region:     "global",
 					Name:       aws.ToString(item.Id),
+					Type:       "Alias",
 					Endpoint:   fmt.Sprintf("https://%s", alias),
 					Port:       443,
 					Protocol:   "https",
 					Visibility: VisibilityPublic,
-					Hints:      append([]string{"Alias"}, hints...),
+					Hints:      hints,
 				})
 			}
 
@@ -551,11 +556,12 @@ func (rec *EndpointsRecon) enumerateCloudfrontDistributions() {
 					AWSService: "Cloudfront",
 					Region:     "global",
 					Name:       aws.ToString(item.Id),
+					Type:       "Origin",
 					Endpoint:   fmt.Sprintf("https://%s/%s", aws.ToString(origin.DomainName), aws.ToString(origin.OriginPath)),
 					Port:       443,
 					Protocol:   "https",
 					Visibility: VisibilityUnknown,
-					Hints:      append([]string{"Origin"}, originHints...),
+					Hints:      originHints,
 				})
 			}
 		}
@@ -596,6 +602,7 @@ func (rec *EndpointsRecon) enumerateEKSClusterPerRegion(region string) {
 				AWSService: "EKS",
 				Region:     region,
 				Name:       aws.ToString(output.Cluster.Name),
+				Type:       "API Server",
 				Endpoint:   aws.ToString(output.Cluster.Endpoint),
 				Port:       443,
 				Protocol:   "https",
@@ -638,6 +645,7 @@ func (rec *EndpointsRecon) enumerateELBListenerPerRegion(region string) {
 					AWSService: "ELB",
 					Region:     region,
 					Name:       aws.ToString(item.LoadBalancerName),
+					Type:       "Listener",
 					Endpoint:   endpoint,
 					Port:       port,
 					Protocol:   protocol,
@@ -690,6 +698,7 @@ func (rec *EndpointsRecon) enumerateELBv2ListenerPerRegion(region string) {
 					AWSService: "ELBv2",
 					Region:     region,
 					Name:       aws.ToString(item.LoadBalancerName),
+					Type:       "Listener",
 					Endpoint:   endpoint,
 					Port:       port,
 					Protocol:   string(l.Protocol),
@@ -716,6 +725,7 @@ func (rec *EndpointsRecon) enumerateGrafanaEndpointsPerRegion(region string) {
 				AWSService: "Grafana",
 				Region:     region,
 				Name:       aws.ToString(workspace.Name),
+				Type:       "Console",
 				Endpoint:   aws.ToString(workspace.Endpoint),
 				Port:       443,
 				Protocol:   "https",
@@ -756,6 +766,7 @@ func (rec *EndpointsRecon) enumerateMQBrokersPerRegion(region string) {
 				AWSService: "Amazon MQ",
 				Name:       aws.ToString(b.BrokerName),
 				Region:     region,
+				Type:       "Console",
 				Endpoint:   aws.ToString(b.BrokerInstances[0].ConsoleURL),
 				Port:       443,
 				Protocol:   "https",
@@ -799,6 +810,7 @@ func (rec *EndpointsRecon) enumerateOpensearchDomainsPerRegion(region string) {
 			AWSService: "Opensearch",
 			Name:       aws.ToString(item.DomainName),
 			Region:     region,
+			Type:       "API",
 			Endpoint:   fmt.Sprintf("https://%s", endpoint),
 			Port:       443,
 			Protocol:   "https",
@@ -810,6 +822,7 @@ func (rec *EndpointsRecon) enumerateOpensearchDomainsPerRegion(region string) {
 			AWSService: "Opensearch",
 			Name:       aws.ToString(item.DomainName),
 			Region:     region,
+			Type:       "Kibana",
 			Endpoint:   fmt.Sprintf("https://%s/_plugin/kibana/", endpoint),
 			Port:       443,
 			Protocol:   "https",
@@ -848,6 +861,7 @@ func (rec *EndpointsRecon) enumerateLambdaFunctionsPerRegion(region string) {
 				AWSService: "Lambda",
 				Name:       aws.ToString(function.FunctionName),
 				Region:     region,
+				Type:       "URL",
 				Endpoint:   aws.ToString(output.FunctionUrl),
 				Port:       443,
 				Protocol:   "https",
@@ -871,6 +885,7 @@ func (rec *EndpointsRecon) enumerateLightsailEndpointsPerRegion(region string) {
 			AWSService: "Lightsail",
 			Name:       aws.ToString(item.ContainerServiceName),
 			Region:     region,
+			Type:       "URL",
 			Endpoint:   aws.ToString(item.Url),
 			Port:       443,
 			Protocol:   "https",
@@ -906,6 +921,7 @@ func (rec *EndpointsRecon) enumerateRDSEndpointsPerRegion(region string) {
 					AWSService: "RDS",
 					Region:     region,
 					Name:       aws.ToString(instance.DBInstanceIdentifier),
+					Type:       "DNS",
 					Endpoint:   aws.ToString(instance.Endpoint.Address),
 					Port:       instance.Endpoint.Port,
 					Protocol:   aws.ToString(instance.Engine),
@@ -938,6 +954,7 @@ func (rec *EndpointsRecon) enumerateRedshiftEndpointsPerRegion(region string) {
 				AWSService: "Redshift",
 				Region:     region,
 				Name:       aws.ToString(cluster.DBName),
+				Type:       "DNS",
 				Endpoint:   aws.ToString(cluster.Endpoint.Address),
 				Port:       cluster.Endpoint.Port,
 				Protocol:   "https",

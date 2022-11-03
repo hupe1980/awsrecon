@@ -39,6 +39,7 @@ func newInstancesCmd(globalOpts *globalOptions) *cobra.Command {
 				"Region",
 				"Name",
 				"State",
+				"Platform",
 				"Arch",
 				"Type",
 				//"VPC",
@@ -57,6 +58,7 @@ func newInstancesCmd(globalOpts *globalOptions) *cobra.Command {
 					instance.Region,
 					instance.Name,
 					instance.State,
+					instance.Platform,
 					instance.Architecture,
 					instance.InstanceType,
 					//instance.VPCID,
@@ -66,7 +68,7 @@ func newInstancesCmd(globalOpts *globalOptions) *cobra.Command {
 					instance.InstanceProfile,
 					instance.UserDataState,
 					string(instance.IMDS),
-					strings.Join(instance.Hints, ", "),
+					strings.Join(instance.Hints, ",\n"),
 				})
 			}
 

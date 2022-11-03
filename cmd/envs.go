@@ -45,7 +45,7 @@ func newEnvsCmd(globalOpts *globalOptions) *cobra.Command {
 				"Key",
 				"Value",
 				"Entropy",
-				"Findings",
+				"Hints",
 			})
 
 			sort.Slice(envs, func(i, j int) bool {
@@ -60,7 +60,7 @@ func newEnvsCmd(globalOpts *globalOptions) *cobra.Command {
 					env.Key,
 					env.Value,
 					fmt.Sprintf("%f", env.Entropy),
-					strings.Join(env.Hints, ", "),
+					strings.Join(env.Hints, ",\n"),
 				})
 			}
 
