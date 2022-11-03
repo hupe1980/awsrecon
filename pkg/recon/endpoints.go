@@ -466,6 +466,11 @@ func (rec *EndpointsRecon) enumerateAppsyncEndpointsPerRegion(region string) {
 		}
 
 		for endpointType, uri := range item.Uris {
+			protocol := "https"
+			if endpointType == "REALTIME" {
+				protocol = "wss"
+			}
+
 			rec.addResult(Endpoint{
 				AWSService: "Appsync",
 				Region:     region,
@@ -473,7 +478,7 @@ func (rec *EndpointsRecon) enumerateAppsyncEndpointsPerRegion(region string) {
 				Type:       endpointType,
 				Endpoint:   uri,
 				Port:       443,
-				Protocol:   "https",
+				Protocol:   protocol,
 				Visibility: VisibilityPublic,
 				Hints:      hints,
 			})
