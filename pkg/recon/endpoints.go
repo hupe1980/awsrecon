@@ -28,7 +28,6 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/opensearch"
 	"github.com/aws/aws-sdk-go-v2/service/rds"
 	"github.com/aws/aws-sdk-go-v2/service/redshift"
-	"github.com/hupe1980/awsrecon/pkg/common"
 	"github.com/hupe1980/awsrecon/pkg/config"
 )
 
@@ -101,95 +100,67 @@ func NewEndpointsRecon(cfg *config.Config, optFns ...func(o *EndpointOptions)) *
 	}
 
 	r.recon = newRecon[Endpoint](func() {
-		if !common.SliceContains(opts.IgnoreServices, "apigateway") {
-			r.runEnumeratePerRegion(cfg.Regions, func(region string) {
-				r.enumerateAPIGatewayAPIsPerRegion(region)
-			})
-		}
+		r.runEnumerateServicePerRegion("apigateway", cfg.Regions, func(region string) {
+			r.enumerateAPIGatewayAPIsPerRegion(region)
+		})
 
-		if !common.SliceContains(opts.IgnoreServices, "apigatewayv2") {
-			r.runEnumeratePerRegion(cfg.Regions, func(region string) {
-				r.enumerateAPIGatewayV2APIsPerRegion(region)
-			})
-		}
+		r.runEnumerateServicePerRegion("apigatewayv2", cfg.Regions, func(region string) {
+			r.enumerateAPIGatewayV2APIsPerRegion(region)
+		})
 
-		if !common.SliceContains(opts.IgnoreServices, "apprunner") {
-			r.runEnumeratePerRegion(cfg.Regions, func(region string) {
-				r.enumerateApprunnerEndpointsPerRegion(region)
-			})
-		}
+		r.runEnumerateServicePerRegion("apprunner", cfg.Regions, func(region string) {
+			r.enumerateApprunnerEndpointsPerRegion(region)
+		})
 
-		if !common.SliceContains(opts.IgnoreServices, "appsync") {
-			r.runEnumeratePerRegion(cfg.Regions, func(region string) {
-				r.enumerateAppsyncEndpointsPerRegion(region)
-			})
-		}
+		r.runEnumerateServicePerRegion("appsync", cfg.Regions, func(region string) {
+			r.enumerateAppsyncEndpointsPerRegion(region)
+		})
 
-		if !common.SliceContains(opts.IgnoreServices, "cloudfront") {
-			r.runEnumerate(func() {
-				r.enumerateCloudfrontDistributions()
-			})
-		}
+		r.runEnumerateService("cloudfront", func() {
+			r.enumerateCloudfrontDistributions()
+		})
 
-		if !common.SliceContains(opts.IgnoreServices, "eks") {
-			r.runEnumeratePerRegion(cfg.Regions, func(region string) {
-				r.enumerateEKSClusterPerRegion(region)
-			})
-		}
+		r.runEnumerateServicePerRegion("eks", cfg.Regions, func(region string) {
+			r.enumerateEKSClusterPerRegion(region)
+		})
 
-		if !common.SliceContains(opts.IgnoreServices, "elb") {
-			r.runEnumeratePerRegion(cfg.Regions, func(region string) {
-				r.enumerateELBListenerPerRegion(region)
-			})
-		}
+		r.runEnumerateServicePerRegion("elb", cfg.Regions, func(region string) {
+			r.enumerateELBListenerPerRegion(region)
+		})
 
-		if !common.SliceContains(opts.IgnoreServices, "elbv2") {
-			r.runEnumeratePerRegion(cfg.Regions, func(region string) {
-				r.enumerateELBv2ListenerPerRegion(region)
-			})
-		}
+		r.runEnumerateServicePerRegion("elbv2", cfg.Regions, func(region string) {
+			r.enumerateELBv2ListenerPerRegion(region)
+		})
 
-		if !common.SliceContains(opts.IgnoreServices, "grafana") {
-			r.runEnumeratePerRegion(cfg.Regions, func(region string) {
-				r.enumerateGrafanaEndpointsPerRegion(region)
-			})
-		}
+		r.runEnumerateServicePerRegion("grafana", cfg.Regions, func(region string) {
+			r.enumerateGrafanaEndpointsPerRegion(region)
+		})
 
-		if !common.SliceContains(opts.IgnoreServices, "lambda") {
-			r.runEnumeratePerRegion(cfg.Regions, func(region string) {
-				r.enumerateLambdaFunctionsPerRegion(region)
-			})
-		}
+		r.runEnumerateServicePerRegion("lambda", cfg.Regions, func(region string) {
+			r.enumerateLambdaFunctionsPerRegion(region)
+		})
 
-		if !common.SliceContains(opts.IgnoreServices, "lightsail") {
-			r.runEnumeratePerRegion(cfg.Regions, func(region string) {
-				r.enumerateLightsailEndpointsPerRegion(region)
-			})
-		}
+		r.runEnumerateServicePerRegion("lightsail", cfg.Regions, func(region string) {
+			r.enumerateLightsailEndpointsPerRegion(region)
+		})
 
-		if !common.SliceContains(opts.IgnoreServices, "mq") {
-			r.runEnumeratePerRegion(cfg.Regions, func(region string) {
-				r.enumerateMQBrokersPerRegion(region)
-			})
-		}
+		r.runEnumerateServicePerRegion("mq", cfg.Regions, func(region string) {
+			r.enumerateMQBrokersPerRegion(region)
+		})
 
-		if !common.SliceContains(opts.IgnoreServices, "opensearch") {
-			r.runEnumeratePerRegion(cfg.Regions, func(region string) {
-				r.enumerateOpensearchDomainsPerRegion(region)
-			})
-		}
+		r.runEnumerateServicePerRegion("opensearch", cfg.Regions, func(region string) {
+			r.enumerateOpensearchDomainsPerRegion(region)
+		})
 
-		if !common.SliceContains(opts.IgnoreServices, "rds") {
-			r.runEnumeratePerRegion(cfg.Regions, func(region string) {
-				r.enumerateRDSEndpointsPerRegion(region)
-			})
-		}
+		r.runEnumerateServicePerRegion("rds", cfg.Regions, func(region string) {
+			r.enumerateRDSEndpointsPerRegion(region)
+		})
 
-		if !common.SliceContains(opts.IgnoreServices, "redshift") {
-			r.runEnumeratePerRegion(cfg.Regions, func(region string) {
-				r.enumerateRedshiftEndpointsPerRegion(region)
-			})
-		}
+		r.runEnumerateServicePerRegion("redshift", cfg.Regions, func(region string) {
+			r.enumerateRedshiftEndpointsPerRegion(region)
+		})
+	}, func(o *reconOptions) {
+		o.IgnoreServices = opts.IgnoreServices
 	})
 
 	return r
