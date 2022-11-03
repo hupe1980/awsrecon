@@ -546,7 +546,7 @@ func (rec *EndpointsRecon) enumerateCloudfrontDistributions() {
 					originHints = append(originHints, "OAI")
 				}
 
-				if aws.ToInt32(origin.CustomHeaders.Quantity) > 0 {
+				if origin.CustomHeaders != nil && aws.ToInt32(origin.CustomHeaders.Quantity) > 0 {
 					originHints = append(originHints, "CustomHeaders")
 				} else {
 					originHints = append(originHints, "NoCustomHeaders")
