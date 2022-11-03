@@ -38,7 +38,7 @@ func newSecretsCmd(globalOpts *globalOptions) *cobra.Command {
 
 			secrets := recon.Run()
 
-			output := output.NewTable([]string{
+			output := output.New([]string{
 				"Service",
 				"Region",
 				"Type",
@@ -60,11 +60,15 @@ func newSecretsCmd(globalOpts *globalOptions) *cobra.Command {
 					s.Name,
 					s.Value,
 					fmt.Sprintf("%f", s.Entropy),
-					strings.Join(s.Hints, ","),
+					strings.Join(s.Hints, ",\n"),
 				})
 			}
 
-			output.Print()
+			if globalOpts.output != "" {
+				return output.SaveAsCSV(globalOpts.output)
+			}
+
+			output.PrintTable()
 
 			return nil
 		},

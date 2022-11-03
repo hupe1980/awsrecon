@@ -35,7 +35,7 @@ func newInstancesCmd(globalOpts *globalOptions) *cobra.Command {
 
 			instances := recon.Run()
 
-			output := output.NewTable([]string{
+			output := output.New([]string{
 				"Service",
 				"Region",
 				"Name",
@@ -70,16 +70,20 @@ func newInstancesCmd(globalOpts *globalOptions) *cobra.Command {
 					instance.AvailabilityZone,
 					instance.PublicIP,
 					instance.PrivateIP,
-					strings.Join(instance.SGAudit.OpenFromAnywhereIngressPorts(), "\n"),
-					strings.Join(instance.SGAudit.OpenToAnywhereEgressPorts(), "\n"),
+					strings.Join(instance.SGAudit.OpenFromAnywhereIngressPorts(), ",\n"),
+					strings.Join(instance.SGAudit.OpenToAnywhereEgressPorts(), ",\n"),
 					instance.InstanceProfile,
 					instance.UserDataState,
 					string(instance.IMDS),
-					strings.Join(instance.Hints, "\n"),
+					strings.Join(instance.Hints, ",\n"),
 				})
 			}
 
-			output.Print()
+			if globalOpts.output != "" {
+				return output.SaveAsCSV(globalOpts.output)
+			}
+
+			output.PrintTable()
 
 			return nil
 		},

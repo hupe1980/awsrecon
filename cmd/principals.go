@@ -32,7 +32,7 @@ func newPrincipalsCmd(globalOpts *globalOptions) *cobra.Command {
 
 			principals := recon.Run()
 
-			output := output.NewTable([]string{"Service", "Type", "Name"})
+			output := output.New([]string{"Service", "Type", "Name"})
 
 			sort.Slice(principals, func(i, j int) bool {
 				return principals[i].AWSService < principals[j].AWSService
@@ -42,7 +42,11 @@ func newPrincipalsCmd(globalOpts *globalOptions) *cobra.Command {
 				output.Add([]string{p.AWSService, p.Type, p.Name})
 			}
 
-			output.Print()
+			if globalOpts.output != "" {
+				return output.SaveAsCSV(globalOpts.output)
+			}
+
+			output.PrintTable()
 
 			return nil
 		},

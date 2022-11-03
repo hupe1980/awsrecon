@@ -38,7 +38,7 @@ func newEnvsCmd(globalOpts *globalOptions) *cobra.Command {
 
 			envs := recon.Run()
 
-			output := output.NewTable([]string{
+			output := output.New([]string{
 				"Service",
 				"Region",
 				"Name",
@@ -64,7 +64,11 @@ func newEnvsCmd(globalOpts *globalOptions) *cobra.Command {
 				})
 			}
 
-			output.Print()
+			if globalOpts.output != "" {
+				return output.SaveAsCSV(globalOpts.output)
+			}
+
+			output.PrintTable()
 
 			return nil
 		},

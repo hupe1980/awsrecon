@@ -38,17 +38,37 @@ func newTagsCmd(globalOpts *globalOptions) *cobra.Command {
 
 			tags := recon.Run()
 
-			output := output.NewTable([]string{"Service", "Region", "Name", "Key", "Value", "Entropy", "Hints"})
+			output := output.New([]string{
+				"Service",
+				"Region",
+				"Name",
+				"Key",
+				"Value",
+				"Entropy",
+				"Hints",
+			})
 
 			sort.Slice(tags, func(i, j int) bool {
 				return tags[i].AWSService < tags[j].AWSService
 			})
 
 			for _, t := range tags {
-				output.Add([]string{t.AWSService, t.Region, t.Name, t.Key, t.Value, fmt.Sprintf("%f", t.Entropy), strings.Join(t.Hints, ", ")})
+				output.Add([]string{
+					t.AWSService,
+					t.Region,
+					t.Name,
+					t.Key,
+					t.Value,
+					fmt.Sprintf("%f", t.Entropy),
+					strings.Join(t.Hints, ",\n"),
+				})
 			}
 
-			output.Print()
+			if globalOpts.output != "" {
+				return output.SaveAsCSV(globalOpts.output)
+			}
+
+			output.PrintTable()
 
 			return nil
 		},

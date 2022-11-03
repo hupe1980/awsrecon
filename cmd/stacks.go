@@ -39,7 +39,7 @@ func newStacksCmd(globalOpts *globalOptions) *cobra.Command {
 
 			stacks := recon.Run()
 
-			table := output.NewTable([]string{
+			output := output.New([]string{
 				"Service",
 				"Region",
 				"Name",
@@ -52,7 +52,7 @@ func newStacksCmd(globalOpts *globalOptions) *cobra.Command {
 
 			for _, stack := range stacks {
 				for _, p := range stack.Parameters {
-					table.Add([]string{
+					output.Add([]string{
 						stack.AWSService,
 						stack.Region,
 						stack.Name,
@@ -60,12 +60,12 @@ func newStacksCmd(globalOpts *globalOptions) *cobra.Command {
 						p.Key,
 						p.Value,
 						fmt.Sprintf("%f", p.Entropy),
-						strings.Join(p.Hints, ", "),
+						strings.Join(p.Hints, ",\n"),
 					})
 				}
 
 				for _, r := range stack.Resources {
-					table.Add([]string{
+					output.Add([]string{
 						stack.AWSService,
 						stack.Region,
 						stack.Name,
@@ -73,12 +73,12 @@ func newStacksCmd(globalOpts *globalOptions) *cobra.Command {
 						r.Name,
 						"",
 						"N/A",
-						strings.Join(r.Hints, ", "),
+						strings.Join(r.Hints, ",\n"),
 					})
 				}
 
 				for _, o := range stack.Outputs {
-					table.Add([]string{
+					output.Add([]string{
 						stack.AWSService,
 						stack.Region,
 						stack.Name,
@@ -91,7 +91,11 @@ func newStacksCmd(globalOpts *globalOptions) *cobra.Command {
 				}
 			}
 
-			table.Print()
+			if globalOpts.output != "" {
+				return output.SaveAsCSV(globalOpts.output)
+			}
+
+			output.PrintTable()
 
 			return nil
 		},

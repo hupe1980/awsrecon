@@ -34,7 +34,7 @@ func newEndpointsCmd(globalOpts *globalOptions) *cobra.Command {
 
 			endpoints := recon.Run()
 
-			output := output.NewTable([]string{
+			output := output.New([]string{
 				"Service",
 				"Region",
 				"Name",
@@ -64,7 +64,11 @@ func newEndpointsCmd(globalOpts *globalOptions) *cobra.Command {
 				})
 			}
 
-			output.Print()
+			if globalOpts.output != "" {
+				return output.SaveAsCSV(globalOpts.output)
+			}
+
+			output.PrintTable()
 
 			return nil
 		},

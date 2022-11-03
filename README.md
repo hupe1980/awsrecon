@@ -46,6 +46,7 @@ Available Commands:
 
 Flags:
   -h, --help                help for awsrecon
+  -o, --output string       output CSV filename
       --profile string      AWS profile
       --region strings      AWS regions (default all aws regions)
       --timeout duration    timeout for network requests (default 15s)

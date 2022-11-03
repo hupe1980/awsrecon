@@ -33,7 +33,7 @@ func newRecordsCmd(globalOpts *globalOptions) *cobra.Command {
 
 			records := recon.Run()
 
-			output := output.NewTable([]string{
+			output := output.New([]string{
 				"Service",
 				"Zone",
 				"Name",
@@ -51,11 +51,15 @@ func newRecordsCmd(globalOpts *globalOptions) *cobra.Command {
 					record.Type,
 					record.Value,
 					fmt.Sprintf("%t", record.PrivateZone),
-					strings.Join(record.Hints, ", "),
+					strings.Join(record.Hints, ",\n"),
 				})
 			}
 
-			output.Print()
+			if globalOpts.output != "" {
+				return output.SaveAsCSV(globalOpts.output)
+			}
+
+			output.PrintTable()
 
 			return nil
 		},

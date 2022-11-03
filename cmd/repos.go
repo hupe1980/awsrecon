@@ -34,13 +34,17 @@ func newReposCmd(globalOpts *globalOptions) *cobra.Command {
 
 			repos := recon.Run()
 
-			output := output.NewTable([]string{"Service", "Region", "Name", "CloneURL"})
+			output := output.New([]string{"Service", "Region", "Name", "CloneURL"})
 
 			for _, r := range repos {
 				output.Add([]string{r.AWSService, r.Region, r.Name, r.CloneURLHTTP})
 			}
 
-			output.Print()
+			if globalOpts.output != "" {
+				return output.SaveAsCSV(globalOpts.output)
+			}
+
+			output.PrintTable()
 
 			return nil
 		},

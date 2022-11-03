@@ -33,22 +33,22 @@ func newBucketsCmd(globalOpts *globalOptions) *cobra.Command {
 
 			buckets := recon.Run()
 
-			output := output.NewTable([]string{
+			output := output.New([]string{
 				"Service",
 				"Region",
 				"Location",
 				"Name",
-				"Block-\nPublic-\nAcls",
-				"Block-\nPublic-\nPolicy",
-				"Ignore-\nPublic-\nAcls",
-				"Restrict-\nPublic-\nBuckets",
-				"Policy-\nStatus",
-				"ACL-\nStatus",
+				"Block\nPublic\nAcls",
+				"Block\nPublic\nPolicy",
+				"Ignore\nPublic\nAcls",
+				"Restrict\nPublic\nBuckets",
+				"Policy\nStatus",
+				"ACL\nStatus",
 				"SSE",
 				"Website",
 				"OAI",
-				"MFA-\nDelete",
-				"Version-\ning",
+				"MFA\nDelete",
+				"Version\ning",
 				"Hints",
 			})
 
@@ -76,11 +76,15 @@ func newBucketsCmd(globalOpts *globalOptions) *cobra.Command {
 					oai,
 					b.Audit.MFADeleteStatus(),
 					b.Audit.VersioningStatus(),
-					strings.Join(b.Hints, ", "),
+					strings.Join(b.Hints, ",\n"),
 				})
 			}
 
-			output.Print()
+			if globalOpts.output != "" {
+				return output.SaveAsCSV(globalOpts.output)
+			}
+
+			output.PrintTable()
 
 			return nil
 		},
