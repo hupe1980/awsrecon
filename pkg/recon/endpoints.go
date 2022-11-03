@@ -542,7 +542,7 @@ func (rec *EndpointsRecon) enumerateCloudfrontDistributions() {
 			for _, origin := range item.Origins.Items {
 				var originHints []string
 
-				if origin.S3OriginConfig.OriginAccessIdentity != nil {
+				if origin.S3OriginConfig != nil && origin.S3OriginConfig.OriginAccessIdentity != nil {
 					originHints = append(originHints, "OAI")
 				}
 
