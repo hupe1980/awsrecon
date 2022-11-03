@@ -11,9 +11,10 @@ import (
 )
 
 type stacksOptions struct {
-	entropy              float64
-	verify               bool
-	highEntropyThreshold float64
+	entropy                  float64
+	verify                   bool
+	highEntropyThreshold     float64
+	ignoreCDKAssetParameters bool
 }
 
 func newStacksCmd(globalOpts *globalOptions) *cobra.Command {
@@ -33,6 +34,7 @@ func newStacksCmd(globalOpts *globalOptions) *cobra.Command {
 				o.Entropy = opts.entropy
 				o.Verify = opts.verify
 				o.HighEntropyThreshold = opts.highEntropyThreshold
+				o.IgnoreCDKAssetParameters = opts.ignoreCDKAssetParameters
 			})
 
 			stacks := recon.Run()
@@ -84,7 +86,7 @@ func newStacksCmd(globalOpts *globalOptions) *cobra.Command {
 						o.Key,
 						o.Value,
 						fmt.Sprintf("%f", o.Entropy),
-						strings.Join(o.Hints, ", "),
+						strings.Join(o.Hints, ",\n"),
 					})
 				}
 			}
@@ -97,6 +99,7 @@ func newStacksCmd(globalOpts *globalOptions) *cobra.Command {
 
 	cmd.Flags().Float64VarP(&opts.entropy, "entropy", "e", 0, "minimum entropy")
 	cmd.Flags().BoolVarP(&opts.verify, "verify", "", false, "verify secrets")
+	cmd.Flags().BoolVarP(&opts.ignoreCDKAssetParameters, "ignore-cdk-asset-parameter", "", false, "ignore cdk asset parameter")
 	cmd.Flags().Float64VarP(&opts.highEntropyThreshold, "high-entropy-threshold", "", 3.5, "high entropy threshold")
 
 	return cmd

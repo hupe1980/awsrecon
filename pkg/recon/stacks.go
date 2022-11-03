@@ -47,10 +47,10 @@ type Stack struct {
 }
 
 type StacksOptions struct {
-	Entropy                float64
-	Verify                 bool
-	HighEntropyThreshold   float64
-	HideCDKAssetParameters bool
+	Entropy                  float64
+	Verify                   bool
+	HighEntropyThreshold     float64
+	IgnoreCDKAssetParameters bool
 }
 
 type StacksRecon struct {
@@ -62,10 +62,10 @@ type StacksRecon struct {
 
 func NewStacksRecon(cfg *config.Config, optFns ...func(o *StacksOptions)) *StacksRecon {
 	opts := StacksOptions{
-		Entropy:                0,
-		Verify:                 false,
-		HighEntropyThreshold:   3.5,
-		HideCDKAssetParameters: false,
+		Entropy:                  0,
+		Verify:                   false,
+		HighEntropyThreshold:     3.5,
+		IgnoreCDKAssetParameters: false,
 	}
 
 	for _, fn := range optFns {
@@ -125,7 +125,7 @@ func (rec *StacksRecon) enumerateStacksPerRegion(region string) {
 				value := aws.ToString(p.ParameterValue)
 
 				// Filter cdk asset parameters
-				if rec.opts.HideCDKAssetParameters && isCDKAssetParameter(key) {
+				if rec.opts.IgnoreCDKAssetParameters && isCDKAssetParameter(key) {
 					continue
 				}
 
