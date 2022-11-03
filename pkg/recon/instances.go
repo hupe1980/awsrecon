@@ -100,6 +100,11 @@ func (rec *InstancesRecon) enumerateInstancesPerRegion(region string) {
 					}
 				}
 
+				if name == "" {
+					// Fallback if the instance has no name tag
+					name = aws.ToString(inst.InstanceId)
+				}
+
 				var hints []string
 
 				userDataState := "Unknown"
