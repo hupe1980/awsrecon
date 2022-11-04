@@ -10,6 +10,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/lambda"
 	"github.com/hupe1980/awsrecon/pkg/audit"
 	"github.com/hupe1980/awsrecon/pkg/audit/secret"
+	"github.com/hupe1980/awsrecon/pkg/buildspec"
 	"github.com/hupe1980/awsrecon/pkg/config"
 )
 
@@ -115,6 +116,35 @@ func (rec *EnvsRecon) enumerateCodebuildEnvsPerRegion(region string) {
 						Region:     region,
 						Key:        key,
 						Value:      value,
+						Entropy:    entropy,
+						Hints:      hints,
+					})
+				}
+			}
+
+			// Check buildspec
+			if project.Source.Buildspec != nil {
+				buildspec, err := buildspec.ParseJSONString(aws.ToString(project.Source.Buildspec))
+				if err != nil {
+					rec.addError(err)
+					continue
+				}
+
+				for k, v := range buildspec.Env.Variables {
+					entropy := audit.ShannonEntropy(v)
+
+					if entropy < rec.opts.Entropy {
+						continue
+					}
+
+					hints := rec.getHints(v, entropy)
+
+					rec.addResult(Env{
+						AWSService: "Codebuild",
+						Name:       aws.ToString(project.Name),
+						Region:     region,
+						Key:        k,
+						Value:      v,
 						Entropy:    entropy,
 						Hints:      hints,
 					})

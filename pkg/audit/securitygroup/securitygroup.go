@@ -27,7 +27,7 @@ func NewAudit(client *ec2.Client, region string, groupIDs []string) *Audit {
 		openToAnywhereEgressPorts:    common.NewSet[string](),
 	}
 
-	if err := a.descripeSecurityGroups(); err != nil {
+	if err := a.describeSecurityGroups(); err != nil {
 		a.errors = append(a.errors, err)
 	}
 
@@ -50,7 +50,7 @@ func (a *Audit) IsRDPOpenToAnywhere() bool {
 	return common.SliceContains(a.OpenFromAnywhereIngressPorts(), "tcp: 3389")
 }
 
-func (a *Audit) descripeSecurityGroups() error {
+func (a *Audit) describeSecurityGroups() error {
 	p := ec2.NewDescribeSecurityGroupsPaginator(a.ec2Client, &ec2.DescribeSecurityGroupsInput{
 		GroupIds: a.groupIDs,
 	})
