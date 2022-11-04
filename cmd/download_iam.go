@@ -6,11 +6,10 @@ import (
 )
 
 type downloadIAMOptions struct {
-	outdir   string
 	gzipFile bool
 }
 
-func newDownloadIAMCmd() *cobra.Command {
+func newDownloadIAMCmd(globalOpts *globalOptions) *cobra.Command {
 	opts := &downloadIAMOptions{}
 	cmd := &cobra.Command{
 		Use:   "download-iam",
@@ -24,7 +23,7 @@ func newDownloadIAMCmd() *cobra.Command {
 				return err
 			}
 
-			if err = def.Save(opts.outdir, opts.gzipFile); err != nil {
+			if err = def.Save(globalOpts.output, opts.gzipFile); err != nil {
 				return err
 			}
 
@@ -32,7 +31,6 @@ func newDownloadIAMCmd() *cobra.Command {
 		},
 	}
 
-	cmd.Flags().StringVarP(&opts.outdir, "outdir", "o", ".", "output directory")
 	cmd.Flags().BoolVarP(&opts.gzipFile, "gzip", "", false, "gzip the file")
 
 	return cmd

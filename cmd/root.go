@@ -39,7 +39,7 @@ func newRootCmd(version string) *cobra.Command {
 	cmd.PersistentFlags().StringSliceVarP(&globalOpts.regions, "region", "", nil, "AWS regions (default all aws regions)")
 	cmd.PersistentFlags().StringVarP(&globalOpts.userAgent, "user-agent", "A", config.DefaultUserAgent, "user-agent ot use")
 	cmd.PersistentFlags().DurationVarP(&globalOpts.timeout, "timeout", "", time.Second*15, "timeout for network requests")
-	cmd.PersistentFlags().StringVarP(&globalOpts.output, "output", "o", "", "output CSV filename")
+	cmd.PersistentFlags().StringVarP(&globalOpts.output, "output", "o", "", "output filename")
 
 	cmd.AddCommand(
 		newBucketsCmd(globalOpts),
@@ -52,7 +52,7 @@ func newRootCmd(version string) *cobra.Command {
 		newSecretsCmd(globalOpts),
 		newStacksCmd(globalOpts),
 		newTagsCmd(globalOpts),
-		newDownloadIAMCmd(),
+		newDownloadIAMCmd(globalOpts),
 	)
 
 	return cmd

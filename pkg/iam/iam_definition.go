@@ -65,7 +65,7 @@ type Definitions struct {
 }
 
 func NewDefinitions() (*Definitions, error) {
-	return NewDefinitionsFromFS("resource/iam-definition.gz", embedFS, true)
+	return NewDefinitionsFromFS("resource/iam-definition.json", embedFS, false)
 }
 
 func NewDefinitionsFromFS(filename string, fs fs.ReadFileFS, gzipFile bool) (*Definitions, error) {
