@@ -40,6 +40,8 @@ github.com/aws/aws-sdk-go-v2/service/cloudformation v1.22.11 h1:BCsaQjXAu98MxMI3
 github.com/aws/aws-sdk-go-v2/service/cloudformation v1.22.11/go.mod h1:7DTKdHCF+93jaD0k/XOa0hbIWJtlbz+/zbX9+eAS8XE=
 github.com/aws/aws-sdk-go-v2/service/cloudfront v1.20.6 h1:MbPY2MDx74/q8VMUBonEGZrEE3nSC1CjgfOBK7tksus=
 github.com/aws/aws-sdk-go-v2/service/cloudfront v1.20.6/go.mod h1:FWiy8pqZs4UuRlVlNxpCDS1lRh1Qyidh1xcg24k67SE=
+github.com/aws/aws-sdk-go-v2/service/cloudwatchlogs v1.16.0 h1:xOcB5Poga/bjOi+CJnNLP+FJvfxds430zYfQxSNnqTI=
+github.com/aws/aws-sdk-go-v2/service/cloudwatchlogs v1.16.0/go.mod h1:9feOMWt3rxs46DqBVHco7z1KxRG36bKUqtv306cAtaA=
 github.com/aws/aws-sdk-go-v2/service/codebuild v1.19.19 h1:zJfK4MT/AUswNYWrDUPE/hUmIJxB4wetdId/D72QOXQ=
 github.com/aws/aws-sdk-go-v2/service/codebuild v1.19.19/go.mod h1:2uDPzP+kGGzUjC6W+goku6WYmLZSS1e4iIkx8kiqmFg=
 github.com/aws/aws-sdk-go-v2/service/codecommit v1.13.19 h1:u3QWKvbwByHrc8OZ8SNb1kp9NK9obaABNbNSdKOrpZc=

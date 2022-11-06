@@ -37,6 +37,7 @@ Available Commands:
   envs         Enumerate environment variables
   help         Help about any command
   instances    Enumerate ec2 instances
+  logs         Enumerate cloudwatch logs
   principals   Enumerate principals
   records      Enumerate dns records
   repos        Enumerate codecommit repositories
@@ -46,7 +47,7 @@ Available Commands:
 
 Flags:
   -h, --help                help for awsrecon
-  -o, --output string       output CSV filename
+  -o, --output string       output filename
       --profile string      AWS profile
       --region strings      AWS regions (default all aws regions)
       --timeout duration    timeout for network requests (default 15s)

@@ -10,6 +10,7 @@ var AWSRegions = []string{"us-east-1", "us-east-2", "us-west-1", "us-west-2", "a
 
 type reconOptions struct {
 	IgnoreServices []string
+	MaxConcurrency int
 }
 
 type recon[T any] struct {
@@ -18,13 +19,15 @@ type recon[T any] struct {
 	errorChan     chan error
 	errors        []error
 	enumerateFunc func()
-	wg            *sync.WaitGroup
+	wg            common.WaitGroup
 	rwg           *sync.WaitGroup
 	opts          reconOptions
 }
 
 func newRecon[T any](enumerateFunc func(), optFns ...func(o *reconOptions)) *recon[T] {
-	opts := reconOptions{}
+	opts := reconOptions{
+		MaxConcurrency: 20,
+	}
 
 	for _, fn := range optFns {
 		fn(&opts)
@@ -34,7 +37,7 @@ func newRecon[T any](enumerateFunc func(), optFns ...func(o *reconOptions)) *rec
 		resultChan:    make(chan T),
 		errorChan:     make(chan error),
 		enumerateFunc: enumerateFunc,
-		wg:            new(sync.WaitGroup),
+		wg:            common.NewSemaphoredWaitGroup(opts.MaxConcurrency),
 		rwg:           new(sync.WaitGroup),
 		opts:          opts,
 	}

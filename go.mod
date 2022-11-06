@@ -46,6 +46,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/appsync v1.15.12
 	github.com/aws/aws-sdk-go-v2/service/cloudformation v1.22.11
 	github.com/aws/aws-sdk-go-v2/service/cloudfront v1.20.6
+	github.com/aws/aws-sdk-go-v2/service/cloudwatchlogs v1.16.0
 	github.com/aws/aws-sdk-go-v2/service/codebuild v1.19.19
 	github.com/aws/aws-sdk-go-v2/service/codecommit v1.13.19
 	github.com/aws/aws-sdk-go-v2/service/ec2 v1.63.2
