@@ -51,9 +51,11 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/codecommit v1.13.19
 	github.com/aws/aws-sdk-go-v2/service/ec2 v1.63.2
 	github.com/aws/aws-sdk-go-v2/service/ecs v1.18.24
+	github.com/aws/aws-sdk-go-v2/service/efs v1.17.18
 	github.com/aws/aws-sdk-go-v2/service/eks v1.22.2
 	github.com/aws/aws-sdk-go-v2/service/elasticloadbalancing v1.14.20
 	github.com/aws/aws-sdk-go-v2/service/elasticloadbalancingv2 v1.18.22
+	github.com/aws/aws-sdk-go-v2/service/fsx v1.25.4
 	github.com/aws/aws-sdk-go-v2/service/grafana v1.9.15
 	github.com/aws/aws-sdk-go-v2/service/iam v1.18.22
 	github.com/aws/aws-sdk-go-v2/service/lambda v1.24.6

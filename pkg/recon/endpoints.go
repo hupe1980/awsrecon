@@ -39,7 +39,7 @@ const (
 	VisibilityUnknown Visibility = "unknown"
 )
 
-type EndpointOptions struct {
+type EndpointsOptions struct {
 	IgnoreServices []string
 }
 
@@ -74,8 +74,8 @@ type EndpointsRecon struct {
 	redshiftClient     *redshift.Client
 }
 
-func NewEndpointsRecon(cfg *config.Config, optFns ...func(o *EndpointOptions)) *EndpointsRecon {
-	opts := EndpointOptions{}
+func NewEndpointsRecon(cfg *config.Config, optFns ...func(o *EndpointsOptions)) *EndpointsRecon {
+	opts := EndpointsOptions{}
 
 	for _, fn := range optFns {
 		fn(&opts)

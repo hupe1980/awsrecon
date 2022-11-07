@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 	"sort"
 	"strings"
 
@@ -11,15 +10,15 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type endpointsOptions struct {
+type fileSystemsOptions struct {
 	ignoreServices []string
 }
 
-func newEndpointsCmd(globalOpts *globalOptions) *cobra.Command {
-	opts := &endpointsOptions{}
+func newFileSystemsCmd(globalOpts *globalOptions) *cobra.Command {
+	opts := &fileSystemsOptions{}
 	cmd := &cobra.Command{
-		Use:           "endpoints",
-		Short:         "Enumerate endpoints",
+		Use:           "filesystems",
+		Short:         "Enumerate filesystems",
 		SilenceUsage:  true,
 		SilenceErrors: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -28,39 +27,29 @@ func newEndpointsCmd(globalOpts *globalOptions) *cobra.Command {
 				return err
 			}
 
-			recon := recon.NewEndpointsRecon(cfg, func(o *recon.EndpointsOptions) {
+			recon := recon.NewFileSystemsRecon(cfg, func(o *recon.FileSystemsOptions) {
 				o.IgnoreServices = opts.ignoreServices
 			})
 
-			endpoints := recon.Run()
+			fileSystems := recon.Run()
 
 			output := output.New([]string{
 				"Service",
 				"Region",
 				"Name",
-				"Type",
-				"Endpoint",
-				"Port",
-				"Pro\ntocol",
-				"Visi\nbility",
 				"Hints",
 			})
 
-			sort.Slice(endpoints, func(i, j int) bool {
-				return endpoints[i].AWSService < endpoints[j].AWSService
+			sort.Slice(fileSystems, func(i, j int) bool {
+				return fileSystems[i].AWSService < fileSystems[j].AWSService
 			})
 
-			for _, e := range endpoints {
+			for _, fs := range fileSystems {
 				output.Add([]string{
-					e.AWSService,
-					e.Region,
-					e.Name,
-					e.Type,
-					e.Endpoint,
-					fmt.Sprintf("%d", e.Port),
-					e.Protocol,
-					string(e.Visibility),
-					strings.Join(e.Hints, ",\n"),
+					fs.AWSService,
+					fs.Region,
+					fs.Name,
+					strings.Join(fs.Hints, ",\n"),
 				})
 			}
 

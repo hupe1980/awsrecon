@@ -35,6 +35,7 @@ Available Commands:
   download-iam Download iam definitions
   endpoints    Enumerate endpoints
   envs         Enumerate environment variables
+  filesystems  Enumerate filesystems
   help         Help about any command
   instances    Enumerate ec2 instances
   logs         Enumerate cloudwatch logs
