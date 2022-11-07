@@ -13,13 +13,13 @@ type Audit struct {
 	ec2Client        ec2.DescribeSecurityGroupsAPIClient
 	region           string
 	groupIDs         []string
-	myIP             *net.IP
+	myIP             net.IP
 	errors           []error
 	openIngressPorts map[string]*OpenRange
 	openEgressPorts  map[string]*OpenRange
 }
 
-func NewAudit(client *ec2.Client, region string, groupIDs []string, myIP *net.IP) *Audit {
+func NewAudit(client *ec2.Client, region string, groupIDs []string, myIP net.IP) *Audit {
 	a := &Audit{
 		ec2Client:        client,
 		region:           region,
@@ -44,7 +44,7 @@ func (a *Audit) OpenEgressPorts() map[string]*OpenRange {
 	return a.openEgressPorts
 }
 
-func (a *Audit) IsSSHOpenToAnywhere() bool {
+func (a *Audit) IsSSHOpen() bool {
 	for _, entry := range []string{"all: all", "tcp: all", "tcp: 22"} {
 		if _, ok := a.openIngressPorts[entry]; ok {
 			return true
@@ -54,7 +54,7 @@ func (a *Audit) IsSSHOpenToAnywhere() bool {
 	return false
 }
 
-func (a *Audit) IsRDPOpenToAnywhere() bool {
+func (a *Audit) IsRDPOpen() bool {
 	for _, entry := range []string{"all: all", "tcp: all", "tcp: 3389"} {
 		if _, ok := a.openIngressPorts[entry]; ok {
 			return true
@@ -83,18 +83,50 @@ func (a *Audit) describeSecurityGroups() error {
 			// Ingress
 			for _, p := range sg.IpPermissions {
 				for _, r := range p.IpRanges {
-					// From Anywhere
-					if r.CidrIp != nil && aws.ToString(r.CidrIp) == "0.0.0.0/0" {
-						openRange := a.evaluateIPRange(p.IpProtocol, p.FromPort, p.ToPort)
-						a.openIngressPorts[openRange.ToString()] = openRange
+					if r.CidrIp != nil {
+						cidrIP := aws.ToString(r.CidrIp)
+
+						// From Anywhere
+						if cidrIP == "0.0.0.0/0" {
+							openRange := a.evaluateIPRange(p.IpProtocol, p.FromPort, p.ToPort)
+							a.openIngressPorts[openRange.ToString()] = openRange
+
+							continue
+						}
+
+						if a.myIP != nil {
+							_, ipnet, _ := net.ParseCIDR(cidrIP)
+							if ipnet.Contains(a.myIP) {
+								openRange := a.evaluateIPRange(p.IpProtocol, p.FromPort, p.ToPort)
+								a.openIngressPorts[openRange.ToString()] = openRange
+
+								continue
+							}
+						}
 					}
 				}
 
 				for _, r := range p.Ipv6Ranges {
-					// From Anywhere
-					if r.CidrIpv6 != nil && aws.ToString(r.CidrIpv6) == "::/0" {
-						openRange := a.evaluateIPRange(p.IpProtocol, p.FromPort, p.ToPort)
-						a.openIngressPorts[openRange.ToString()] = openRange
+					if r.CidrIpv6 != nil {
+						cidrIPv6 := aws.ToString(r.CidrIpv6)
+
+						// From Anywhere
+						if cidrIPv6 == "::/0" {
+							openRange := a.evaluateIPRange(p.IpProtocol, p.FromPort, p.ToPort)
+							a.openIngressPorts[openRange.ToString()] = openRange
+
+							continue
+						}
+
+						if a.myIP != nil {
+							_, ipnet, _ := net.ParseCIDR(cidrIPv6)
+							if ipnet.Contains(a.myIP) {
+								openRange := a.evaluateIPRange(p.IpProtocol, p.FromPort, p.ToPort)
+								a.openIngressPorts[openRange.ToString()] = openRange
+
+								continue
+							}
+						}
 					}
 				}
 			}
@@ -102,18 +134,50 @@ func (a *Audit) describeSecurityGroups() error {
 			// Egress
 			for _, p := range sg.IpPermissionsEgress {
 				for _, r := range p.IpRanges {
-					// From Anywhere
-					if r.CidrIp != nil && aws.ToString(r.CidrIp) == "0.0.0.0/0" {
-						openRange := a.evaluateIPRange(p.IpProtocol, p.FromPort, p.ToPort)
-						a.openEgressPorts[openRange.ToString()] = openRange
+					if r.CidrIp != nil {
+						cidrIP := aws.ToString(r.CidrIp)
+
+						// To Anywhere
+						if cidrIP == "0.0.0.0/0" {
+							openRange := a.evaluateIPRange(p.IpProtocol, p.FromPort, p.ToPort)
+							a.openEgressPorts[openRange.ToString()] = openRange
+
+							continue
+						}
+
+						if a.myIP != nil {
+							_, ipnet, _ := net.ParseCIDR(cidrIP)
+							if ipnet.Contains(a.myIP) {
+								openRange := a.evaluateIPRange(p.IpProtocol, p.FromPort, p.ToPort)
+								a.openEgressPorts[openRange.ToString()] = openRange
+
+								continue
+							}
+						}
 					}
 				}
 
 				for _, r := range p.Ipv6Ranges {
-					// From Anywhere
-					if r.CidrIpv6 != nil && aws.ToString(r.CidrIpv6) == "::/0" {
-						openRange := a.evaluateIPRange(p.IpProtocol, p.FromPort, p.ToPort)
-						a.openEgressPorts[openRange.ToString()] = openRange
+					if r.CidrIpv6 != nil {
+						cidrIPv6 := aws.ToString(r.CidrIpv6)
+
+						// To Anywhere
+						if cidrIPv6 == "::/0" {
+							openRange := a.evaluateIPRange(p.IpProtocol, p.FromPort, p.ToPort)
+							a.openEgressPorts[openRange.ToString()] = openRange
+
+							continue
+						}
+
+						if a.myIP != nil {
+							_, ipnet, _ := net.ParseCIDR(cidrIPv6)
+							if ipnet.Contains(a.myIP) {
+								openRange := a.evaluateIPRange(p.IpProtocol, p.FromPort, p.ToPort)
+								a.openEgressPorts[openRange.ToString()] = openRange
+
+								continue
+							}
+						}
 					}
 				}
 			}

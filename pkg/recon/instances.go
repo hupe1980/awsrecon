@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/base64"
 	"fmt"
+	"net"
 	"strings"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
@@ -48,6 +49,7 @@ type InstancesOptions struct {
 	InstanceStates       []string
 	Verify               bool
 	HighEntropyThreshold float64
+	MyIP                 net.IP
 }
 
 type InstancesRecon struct {
@@ -164,13 +166,13 @@ func (rec *InstancesRecon) enumerateInstancesPerRegion(region string) {
 					publicIP = aws.ToString(inst.PublicIpAddress)
 				}
 
-				sgAudit := securitygroup.NewAudit(rec.ec2Client, region, groupIDs, nil)
+				sgAudit := securitygroup.NewAudit(rec.ec2Client, region, groupIDs, rec.opts.MyIP)
 
-				if sgAudit.IsSSHOpenToAnywhere() {
+				if sgAudit.IsSSHOpen() {
 					hints = append(hints, "OpenSSH")
 				}
 
-				if sgAudit.IsRDPOpenToAnywhere() {
+				if sgAudit.IsRDPOpen() {
 					hints = append(hints, "OpenRDP")
 				}
 

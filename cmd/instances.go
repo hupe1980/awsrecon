@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"net"
 	"strings"
 
 	"github.com/hupe1980/awsrecon/pkg/common"
@@ -14,6 +15,7 @@ type instancesOptions struct {
 	instanceStates       []string
 	verify               bool
 	highEntropyThreshold float64
+	myIP                 net.IP
 }
 
 func newInstancesCmd(globalOpts *globalOptions) *cobra.Command {
@@ -33,6 +35,7 @@ func newInstancesCmd(globalOpts *globalOptions) *cobra.Command {
 				o.InstanceStates = opts.instanceStates
 				o.Verify = opts.verify
 				o.HighEntropyThreshold = opts.highEntropyThreshold
+				o.MyIP = opts.myIP
 			})
 
 			instances := recon.Run()
@@ -99,6 +102,7 @@ func newInstancesCmd(globalOpts *globalOptions) *cobra.Command {
 	cmd.PersistentFlags().StringSliceVarP(&opts.instanceStates, "states", "s", nil, "instance states (default all states)")
 	cmd.Flags().BoolVarP(&opts.verify, "verify", "", false, "verify secrets")
 	cmd.Flags().Float64VarP(&opts.highEntropyThreshold, "high-entropy-threshold", "", 3.5, "high entropy threshold")
+	cmd.Flags().IPVarP(&opts.myIP, "my-ip", "", nil, "ip to check open ports")
 
 	return cmd
 }
