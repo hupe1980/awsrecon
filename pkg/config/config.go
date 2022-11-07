@@ -2,7 +2,6 @@ package config
 
 import (
 	"context"
-	"time"
 
 	smithymiddleware "github.com/aws/smithy-go/middleware"
 	smithyhttp "github.com/aws/smithy-go/transport/http"
@@ -31,14 +30,11 @@ type Config struct {
 	// The regions to send requests to.
 	Regions []string
 
-	// The request timeout limit
-	Timeout time.Duration
-
 	// A Config provides service configuration for aws service clients
 	AWSConfig aws.Config
 }
 
-func NewConfig(profile string, regions []string, userAgent string, timeout time.Duration) (*Config, error) {
+func NewConfig(profile string, regions []string, userAgent string) (*Config, error) {
 	if userAgent == "" {
 		userAgent = DefaultUserAgent
 	}
@@ -77,7 +73,6 @@ func NewConfig(profile string, regions []string, userAgent string, timeout time.
 		Account:   *output.Account,
 		Profile:   profile,
 		Regions:   regions,
-		Timeout:   timeout,
 		AWSConfig: awsCfg,
 	}, nil
 }

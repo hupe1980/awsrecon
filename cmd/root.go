@@ -3,7 +3,6 @@ package cmd
 import (
 	"fmt"
 	"os"
-	"time"
 
 	"github.com/hupe1980/awsrecon/pkg/config"
 	"github.com/spf13/cobra"
@@ -21,7 +20,6 @@ type globalOptions struct {
 	profile   string
 	regions   []string
 	userAgent string
-	timeout   time.Duration
 	output    string
 }
 
@@ -38,7 +36,6 @@ func newRootCmd(version string) *cobra.Command {
 	cmd.PersistentFlags().StringVarP(&globalOpts.profile, "profile", "", "", "AWS profile")
 	cmd.PersistentFlags().StringSliceVarP(&globalOpts.regions, "region", "", nil, "AWS regions (default all aws regions)")
 	cmd.PersistentFlags().StringVarP(&globalOpts.userAgent, "user-agent", "A", config.DefaultUserAgent, "user-agent ot use")
-	cmd.PersistentFlags().DurationVarP(&globalOpts.timeout, "timeout", "", time.Second*15, "timeout for network requests")
 	cmd.PersistentFlags().StringVarP(&globalOpts.output, "output", "o", "", "output filename")
 
 	cmd.AddCommand(

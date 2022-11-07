@@ -50,7 +50,6 @@ Flags:
   -o, --output string       output filename
       --profile string      AWS profile
       --region strings      AWS regions (default all aws regions)
-      --timeout duration    timeout for network requests (default 15s)
   -A, --user-agent string   user-agent ot use (default "awsrecon")
   -v, --version             version for awsrecon
 
