@@ -7,6 +7,7 @@ import (
 
 	"github.com/hupe1980/awsrecon/pkg/audit/secret/scanner"
 	"github.com/hupe1980/awsrecon/pkg/audit/secret/scanner/aws"
+	"github.com/hupe1980/awsrecon/pkg/audit/secret/scanner/npm"
 	"github.com/hupe1980/awsrecon/pkg/audit/secret/scanner/privatekey"
 	"github.com/hupe1980/awsrecon/pkg/audit/secret/scanner/slack"
 )
@@ -22,6 +23,9 @@ func NewEngine(verify bool) *Engine {
 	return &Engine{
 		scanners: []scanner.Scanner{
 			&aws.Scanner{},
+			&npm.Scanner{
+				HTTPClient: httpClient,
+			},
 			&privatekey.Scanner{},
 			&slack.Scanner{
 				HTTPClient: httpClient,

@@ -26,6 +26,7 @@ const (
 type Instance struct {
 	AWSService        string
 	Region            string
+	ID                string
 	Name              string
 	State             string
 	VPCID             string
@@ -58,7 +59,6 @@ type InstancesRecon struct {
 
 func NewInstancesRecon(cfg *config.Config, optFns ...func(o *InstancesOptions)) *InstancesRecon {
 	opts := InstancesOptions{
-		InstanceStates:       []string{"pending", "running", "shutting-down", "terminated", "stopping", "stopped"},
 		Verify:               false,
 		HighEntropyThreshold: 3.5,
 	}
@@ -83,14 +83,18 @@ func NewInstancesRecon(cfg *config.Config, optFns ...func(o *InstancesOptions)) 
 }
 
 func (rec *InstancesRecon) enumerateInstancesPerRegion(region string) {
-	instanceStateFilter := ec2Types.Filter{
-		Name:   aws.String("instance-state-name"),
-		Values: rec.opts.InstanceStates,
+	input := &ec2.DescribeInstancesInput{}
+
+	if len(rec.opts.InstanceStates) > 0 {
+		instanceStateFilter := ec2Types.Filter{
+			Name:   aws.String("instance-state-name"),
+			Values: rec.opts.InstanceStates,
+		}
+
+		input.Filters = []ec2Types.Filter{instanceStateFilter}
 	}
 
-	p := ec2.NewDescribeInstancesPaginator(rec.ec2Client, &ec2.DescribeInstancesInput{
-		Filters: []ec2Types.Filter{instanceStateFilter},
-	})
+	p := ec2.NewDescribeInstancesPaginator(rec.ec2Client, input)
 	for p.HasMorePages() {
 		page, err := p.NextPage(context.TODO(), func(o *ec2.Options) {
 			o.Region = region
@@ -111,19 +115,14 @@ func (rec *InstancesRecon) enumerateInstancesPerRegion(region string) {
 					}
 				}
 
-				if name == "" {
-					// Fallback if the instance has no name tag
-					name = aws.ToString(inst.InstanceId)
-				}
-
 				var hints []string
-
-				userDataState := "Unknown"
 
 				var groupIDs []string
 				for _, sg := range inst.SecurityGroups {
 					groupIDs = append(groupIDs, aws.ToString(sg.GroupId))
 				}
+
+				userDataState := "Unknown"
 
 				if userData, ok := rec.getUserData(inst.InstanceId, region); ok {
 					if userData != "" {
@@ -165,7 +164,7 @@ func (rec *InstancesRecon) enumerateInstancesPerRegion(region string) {
 					publicIP = aws.ToString(inst.PublicIpAddress)
 				}
 
-				sgAudit := securitygroup.NewAudit(rec.ec2Client, region, groupIDs)
+				sgAudit := securitygroup.NewAudit(rec.ec2Client, region, groupIDs, nil)
 
 				if sgAudit.IsSSHOpenToAnywhere() {
 					hints = append(hints, "OpenSSH")
@@ -183,6 +182,7 @@ func (rec *InstancesRecon) enumerateInstancesPerRegion(region string) {
 					PublicIP:          publicIP,
 					PrivateIP:         aws.ToString(inst.PrivateIpAddress),
 					SGAudit:           sgAudit,
+					ID:                aws.ToString(inst.InstanceId),
 					Name:              name,
 					State:             string(inst.State.Name),
 					NitroEnclaveState: enclaveState,

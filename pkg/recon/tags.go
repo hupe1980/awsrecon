@@ -2,6 +2,7 @@ package recon
 
 import (
 	"context"
+	"fmt"
 	"strings"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
@@ -90,6 +91,7 @@ func (rec *TagsRecon) enumerateTagsPerRegion(region string) {
 			}
 
 			for _, tag := range resource.Tags {
+				key := aws.ToString(tag.Key)
 				value := aws.ToString(tag.Value)
 
 				entropy := audit.ShannonEntropy(value)
@@ -97,7 +99,7 @@ func (rec *TagsRecon) enumerateTagsPerRegion(region string) {
 					continue
 				}
 
-				hints := rec.getHints(value, entropy)
+				hints := rec.getHints(fmt.Sprintf("%s=%s", key, value), entropy)
 
 				rec.addResult(Tag{
 					AWSService: parsedARN.Service,

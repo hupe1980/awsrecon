@@ -58,6 +58,11 @@ func newInstancesCmd(globalOpts *globalOptions) *cobra.Command {
 			})
 
 			for _, instance := range instances {
+				if instance.Name == "" {
+					// Fallback if the instance has no name tag
+					instance.Name = instance.ID
+				}
+
 				name := common.InsertStringEveryNth(instance.Name, "\n", 20)
 
 				output.Add([]string{
@@ -72,8 +77,8 @@ func newInstancesCmd(globalOpts *globalOptions) *cobra.Command {
 					instance.AvailabilityZone,
 					instance.PublicIP,
 					instance.PrivateIP,
-					strings.Join(instance.SGAudit.OpenFromAnywhereIngressPorts(), ",\n"),
-					strings.Join(instance.SGAudit.OpenToAnywhereEgressPorts(), ",\n"),
+					strings.Join(common.MapKeys(instance.SGAudit.OpenIngressPorts()), ",\n"),
+					strings.Join(common.MapKeys(instance.SGAudit.OpenEgressPorts()), ",\n"),
 					instance.InstanceProfile,
 					instance.UserDataState,
 					string(instance.IMDS),

@@ -1,6 +1,8 @@
 package cfn
 
 import (
+	"fmt"
+
 	"github.com/hupe1980/awsrecon/pkg/audit/secret"
 	"github.com/hupe1980/awsrecon/pkg/cloudformation"
 )
@@ -46,7 +48,7 @@ type ScanParameterInput struct {
 }
 
 func (a *Audit) ScanParameter(input *ScanParameterInput) []string {
-	findings := a.secretEngine.Scan(input.Value)
+	findings := a.secretEngine.Scan(fmt.Sprintf("%s=%s", input.Key, input.Value))
 
 	if p, ok := a.template.Parameters[input.Key]; ok {
 		if p.NoEcho && p.Default != "" {
@@ -63,7 +65,7 @@ type ScanOutputInput struct {
 }
 
 func (a *Audit) ScanOutput(input *ScanOutputInput) []string {
-	return a.secretEngine.Scan(input.Value)
+	return a.secretEngine.Scan(fmt.Sprintf("%s=%s", input.Key, input.Value))
 }
 
 type ScanResourcesOutput struct {

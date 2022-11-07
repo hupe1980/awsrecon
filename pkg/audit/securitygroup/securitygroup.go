@@ -3,28 +3,30 @@ package securitygroup
 import (
 	"context"
 	"fmt"
+	"net"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/ec2"
-	"github.com/hupe1980/awsrecon/pkg/common"
 )
 
 type Audit struct {
-	ec2Client                    *ec2.Client
-	region                       string
-	groupIDs                     []string
-	errors                       []error
-	openFromAnywhereIngressPorts common.Set[string]
-	openToAnywhereEgressPorts    common.Set[string]
+	ec2Client        ec2.DescribeSecurityGroupsAPIClient
+	region           string
+	groupIDs         []string
+	myIP             *net.IP
+	errors           []error
+	openIngressPorts map[string]*OpenRange
+	openEgressPorts  map[string]*OpenRange
 }
 
-func NewAudit(client *ec2.Client, region string, groupIDs []string) *Audit {
+func NewAudit(client *ec2.Client, region string, groupIDs []string, myIP *net.IP) *Audit {
 	a := &Audit{
-		ec2Client:                    client,
-		region:                       region,
-		groupIDs:                     groupIDs,
-		openFromAnywhereIngressPorts: common.NewSet[string](),
-		openToAnywhereEgressPorts:    common.NewSet[string](),
+		ec2Client:        client,
+		region:           region,
+		groupIDs:         groupIDs,
+		myIP:             myIP,
+		openIngressPorts: make(map[string]*OpenRange),
+		openEgressPorts:  make(map[string]*OpenRange),
 	}
 
 	if err := a.describeSecurityGroups(); err != nil {
@@ -34,20 +36,32 @@ func NewAudit(client *ec2.Client, region string, groupIDs []string) *Audit {
 	return a
 }
 
-func (a *Audit) OpenFromAnywhereIngressPorts() []string {
-	return a.openFromAnywhereIngressPorts.ToSlice()
+func (a *Audit) OpenIngressPorts() map[string]*OpenRange {
+	return a.openIngressPorts
 }
 
-func (a *Audit) OpenToAnywhereEgressPorts() []string {
-	return a.openToAnywhereEgressPorts.ToSlice()
+func (a *Audit) OpenEgressPorts() map[string]*OpenRange {
+	return a.openEgressPorts
 }
 
 func (a *Audit) IsSSHOpenToAnywhere() bool {
-	return common.SliceContains(a.OpenFromAnywhereIngressPorts(), "tcp: 22")
+	for _, entry := range []string{"all: all", "tcp: all", "tcp: 22"} {
+		if _, ok := a.openIngressPorts[entry]; ok {
+			return true
+		}
+	}
+
+	return false
 }
 
 func (a *Audit) IsRDPOpenToAnywhere() bool {
-	return common.SliceContains(a.OpenFromAnywhereIngressPorts(), "tcp: 3389")
+	for _, entry := range []string{"all: all", "tcp: all", "tcp: 3389"} {
+		if _, ok := a.openIngressPorts[entry]; ok {
+			return true
+		}
+	}
+
+	return false
 }
 
 func (a *Audit) describeSecurityGroups() error {
@@ -59,8 +73,8 @@ func (a *Audit) describeSecurityGroups() error {
 			o.Region = a.region
 		})
 		if err != nil {
-			a.openFromAnywhereIngressPorts.Put("Unknown")
-			a.openToAnywhereEgressPorts.Put("Unknown")
+			a.openIngressPorts["Unknown"] = &OpenRange{}
+			a.openEgressPorts["Unknown"] = &OpenRange{}
 
 			return err
 		}
@@ -71,14 +85,16 @@ func (a *Audit) describeSecurityGroups() error {
 				for _, r := range p.IpRanges {
 					// From Anywhere
 					if r.CidrIp != nil && aws.ToString(r.CidrIp) == "0.0.0.0/0" {
-						a.openFromAnywhereIngressPorts.Put(a.evaluateIPRange(p.IpProtocol, p.FromPort, p.ToPort))
+						openRange := a.evaluateIPRange(p.IpProtocol, p.FromPort, p.ToPort)
+						a.openIngressPorts[openRange.ToString()] = openRange
 					}
 				}
 
 				for _, r := range p.Ipv6Ranges {
 					// From Anywhere
 					if r.CidrIpv6 != nil && aws.ToString(r.CidrIpv6) == "::/0" {
-						a.openFromAnywhereIngressPorts.Put(a.evaluateIPRange(p.IpProtocol, p.FromPort, p.ToPort))
+						openRange := a.evaluateIPRange(p.IpProtocol, p.FromPort, p.ToPort)
+						a.openIngressPorts[openRange.ToString()] = openRange
 					}
 				}
 			}
@@ -88,14 +104,16 @@ func (a *Audit) describeSecurityGroups() error {
 				for _, r := range p.IpRanges {
 					// From Anywhere
 					if r.CidrIp != nil && aws.ToString(r.CidrIp) == "0.0.0.0/0" {
-						a.openToAnywhereEgressPorts.Put(a.evaluateIPRange(p.IpProtocol, p.FromPort, p.ToPort))
+						openRange := a.evaluateIPRange(p.IpProtocol, p.FromPort, p.ToPort)
+						a.openEgressPorts[openRange.ToString()] = openRange
 					}
 				}
 
 				for _, r := range p.Ipv6Ranges {
 					// From Anywhere
 					if r.CidrIpv6 != nil && aws.ToString(r.CidrIpv6) == "::/0" {
-						a.openToAnywhereEgressPorts.Put(a.evaluateIPRange(p.IpProtocol, p.FromPort, p.ToPort))
+						openRange := a.evaluateIPRange(p.IpProtocol, p.FromPort, p.ToPort)
+						a.openEgressPorts[openRange.ToString()] = openRange
 					}
 				}
 			}
@@ -105,7 +123,7 @@ func (a *Audit) describeSecurityGroups() error {
 	return nil
 }
 
-func (a *Audit) evaluateIPRange(ipProtocol *string, fromPort *int32, toPort *int32) string {
+func (a *Audit) evaluateIPRange(ipProtocol *string, fromPort *int32, toPort *int32) *OpenRange {
 	f := fmt.Sprintf("%d", aws.ToInt32(fromPort))
 	t := fmt.Sprintf("%d", aws.ToInt32(toPort))
 	p := aws.ToString(ipProtocol)
@@ -125,8 +143,15 @@ func (a *Audit) evaluateIPRange(ipProtocol *string, fromPort *int32, toPort *int
 	}
 
 	if f == t {
-		return fmt.Sprintf("%s: %s", p, f)
+		return &OpenRange{
+			Protocol: p,
+			From:     f,
+		}
 	}
 
-	return fmt.Sprintf("%s: %s-%s", p, f, t)
+	return &OpenRange{
+		Protocol: p,
+		From:     f,
+		To:       t,
+	}
 }

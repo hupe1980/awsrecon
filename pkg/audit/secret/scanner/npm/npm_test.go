@@ -1,9 +1,8 @@
-package slack
+package npm
 
 import (
 	"bytes"
 	"context"
-	"encoding/json"
 	"io"
 	"net/http"
 	"testing"
@@ -12,7 +11,7 @@ import (
 )
 
 // nolint gosec only a testsecret
-var testSecret = "xoxb-263594206564-2343594206574-FGqddMF8t08v8N7Oq4i57vs1MBS"
+var testSecret = "npm_6mOgrBdoVZuWywSBAYBX2ATgdwi9MO50w1y8"
 
 type MockClient struct {
 	DoFunc func(req *http.Request) (*http.Response, error)
@@ -33,7 +32,7 @@ func TestScanner(t *testing.T) {
 		assert.NoError(t, err)
 		assert.NotNil(t, result)
 		assert.Equal(t, 1, len(result))
-		assert.Equal(t, "SlackBotToken", result[0].ID)
+		assert.Equal(t, "NPMToken", result[0].ID)
 		assert.Equal(t, testSecret, result[0].Raw)
 		assert.Equal(t, false, result[0].Verified)
 	})
@@ -42,14 +41,9 @@ func TestScanner(t *testing.T) {
 		scanner := Scanner{
 			HTTPClient: &MockClient{
 				DoFunc: func(req *http.Request) (*http.Response, error) {
-					responseBody, err := newResponseBody(true)
-					if err != nil {
-						t.Fail()
-					}
-
 					return &http.Response{
-						StatusCode: 200,
-						Body:       responseBody,
+						StatusCode: http.StatusOK,
+						Body:       io.NopCloser(bytes.NewReader(nil)),
 					}, nil
 				},
 			},
@@ -60,7 +54,7 @@ func TestScanner(t *testing.T) {
 		assert.NoError(t, err)
 		assert.NotNil(t, result)
 		assert.Equal(t, 1, len(result))
-		assert.Equal(t, "SlackBotToken", result[0].ID)
+		assert.Equal(t, "NPMToken", result[0].ID)
 		assert.Equal(t, testSecret, result[0].Raw)
 		assert.Equal(t, true, result[0].Verified)
 	})
@@ -69,14 +63,9 @@ func TestScanner(t *testing.T) {
 		scanner := Scanner{
 			HTTPClient: &MockClient{
 				DoFunc: func(req *http.Request) (*http.Response, error) {
-					responseBody, err := newResponseBody(false)
-					if err != nil {
-						t.Fail()
-					}
-
 					return &http.Response{
-						StatusCode: 200,
-						Body:       responseBody,
+						StatusCode: http.StatusForbidden,
+						Body:       io.NopCloser(bytes.NewReader(nil)),
 					}, nil
 				},
 			},
@@ -87,21 +76,8 @@ func TestScanner(t *testing.T) {
 		assert.NoError(t, err)
 		assert.NotNil(t, result)
 		assert.Equal(t, 1, len(result))
-		assert.Equal(t, "SlackBotToken", result[0].ID)
+		assert.Equal(t, "NPMToken", result[0].ID)
 		assert.Equal(t, testSecret, result[0].Raw)
 		assert.Equal(t, false, result[0].Verified)
 	})
-}
-
-func newResponseBody(verify bool) (io.ReadCloser, error) {
-	authRes := &authRes{
-		Ok: verify,
-	}
-
-	b := new(bytes.Buffer)
-	if err := json.NewEncoder(b).Encode(authRes); err != nil {
-		return nil, err
-	}
-
-	return io.NopCloser(bytes.NewReader(b.Bytes())), nil
 }

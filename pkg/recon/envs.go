@@ -2,6 +2,7 @@ package recon
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/codebuild"
@@ -108,7 +109,7 @@ func (rec *EnvsRecon) enumerateCodebuildEnvsPerRegion(region string) {
 						continue
 					}
 
-					hints := rec.getHints(value, entropy)
+					hints := rec.getHints(fmt.Sprintf("%s=%s", key, value), entropy)
 
 					rec.addResult(Env{
 						AWSService: "Codebuild",
@@ -137,7 +138,7 @@ func (rec *EnvsRecon) enumerateCodebuildEnvsPerRegion(region string) {
 						continue
 					}
 
-					hints := rec.getHints(v, entropy)
+					hints := rec.getHints(fmt.Sprintf("%s=%s", k, v), entropy)
 
 					rec.addResult(Env{
 						AWSService: "Codebuild",
@@ -190,7 +191,7 @@ func (rec *EnvsRecon) enumerateECSEnvsPerRegion(region string) {
 							continue
 						}
 
-						hints := rec.getHints(value, entropy)
+						hints := rec.getHints(fmt.Sprintf("%s=%s", key, value), entropy)
 
 						rec.addResult(Env{
 							AWSService: "ECS",
@@ -228,7 +229,7 @@ func (rec *EnvsRecon) enumerateLambdaEnvsPerRegion(region string) {
 						continue
 					}
 
-					hints := rec.getHints(value, entropy)
+					hints := rec.getHints(fmt.Sprintf("%s=%s", key, value), entropy)
 
 					rec.addResult(Env{
 						AWSService: "Lambda",
