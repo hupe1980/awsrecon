@@ -35,7 +35,7 @@ func newRootCmd(version string) *cobra.Command {
 
 	cmd.PersistentFlags().StringVarP(&globalOpts.profile, "profile", "", "", "AWS profile")
 	cmd.PersistentFlags().StringSliceVarP(&globalOpts.regions, "region", "", nil, "AWS regions (default all aws regions)")
-	cmd.PersistentFlags().StringVarP(&globalOpts.userAgent, "user-agent", "A", config.DefaultUserAgent, "user-agent ot use")
+	cmd.PersistentFlags().StringVarP(&globalOpts.userAgent, "user-agent", "A", config.DefaultUserAgent, "user-agent to use")
 	cmd.PersistentFlags().StringVarP(&globalOpts.output, "output", "o", "", "output filename")
 
 	cmd.AddCommand(
