@@ -46,7 +46,7 @@ func (d *Definitions) GetActions(input *GetActionsInput) []Action {
 					typeName := input.ResourceTypeName
 					if typeName == "*" {
 						if len(action.ResourceTypes) == 1 {
-							// action does not support restricting to resource ARNs.
+							// action does not support resource ARN restriction.
 							typeName = ""
 						} else {
 							continue
@@ -83,12 +83,9 @@ func (d *Definitions) GetActionData(action Action) []*ActionData {
 		if action, ok := sd.Actions[action.Name()]; ok {
 			var results []*ActionData
 
-			resourceARNFormat := "*"
-			conditionKeys := []string{}
-			dependentActions := []string{}
-
 			for _, art := range action.ResourceTypes {
-				dependentActions = append(dependentActions, art.DependentActions...)
+				resourceARNFormat := "*"
+				conditionKeys := []string{}
 
 				if art.Name != "" {
 					if srt, ok := sd.ResourceTypes[art.Name]; ok {
@@ -104,7 +101,7 @@ func (d *Definitions) GetActionData(action Action) []*ActionData {
 					ResourceARNFormat: resourceARNFormat,
 					APIDocLink:        action.APIDocLink,
 					ConditionKeys:     conditionKeys,
-					DependentActions:  dependentActions,
+					DependentActions:  art.DependentActions,
 				})
 			}
 
