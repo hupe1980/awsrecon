@@ -95,8 +95,8 @@ func (a *Audit) describeSecurityGroups() error {
 						}
 
 						if a.myIP != nil {
-							_, ipnet, _ := net.ParseCIDR(cidrIP)
-							if ipnet.Contains(a.myIP) {
+							_, ipnet, err := net.ParseCIDR(cidrIP)
+							if err == nil && ipnet.Contains(a.myIP) {
 								openRange := a.evaluateIPRange(p.IpProtocol, p.FromPort, p.ToPort)
 								a.openIngressPorts[openRange.ToString()] = openRange
 
@@ -119,8 +119,8 @@ func (a *Audit) describeSecurityGroups() error {
 						}
 
 						if a.myIP != nil {
-							_, ipnet, _ := net.ParseCIDR(cidrIPv6)
-							if ipnet.Contains(a.myIP) {
+							_, ipnet, err := net.ParseCIDR(cidrIPv6)
+							if err == nil && ipnet.Contains(a.myIP) {
 								openRange := a.evaluateIPRange(p.IpProtocol, p.FromPort, p.ToPort)
 								a.openIngressPorts[openRange.ToString()] = openRange
 
@@ -146,8 +146,8 @@ func (a *Audit) describeSecurityGroups() error {
 						}
 
 						if a.myIP != nil {
-							_, ipnet, _ := net.ParseCIDR(cidrIP)
-							if ipnet.Contains(a.myIP) {
+							_, ipnet, err := net.ParseCIDR(cidrIP)
+							if err == nil && ipnet.Contains(a.myIP) {
 								openRange := a.evaluateIPRange(p.IpProtocol, p.FromPort, p.ToPort)
 								a.openEgressPorts[openRange.ToString()] = openRange
 
@@ -170,8 +170,8 @@ func (a *Audit) describeSecurityGroups() error {
 						}
 
 						if a.myIP != nil {
-							_, ipnet, _ := net.ParseCIDR(cidrIPv6)
-							if ipnet.Contains(a.myIP) {
+							_, ipnet, err := net.ParseCIDR(cidrIPv6)
+							if err == nil && ipnet.Contains(a.myIP) {
 								openRange := a.evaluateIPRange(p.IpProtocol, p.FromPort, p.ToPort)
 								a.openEgressPorts[openRange.ToString()] = openRange
 

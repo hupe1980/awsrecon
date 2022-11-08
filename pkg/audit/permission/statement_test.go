@@ -34,4 +34,8 @@ func TestStatement(t *testing.T) {
 
 		assert.ElementsMatch(t, expected, st.Services())
 	})
+
+	t.Run("resource wildcard", func(t *testing.T) {
+		assert.Equal(t, true, st.HasResourceWildcard())
+	})
 }

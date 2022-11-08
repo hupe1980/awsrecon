@@ -1,0 +1,5651 @@
+{
+ "dynamodb": {
+  "Name": "Amazon DynamoDB",
+  "Prefix": "dynamodb",
+  "AuthorizationURL": "https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazondynamodb.html",
+  "Actions": {
+   "BatchGetItem": {
+    "Name": "BatchGetItem",
+    "Description": "Grants permission to return the attributes of one or more items from one or more tables",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "dynamodb:Attributes",
+       "dynamodb:LeadingKeys",
+       "dynamodb:ReturnConsumedCapacity",
+       "dynamodb:Select"
+      ],
+      "DependentActions": []
+     },
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_BatchGetItem.html"
+   },
+   "BatchWriteItem": {
+    "Name": "BatchWriteItem",
+    "Description": "Grants permission to put or delete multiple items in one or more tables",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "dynamodb:Attributes",
+       "dynamodb:LeadingKeys",
+       "dynamodb:ReturnConsumedCapacity"
+      ],
+      "DependentActions": []
+     },
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_BatchWriteItem.html"
+   },
+   "ConditionCheckItem": {
+    "Name": "ConditionCheckItem",
+    "Description": "Grants permission to the ConditionCheckItem operation checks the existence of a set of attributes for the item with the given primary key",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "dynamodb:Attributes",
+       "dynamodb:LeadingKeys",
+       "dynamodb:ReturnConsumedCapacity",
+       "dynamodb:ReturnValues"
+      ],
+      "DependentActions": []
+     },
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ConditionCheckItem.html"
+   },
+   "CreateBackup": {
+    "Name": "CreateBackup",
+    "Description": "Grants permission to create a backup for an existing table",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_CreateBackup.html"
+   },
+   "CreateGlobalTable": {
+    "Name": "CreateGlobalTable",
+    "Description": "Grants permission to create a global table from an existing table",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "global-table": {
+      "Name": "global-table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     },
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_CreateGlobalTable.html"
+   },
+   "CreateTable": {
+    "Name": "CreateTable",
+    "Description": "Grants permission to the CreateTable operation adds a new table to your account",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_CreateTable.html"
+   },
+   "CreateTableReplica": {
+    "Name": "CreateTableReplica",
+    "Description": "Grants permission to add a new replica table",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/V2gt_IAM.html"
+   },
+   "DeleteBackup": {
+    "Name": "DeleteBackup",
+    "Description": "Grants permission to delete an existing backup of a table",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "backup": {
+      "Name": "backup",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DeleteBackup.html"
+   },
+   "DeleteItem": {
+    "Name": "DeleteItem",
+    "Description": "Grants permission to deletes a single item in a table by primary key",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "dynamodb:Attributes",
+       "dynamodb:EnclosingOperation",
+       "dynamodb:LeadingKeys",
+       "dynamodb:ReturnConsumedCapacity",
+       "dynamodb:ReturnValues"
+      ],
+      "DependentActions": []
+     },
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DeleteItem.html"
+   },
+   "DeleteTable": {
+    "Name": "DeleteTable",
+    "Description": "Grants permission to the DeleteTable operation which deletes a table and all of its items",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DeleteTable.html"
+   },
+   "DeleteTableReplica": {
+    "Name": "DeleteTableReplica",
+    "Description": "Grants permission to delete a replica table and all of its items",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/V2gt_IAM.html"
+   },
+   "DescribeBackup": {
+    "Name": "DescribeBackup",
+    "Description": "Grants permission to describe an existing backup of a table",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "backup": {
+      "Name": "backup",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeBackup.html"
+   },
+   "DescribeContinuousBackups": {
+    "Name": "DescribeContinuousBackups",
+    "Description": "Grants permission to check the status of the backup restore settings on the specified table",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeContinuousBackups.html"
+   },
+   "DescribeContributorInsights": {
+    "Name": "DescribeContributorInsights",
+    "Description": "Grants permission to describe the contributor insights status and related details for a given table or global secondary index",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "index": {
+      "Name": "index",
+      "Required": false,
+      "ConditionKeys": [],
+      "DependentActions": []
+     },
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeContributorInsights.html"
+   },
+   "DescribeExport": {
+    "Name": "DescribeExport",
+    "Description": "Grants permission to describe an existing Export of a table",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "export": {
+      "Name": "export",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeExport.html"
+   },
+   "DescribeGlobalTable": {
+    "Name": "DescribeGlobalTable",
+    "Description": "Grants permission to return information about the specified global table",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "global-table": {
+      "Name": "global-table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeGlobalTable.html"
+   },
+   "DescribeGlobalTableSettings": {
+    "Name": "DescribeGlobalTableSettings",
+    "Description": "Grants permission to return settings information about the specified global table",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "global-table": {
+      "Name": "global-table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeGlobalTableSettings.html"
+   },
+   "DescribeImport": {
+    "Name": "DescribeImport",
+    "Description": "Grants permission to describe an existing import",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "import": {
+      "Name": "import",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeImport.html"
+   },
+   "DescribeKinesisStreamingDestination": {
+    "Name": "DescribeKinesisStreamingDestination",
+    "Description": "Grants permission to grant permission to describe the status of Kinesis streaming and related details for a given table",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeKinesisStreamingDestination.html"
+   },
+   "DescribeLimits": {
+    "Name": "DescribeLimits",
+    "Description": "Grants permission to return the current provisioned-capacity limits for your AWS account in a region, both for the region as a whole and for any one DynamoDB table that you create there",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeLimits.html"
+   },
+   "DescribeReservedCapacity": {
+    "Name": "DescribeReservedCapacity",
+    "Description": "Grants permission to describe one or more of the Reserved Capacity purchased",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": ""
+   },
+   "DescribeReservedCapacityOfferings": {
+    "Name": "DescribeReservedCapacityOfferings",
+    "Description": "Grants permission to describe Reserved Capacity offerings that are available for purchase",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": ""
+   },
+   "DescribeStream": {
+    "Name": "DescribeStream",
+    "Description": "Grants permission to return information about a stream, including the current status of the stream, its Amazon Resource Name (ARN), the composition of its shards, and its corresponding DynamoDB table",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "stream": {
+      "Name": "stream",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeStream.html"
+   },
+   "DescribeTable": {
+    "Name": "DescribeTable",
+    "Description": "Grants permission to return information about the table",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeTable.html"
+   },
+   "DescribeTableReplicaAutoScaling": {
+    "Name": "DescribeTableReplicaAutoScaling",
+    "Description": "Grants permission to describe the auto scaling settings across all replicas of the global table",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeTableReplicaAutoScaling.html"
+   },
+   "DescribeTimeToLive": {
+    "Name": "DescribeTimeToLive",
+    "Description": "Grants permission to give a description of the Time to Live (TTL) status on the specified table",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeTimeToLive.html"
+   },
+   "DisableKinesisStreamingDestination": {
+    "Name": "DisableKinesisStreamingDestination",
+    "Description": "Grants permission to grant permission to stop replication from the DynamoDB table to the Kinesis data stream",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DisableKinesisStreamingDestination.html"
+   },
+   "EnableKinesisStreamingDestination": {
+    "Name": "EnableKinesisStreamingDestination",
+    "Description": "Grants permission to grant permission to start table data replication to the specified Kinesis data stream at a timestamp chosen during the enable workflow",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_EnableKinesisStreamingDestination.html"
+   },
+   "ExportTableToPointInTime": {
+    "Name": "ExportTableToPointInTime",
+    "Description": "Grants permission to initiate an Export of a DynamoDB table to S3",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ExportTableToPointInTime.html"
+   },
+   "GetItem": {
+    "Name": "GetItem",
+    "Description": "Grants permission to the GetItem operation that returns a set of attributes for the item with the given primary key",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "dynamodb:Attributes",
+       "dynamodb:EnclosingOperation",
+       "dynamodb:LeadingKeys",
+       "dynamodb:ReturnConsumedCapacity",
+       "dynamodb:Select"
+      ],
+      "DependentActions": []
+     },
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_GetItem.html"
+   },
+   "GetRecords": {
+    "Name": "GetRecords",
+    "Description": "Grants permission to retrieve the stream records from a given shard",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "stream": {
+      "Name": "stream",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_GetRecords.html"
+   },
+   "GetShardIterator": {
+    "Name": "GetShardIterator",
+    "Description": "Grants permission to return a shard iterator",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "stream": {
+      "Name": "stream",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_GetShardIterator.html"
+   },
+   "ImportTable": {
+    "Name": "ImportTable",
+    "Description": "Grants permission to initiate an import from S3 to a DynamoDB table",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ImportTable.html"
+   },
+   "ListBackups": {
+    "Name": "ListBackups",
+    "Description": "Grants permission to list backups associated with the account and endpoint",
+    "AccessLevel": "List",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ListBackups.html"
+   },
+   "ListContributorInsights": {
+    "Name": "ListContributorInsights",
+    "Description": "Grants permission to list the ContributorInsightsSummary for all tables and global secondary indexes associated with the current account and endpoint",
+    "AccessLevel": "List",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ListContributorInsights.html"
+   },
+   "ListExports": {
+    "Name": "ListExports",
+    "Description": "Grants permission to list exports associated with the account and endpoint",
+    "AccessLevel": "List",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ListExports.html"
+   },
+   "ListGlobalTables": {
+    "Name": "ListGlobalTables",
+    "Description": "Grants permission to list all global tables that have a replica in the specified region",
+    "AccessLevel": "List",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ListGlobalTables.html"
+   },
+   "ListImports": {
+    "Name": "ListImports",
+    "Description": "Grants permission to list imports associated with the account and endpoint",
+    "AccessLevel": "List",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ListImports.html"
+   },
+   "ListStreams": {
+    "Name": "ListStreams",
+    "Description": "Grants permission to return an array of stream ARNs associated with the current account and endpoint",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ListStreams.html"
+   },
+   "ListTables": {
+    "Name": "ListTables",
+    "Description": "Grants permission to return an array of table names associated with the current account and endpoint",
+    "AccessLevel": "List",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ListTables.html"
+   },
+   "ListTagsOfResource": {
+    "Name": "ListTagsOfResource",
+    "Description": "Grants permission to list all tags on an Amazon DynamoDB resource",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ListTagsOfResource.html"
+   },
+   "PartiQLDelete": {
+    "Name": "PartiQLDelete",
+    "Description": "Grants permission to delete a single item in a table by primary key",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "dynamodb:Attributes",
+       "dynamodb:EnclosingOperation",
+       "dynamodb:LeadingKeys",
+       "dynamodb:ReturnValues"
+      ],
+      "DependentActions": []
+     },
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ExecuteStatement.html"
+   },
+   "PartiQLInsert": {
+    "Name": "PartiQLInsert",
+    "Description": "Grants permission to create a new item, if an item with same primary key does not exist in the table",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "dynamodb:Attributes",
+       "dynamodb:EnclosingOperation",
+       "dynamodb:LeadingKeys"
+      ],
+      "DependentActions": []
+     },
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ExecuteStatement.html"
+   },
+   "PartiQLSelect": {
+    "Name": "PartiQLSelect",
+    "Description": "Grants permission to read a set of attributes for items from a table or index",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "dynamodb:Attributes",
+       "dynamodb:EnclosingOperation",
+       "dynamodb:FullTableScan",
+       "dynamodb:LeadingKeys",
+       "dynamodb:Select"
+      ],
+      "DependentActions": []
+     },
+     "index": {
+      "Name": "index",
+      "Required": false,
+      "ConditionKeys": [],
+      "DependentActions": []
+     },
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ExecuteStatement.html"
+   },
+   "PartiQLUpdate": {
+    "Name": "PartiQLUpdate",
+    "Description": "Grants permission to edit an existing item's attributes",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "dynamodb:Attributes",
+       "dynamodb:EnclosingOperation",
+       "dynamodb:LeadingKeys",
+       "dynamodb:ReturnValues"
+      ],
+      "DependentActions": []
+     },
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ExecuteStatement.html"
+   },
+   "PurchaseReservedCapacityOfferings": {
+    "Name": "PurchaseReservedCapacityOfferings",
+    "Description": "Grants permission to purchases reserved capacity for use with your account",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": ""
+   },
+   "PutItem": {
+    "Name": "PutItem",
+    "Description": "Grants permission to create a new item, or replace an old item with a new item",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "dynamodb:Attributes",
+       "dynamodb:EnclosingOperation",
+       "dynamodb:LeadingKeys",
+       "dynamodb:ReturnConsumedCapacity",
+       "dynamodb:ReturnValues"
+      ],
+      "DependentActions": []
+     },
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_PutItem.html"
+   },
+   "Query": {
+    "Name": "Query",
+    "Description": "Grants permission to use the primary key of a table or a secondary index to directly access items from that table or index",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "dynamodb:Attributes",
+       "dynamodb:LeadingKeys",
+       "dynamodb:ReturnConsumedCapacity",
+       "dynamodb:ReturnValues",
+       "dynamodb:Select"
+      ],
+      "DependentActions": []
+     },
+     "index": {
+      "Name": "index",
+      "Required": false,
+      "ConditionKeys": [],
+      "DependentActions": []
+     },
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html"
+   },
+   "RestoreTableFromAwsBackup": {
+    "Name": "RestoreTableFromAwsBackup",
+    "Description": "Grants permission to create a new table from recovery point on AWS Backup",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_RestoreTableFromAwsBackup.html"
+   },
+   "RestoreTableFromBackup": {
+    "Name": "RestoreTableFromBackup",
+    "Description": "Grants permission to create a new table from an existing backup",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "backup": {
+      "Name": "backup",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     },
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_RestoreTableFromBackup.html"
+   },
+   "RestoreTableToPointInTime": {
+    "Name": "RestoreTableToPointInTime",
+    "Description": "Grants permission to restore a table to a point in time",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_RestoreTableToPointInTime.html"
+   },
+   "Scan": {
+    "Name": "Scan",
+    "Description": "Grants permission to return one or more items and item attributes by accessing every item in a table or a secondary index",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "dynamodb:Attributes",
+       "dynamodb:ReturnConsumedCapacity",
+       "dynamodb:ReturnValues",
+       "dynamodb:Select"
+      ],
+      "DependentActions": []
+     },
+     "index": {
+      "Name": "index",
+      "Required": false,
+      "ConditionKeys": [],
+      "DependentActions": []
+     },
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html"
+   },
+   "StartAwsBackupJob": {
+    "Name": "StartAwsBackupJob",
+    "Description": "Grants permission to create a backup on AWS Backup with advanced features enabled",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_StartAwsBackupJob.html"
+   },
+   "TagResource": {
+    "Name": "TagResource",
+    "Description": "Grants permission to associate a set of tags with an Amazon DynamoDB resource",
+    "AccessLevel": "Tagging",
+    "ResourceTypes": {
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_TagResource.html"
+   },
+   "UntagResource": {
+    "Name": "UntagResource",
+    "Description": "Grants permission to remove the association of tags from an Amazon DynamoDB resource",
+    "AccessLevel": "Tagging",
+    "ResourceTypes": {
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UntagResource.html"
+   },
+   "UpdateContinuousBackups": {
+    "Name": "UpdateContinuousBackups",
+    "Description": "Grants permission to enable or disable continuous backups",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateContinuousBackups.html"
+   },
+   "UpdateContributorInsights": {
+    "Name": "UpdateContributorInsights",
+    "Description": "Grants permission to update the status for contributor insights for a specific table or global secondary index",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "index": {
+      "Name": "index",
+      "Required": false,
+      "ConditionKeys": [],
+      "DependentActions": []
+     },
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateContributorInsights.html"
+   },
+   "UpdateGlobalTable": {
+    "Name": "UpdateGlobalTable",
+    "Description": "Grants permission to add or remove replicas in the specified global table",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "global-table": {
+      "Name": "global-table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     },
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateGlobalTable.html"
+   },
+   "UpdateGlobalTableSettings": {
+    "Name": "UpdateGlobalTableSettings",
+    "Description": "Grants permission to update settings of the specified global table",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "global-table": {
+      "Name": "global-table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     },
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateGlobalTableSettings.html"
+   },
+   "UpdateItem": {
+    "Name": "UpdateItem",
+    "Description": "Grants permission to edit an existing item's attributes, or adds a new item to the table if it does not already exist",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "dynamodb:Attributes",
+       "dynamodb:EnclosingOperation",
+       "dynamodb:LeadingKeys",
+       "dynamodb:ReturnConsumedCapacity",
+       "dynamodb:ReturnValues"
+      ],
+      "DependentActions": []
+     },
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html"
+   },
+   "UpdateTable": {
+    "Name": "UpdateTable",
+    "Description": "Grants permission to modify the provisioned throughput settings, global secondary indexes, or DynamoDB Streams settings for a given table",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateTable.html"
+   },
+   "UpdateTableReplicaAutoScaling": {
+    "Name": "UpdateTableReplicaAutoScaling",
+    "Description": "Grants permission to update auto scaling settings on your replica table",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateTableReplicaAutoScaling.html"
+   },
+   "UpdateTimeToLive": {
+    "Name": "UpdateTimeToLive",
+    "Description": "Grants permission to enable or disable TTL for the specified table",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "table": {
+      "Name": "table",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateTimeToLive.html"
+   }
+  },
+  "ResourceTypes": {
+   "backup": {
+    "Name": "backup",
+    "ARN": "arn:${Partition}:dynamodb:${Region}:${Account}:table/${TableName}/backup/${BackupName}",
+    "Conditions": []
+   },
+   "export": {
+    "Name": "export",
+    "ARN": "arn:${Partition}:dynamodb:${Region}:${Account}:table/${TableName}/export/${ExportName}",
+    "Conditions": []
+   },
+   "global-table": {
+    "Name": "global-table",
+    "ARN": "arn:${Partition}:dynamodb::${Account}:global-table/${GlobalTableName}",
+    "Conditions": []
+   },
+   "import": {
+    "Name": "import",
+    "ARN": "arn:${Partition}:dynamodb:${Region}:${Account}:table/${TableName}/import/${ImportName}",
+    "Conditions": []
+   },
+   "index": {
+    "Name": "index",
+    "ARN": "arn:${Partition}:dynamodb:${Region}:${Account}:table/${TableName}/index/${IndexName}",
+    "Conditions": []
+   },
+   "stream": {
+    "Name": "stream",
+    "ARN": "arn:${Partition}:dynamodb:${Region}:${Account}:table/${TableName}/stream/${StreamLabel}",
+    "Conditions": []
+   },
+   "table": {
+    "Name": "table",
+    "ARN": "arn:${Partition}:dynamodb:${Region}:${Account}:table/${TableName}",
+    "Conditions": []
+   }
+  },
+  "ConditionKeys": {
+   "dynamodb:Attributes": {
+    "Name": "dynamodb:Attributes",
+    "Description": "Filter based on the attribute (field or column) names of the table",
+    "Type": "String"
+   },
+   "dynamodb:EnclosingOperation": {
+    "Name": "dynamodb:EnclosingOperation",
+    "Description": "Used to block Transactions APIs calls and allow the non-Transaction APIs calls and vice-versa",
+    "Type": "String"
+   },
+   "dynamodb:FullTableScan": {
+    "Name": "dynamodb:FullTableScan",
+    "Description": "Used to block full table scan",
+    "Type": "Bool"
+   },
+   "dynamodb:LeadingKeys": {
+    "Name": "dynamodb:LeadingKeys",
+    "Description": "Filters based on the partition key of the table",
+    "Type": "String"
+   },
+   "dynamodb:ReturnConsumedCapacity": {
+    "Name": "dynamodb:ReturnConsumedCapacity",
+    "Description": "Filter based on the ReturnConsumedCapacity parameter of a request. Contains either \"TOTAL\" or \"NONE\"",
+    "Type": "String"
+   },
+   "dynamodb:ReturnValues": {
+    "Name": "dynamodb:ReturnValues",
+    "Description": "Filter based on the ReturnValues parameter of request. Contains one of the following: \"ALL_OLD\", \"UPDATED_OLD\",\"ALL_NEW\",\"UPDATED_NEW\", or \"NONE\"",
+    "Type": "String"
+   },
+   "dynamodb:Select": {
+    "Name": "dynamodb:Select",
+    "Description": "Filter based on the Select parameter of a Query or Scan request",
+    "Type": "String"
+   }
+  }
+ },
+ "ram": {
+  "Name": "AWS Resource Access Manager",
+  "Prefix": "ram",
+  "AuthorizationURL": "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsresourceaccessmanager.html",
+  "Actions": {
+   "AcceptResourceShareInvitation": {
+    "Name": "AcceptResourceShareInvitation",
+    "Description": "Grants permission to accept the specified resource share invitation",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "ram:ShareOwnerAccountId"
+      ],
+      "DependentActions": []
+     },
+     "resource-share-invitation": {
+      "Name": "resource-share-invitation",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/ram/latest/APIReference/API_AcceptResourceShareInvitation.html"
+   },
+   "AssociateResourceShare": {
+    "Name": "AssociateResourceShare",
+    "Description": "Grants permission to associate resource(s) and/or principal(s) to a resource share",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "aws:ResourceTag/${TagKey}",
+       "ram:ResourceShareName",
+       "ram:AllowsExternalPrincipals",
+       "ram:Principal",
+       "ram:RequestedResourceType",
+       "ram:ResourceArn"
+      ],
+      "DependentActions": []
+     },
+     "resource-share": {
+      "Name": "resource-share",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/ram/latest/APIReference/API_AssociateResourceShare.html"
+   },
+   "AssociateResourceSharePermission": {
+    "Name": "AssociateResourceSharePermission",
+    "Description": "Grants permission to associate a Permission with a Resource Share",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "permission": {
+      "Name": "permission",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     },
+     "resource-share": {
+      "Name": "resource-share",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/ram/latest/APIReference/API_AssociateResourceSharePermission.html"
+   },
+   "CreateResourceShare": {
+    "Name": "CreateResourceShare",
+    "Description": "Grants permission to create a resource share with provided resource(s) and/or principal(s)",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "aws:RequestTag/${TagKey}",
+       "aws:TagKeys",
+       "ram:RequestedResourceType",
+       "ram:ResourceArn",
+       "ram:RequestedAllowsExternalPrincipals",
+       "ram:Principal"
+      ],
+      "DependentActions": [
+       "ec2:CreateTags"
+      ]
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/ram/latest/APIReference/API_CreateResourceShare.html"
+   },
+   "DeleteResourceShare": {
+    "Name": "DeleteResourceShare",
+    "Description": "Grants permission to delete resource share",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "aws:ResourceTag/${TagKey}",
+       "ram:ResourceShareName",
+       "ram:AllowsExternalPrincipals"
+      ],
+      "DependentActions": []
+     },
+     "resource-share": {
+      "Name": "resource-share",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/ram/latest/APIReference/API_DeleteResourceShare.html"
+   },
+   "DisassociateResourceShare": {
+    "Name": "DisassociateResourceShare",
+    "Description": "Grants permission to disassociate resource(s) and/or principal(s) from a resource share",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "aws:ResourceTag/${TagKey}",
+       "ram:ResourceShareName",
+       "ram:AllowsExternalPrincipals",
+       "ram:Principal",
+       "ram:RequestedResourceType",
+       "ram:ResourceArn"
+      ],
+      "DependentActions": []
+     },
+     "resource-share": {
+      "Name": "resource-share",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/ram/latest/APIReference/API_DisassociateResourceShare.html"
+   },
+   "DisassociateResourceSharePermission": {
+    "Name": "DisassociateResourceSharePermission",
+    "Description": "Grants permission to disassociate a Permission from a Resource Share",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "permission": {
+      "Name": "permission",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     },
+     "resource-share": {
+      "Name": "resource-share",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/ram/latest/APIReference/API_DisassociateResourceSharePermission.html"
+   },
+   "EnableSharingWithAwsOrganization": {
+    "Name": "EnableSharingWithAwsOrganization",
+    "Description": "Grants permission to access customer's organization and create a SLR in the customer's account",
+    "AccessLevel": "Permissions management",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [],
+      "DependentActions": [
+       "iam:CreateServiceLinkedRole",
+       "organizations:DescribeOrganization",
+       "organizations:EnableAWSServiceAccess"
+      ]
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/ram/latest/APIReference/API_EnableSharingWithAwsOrganization.html"
+   },
+   "GetPermission": {
+    "Name": "GetPermission",
+    "Description": "Grants permission to get the contents of an AWS RAM permission",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "ram:PermissionArn"
+      ],
+      "DependentActions": []
+     },
+     "permission": {
+      "Name": "permission",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/ram/latest/APIReference/API_GetPermission.html"
+   },
+   "GetResourcePolicies": {
+    "Name": "GetResourcePolicies",
+    "Description": "Grants permission to get the policies for the specified resources that you own and have shared",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/ram/latest/APIReference/API_GetResourcePolicies.html"
+   },
+   "GetResourceShareAssociations": {
+    "Name": "GetResourceShareAssociations",
+    "Description": "Grants permission to get a set of resource share associations from a provided list or with a specified status of the specified type",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/ram/latest/APIReference/API_GetResourceShareAssociations.html"
+   },
+   "GetResourceShareInvitations": {
+    "Name": "GetResourceShareInvitations",
+    "Description": "Grants permission to get resource share invitations by the specified invitation arn or those for the resource share",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/ram/latest/APIReference/API_GetResourceShareInvitations.html"
+   },
+   "GetResourceShares": {
+    "Name": "GetResourceShares",
+    "Description": "Grants permission to get a set of resource shares from a provided list or with a specified status",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "aws:RequestTag/${TagKey}",
+       "aws:TagKeys"
+      ],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/ram/latest/APIReference/API_GetResourceShares.html"
+   },
+   "ListPendingInvitationResources": {
+    "Name": "ListPendingInvitationResources",
+    "Description": "Grants permission to list the resources in a resource share that is shared with you but that the invitation is still pending for",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "resource-share-invitation": {
+      "Name": "resource-share-invitation",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/ram/latest/APIReference/API_ListPendingInvitationResources.html"
+   },
+   "ListPermissionVersions": {
+    "Name": "ListPermissionVersions",
+    "Description": "Grants permission to list the versions of an AWS RAM permission",
+    "AccessLevel": "List",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/ram/latest/APIReference/API_ListPermissionVersions.html"
+   },
+   "ListPermissions": {
+    "Name": "ListPermissions",
+    "Description": "Grants permission to list the AWS RAM permissions",
+    "AccessLevel": "List",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/ram/latest/APIReference/API_ListPermissions.html"
+   },
+   "ListPrincipals": {
+    "Name": "ListPrincipals",
+    "Description": "Grants permission to list the principals that you have shared resources with or that have shared resources with you",
+    "AccessLevel": "List",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/ram/latest/APIReference/API_ListPrincipals.html"
+   },
+   "ListResourceSharePermissions": {
+    "Name": "ListResourceSharePermissions",
+    "Description": "Grants permission to list the Permissions associated with a Resource Share",
+    "AccessLevel": "List",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "aws:ResourceTag/${TagKey}",
+       "ram:ResourceShareName",
+       "ram:AllowsExternalPrincipals"
+      ],
+      "DependentActions": []
+     },
+     "resource-share": {
+      "Name": "resource-share",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/ram/latest/APIReference/API_ListResourceSharePermissions.html"
+   },
+   "ListResourceTypes": {
+    "Name": "ListResourceTypes",
+    "Description": "Grants permission to list the shareable resource types supported by AWS RAM",
+    "AccessLevel": "List",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/ram/latest/APIReference/API_ListResourceTypes.html"
+   },
+   "ListResources": {
+    "Name": "ListResources",
+    "Description": "Grants permission to list the resources that you added to resource shares or the resources that are shared with you",
+    "AccessLevel": "List",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/ram/latest/APIReference/API_ListResources.html"
+   },
+   "PromoteResourceShareCreatedFromPolicy": {
+    "Name": "PromoteResourceShareCreatedFromPolicy",
+    "Description": "Grants permission to promote the specified resource share",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "resource-share": {
+      "Name": "resource-share",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/ram/latest/APIReference/API_PromoteResourceShareCreatedFromPolicy.html"
+   },
+   "RejectResourceShareInvitation": {
+    "Name": "RejectResourceShareInvitation",
+    "Description": "Grants permission to reject the specified resource share invitation",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "ram:ShareOwnerAccountId"
+      ],
+      "DependentActions": []
+     },
+     "resource-share-invitation": {
+      "Name": "resource-share-invitation",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/ram/latest/APIReference/API_RejectResourceShareInvitation.html"
+   },
+   "TagResource": {
+    "Name": "TagResource",
+    "Description": "Grants permission to tag the specified resource share",
+    "AccessLevel": "Tagging",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "aws:RequestTag/${TagKey}",
+       "aws:TagKeys"
+      ],
+      "DependentActions": []
+     },
+     "resource-share": {
+      "Name": "resource-share",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/ram/latest/APIReference/API_TagResource.html"
+   },
+   "UntagResource": {
+    "Name": "UntagResource",
+    "Description": "Grants permission to untag the specified resource share",
+    "AccessLevel": "Tagging",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "aws:RequestTag/${TagKey}",
+       "aws:TagKeys"
+      ],
+      "DependentActions": []
+     },
+     "resource-share": {
+      "Name": "resource-share",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/ram/latest/APIReference/API_UntagResource.html"
+   },
+   "UpdateResourceShare": {
+    "Name": "UpdateResourceShare",
+    "Description": "Grants permission to update attributes of the resource share",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "aws:ResourceTag/${TagKey}",
+       "ram:ResourceShareName",
+       "ram:AllowsExternalPrincipals",
+       "ram:RequestedAllowsExternalPrincipals"
+      ],
+      "DependentActions": []
+     },
+     "resource-share": {
+      "Name": "resource-share",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/ram/latest/APIReference/API_UpdateResourceShare.html"
+   }
+  },
+  "ResourceTypes": {
+   "permission": {
+    "Name": "permission",
+    "ARN": "arn:${Partition}:ram::${Account}:permission/${ResourcePath}",
+    "Conditions": [
+     "ram:PermissionArn",
+     "ram:PermissionResourceType"
+    ]
+   },
+   "resource-share": {
+    "Name": "resource-share",
+    "ARN": "arn:${Partition}:ram:${Region}:${Account}:resource-share/${ResourcePath}",
+    "Conditions": [
+     "aws:ResourceTag/${TagKey}",
+     "ram:AllowsExternalPrincipals",
+     "ram:ResourceShareName"
+    ]
+   },
+   "resource-share-invitation": {
+    "Name": "resource-share-invitation",
+    "ARN": "arn:${Partition}:ram:${Region}:${Account}:resource-share-invitation/${ResourcePath}",
+    "Conditions": [
+     "ram:ShareOwnerAccountId"
+    ]
+   }
+  },
+  "ConditionKeys": {
+   "aws:RequestTag/${TagKey}": {
+    "Name": "aws:RequestTag/${TagKey}",
+    "Description": "Filters access based on the tags that are passed in the request when creating or tagging a resource share. If users don't pass these specific tags, or if they don't specify tags at all, the request fails",
+    "Type": "String"
+   },
+   "aws:ResourceTag/${TagKey}": {
+    "Name": "aws:ResourceTag/${TagKey}",
+    "Description": "Filters access based on the tags associated with the resource",
+    "Type": "String"
+   },
+   "aws:TagKeys": {
+    "Name": "aws:TagKeys",
+    "Description": "Filters access based on the tag keys that are passed when creating or tagging a resource share",
+    "Type": "ArrayOfString"
+   },
+   "ram:AllowsExternalPrincipals": {
+    "Name": "ram:AllowsExternalPrincipals",
+    "Description": "Filters access based on resource shares that allow or deny sharing with external principals. For example, specify true if the action can only be performed on resource shares that allow sharing with external principals. External principals are AWS accounts that are outside of its AWS organization",
+    "Type": "Bool"
+   },
+   "ram:PermissionArn": {
+    "Name": "ram:PermissionArn",
+    "Description": "Filters access based on the specified Permission ARN",
+    "Type": "ARN"
+   },
+   "ram:PermissionResourceType": {
+    "Name": "ram:PermissionResourceType",
+    "Description": "Filters access based on permissions of specified resource type",
+    "Type": "String"
+   },
+   "ram:Principal": {
+    "Name": "ram:Principal",
+    "Description": "Filters access based on the format of the specified principal",
+    "Type": "String"
+   },
+   "ram:RequestedAllowsExternalPrincipals": {
+    "Name": "ram:RequestedAllowsExternalPrincipals",
+    "Description": "Filters access based on the specified value for 'allowExternalPrincipals'. External principals are AWS accounts that are outside of its AWS Organization",
+    "Type": "Bool"
+   },
+   "ram:RequestedResourceType": {
+    "Name": "ram:RequestedResourceType",
+    "Description": "Filters access based on the specified resource type",
+    "Type": "String"
+   },
+   "ram:ResourceArn": {
+    "Name": "ram:ResourceArn",
+    "Description": "Filters access based on a resource with the specified ARN",
+    "Type": "ARN"
+   },
+   "ram:ResourceShareName": {
+    "Name": "ram:ResourceShareName",
+    "Description": "Filters access based on a resource share with the specified name",
+    "Type": "String"
+   },
+   "ram:ShareOwnerAccountId": {
+    "Name": "ram:ShareOwnerAccountId",
+    "Description": "Filters access based on resource shares owned by a specific account. For example, you can use this condition key to specify which resource share invitations can be accepted or rejected based on the resource share owner's account ID",
+    "Type": "String"
+   }
+  }
+ },
+ "s3": {
+  "Name": "Amazon S3",
+  "Prefix": "s3",
+  "AuthorizationURL": "https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazons3.html",
+  "Actions": {
+   "AbortMultipartUpload": {
+    "Name": "AbortMultipartUpload",
+    "Description": "Grants permission to abort a multipart upload",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointArn",
+       "s3:DataAccessPointAccount",
+       "s3:AccessPointNetworkOrigin",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "object": {
+      "Name": "object",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html"
+   },
+   "BypassGovernanceRetention": {
+    "Name": "BypassGovernanceRetention",
+    "Description": "Grants permission to allow circumvention of governance-mode object retention settings",
+    "AccessLevel": "Permissions management",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:RequestObjectTag/\u003ckey\u003e",
+       "s3:RequestObjectTagKeys",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-acl",
+       "s3:x-amz-content-sha256",
+       "s3:x-amz-copy-source",
+       "s3:x-amz-grant-full-control",
+       "s3:x-amz-grant-read",
+       "s3:x-amz-grant-read-acp",
+       "s3:x-amz-grant-write",
+       "s3:x-amz-grant-write-acp",
+       "s3:x-amz-metadata-directive",
+       "s3:x-amz-server-side-encryption",
+       "s3:x-amz-server-side-encryption-aws-kms-key-id",
+       "s3:x-amz-server-side-encryption-customer-algorithm",
+       "s3:x-amz-storage-class",
+       "s3:x-amz-website-redirect-location",
+       "s3:object-lock-mode",
+       "s3:object-lock-retain-until-date",
+       "s3:object-lock-remaining-retention-days",
+       "s3:object-lock-legal-hold"
+      ],
+      "DependentActions": []
+     },
+     "object": {
+      "Name": "object",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock-managing.html#object-lock-managing-bypass"
+   },
+   "CreateAccessPoint": {
+    "Name": "CreateAccessPoint",
+    "Description": "Grants permission to create a new access point",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:authType",
+       "s3:locationconstraint",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-acl",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "accesspoint": {
+      "Name": "accesspoint",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_CreateAccessPoint.html"
+   },
+   "CreateAccessPointForObjectLambda": {
+    "Name": "CreateAccessPointForObjectLambda",
+    "Description": "Grants permission to create an object lambda enabled accesspoint",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "objectlambdaaccesspoint": {
+      "Name": "objectlambdaaccesspoint",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_CreateAccessPointForObjectLambda.html"
+   },
+   "CreateBucket": {
+    "Name": "CreateBucket",
+    "Description": "Grants permission to create a new bucket",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:locationconstraint",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-acl",
+       "s3:x-amz-content-sha256",
+       "s3:x-amz-grant-full-control",
+       "s3:x-amz-grant-read",
+       "s3:x-amz-grant-read-acp",
+       "s3:x-amz-grant-write",
+       "s3:x-amz-grant-write-acp",
+       "s3:x-amz-object-ownership"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateBucket.html"
+   },
+   "CreateJob": {
+    "Name": "CreateJob",
+    "Description": "Grants permission to create a new Amazon S3 Batch Operations job",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256",
+       "s3:RequestJobPriority",
+       "s3:RequestJobOperation",
+       "aws:TagKeys",
+       "aws:RequestTag/${TagKey}"
+      ],
+      "DependentActions": [
+       "iam:PassRole"
+      ]
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_CreateJob.html"
+   },
+   "CreateMultiRegionAccessPoint": {
+    "Name": "CreateMultiRegionAccessPoint",
+    "Description": "Grants permission to create a new multi region access point",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureversion",
+       "s3:signatureAge",
+       "s3:TlsVersion"
+      ],
+      "DependentActions": []
+     },
+     "multiregionaccesspoint": {
+      "Name": "multiregionaccesspoint",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_CreateMultiRegionAccessPoint.html"
+   },
+   "DeleteAccessPoint": {
+    "Name": "DeleteAccessPoint",
+    "Description": "Grants permission to delete the access point named in the URI",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointArn",
+       "s3:DataAccessPointAccount",
+       "s3:AccessPointNetworkOrigin",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "accesspoint": {
+      "Name": "accesspoint",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_DeleteAccessPoint.html"
+   },
+   "DeleteAccessPointForObjectLambda": {
+    "Name": "DeleteAccessPointForObjectLambda",
+    "Description": "Grants permission to delete the object lambda enabled access point named in the URI",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointArn",
+       "s3:DataAccessPointAccount",
+       "s3:AccessPointNetworkOrigin",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "objectlambdaaccesspoint": {
+      "Name": "objectlambdaaccesspoint",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_DeleteAccessPointForObjectLambda.html"
+   },
+   "DeleteAccessPointPolicy": {
+    "Name": "DeleteAccessPointPolicy",
+    "Description": "Grants permission to delete the policy on a specified access point",
+    "AccessLevel": "Permissions management",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointArn",
+       "s3:DataAccessPointAccount",
+       "s3:AccessPointNetworkOrigin",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "accesspoint": {
+      "Name": "accesspoint",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_DeleteAccessPointPolicy.html"
+   },
+   "DeleteAccessPointPolicyForObjectLambda": {
+    "Name": "DeleteAccessPointPolicyForObjectLambda",
+    "Description": "Grants permission to delete the policy on a specified object lambda enabled access point",
+    "AccessLevel": "Permissions management",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointArn",
+       "s3:DataAccessPointAccount",
+       "s3:AccessPointNetworkOrigin",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "objectlambdaaccesspoint": {
+      "Name": "objectlambdaaccesspoint",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_DeleteAccessPointPolicyForObjectLambda.html"
+   },
+   "DeleteBucket": {
+    "Name": "DeleteBucket",
+    "Description": "Grants permission to delete the bucket named in the URI",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucket.html"
+   },
+   "DeleteBucketPolicy": {
+    "Name": "DeleteBucketPolicy",
+    "Description": "Grants permission to delete the policy on a specified bucket",
+    "AccessLevel": "Permissions management",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketPolicy.html"
+   },
+   "DeleteBucketWebsite": {
+    "Name": "DeleteBucketWebsite",
+    "Description": "Grants permission to remove the website configuration for a bucket",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketWebsite.html"
+   },
+   "DeleteJobTagging": {
+    "Name": "DeleteJobTagging",
+    "Description": "Grants permission to remove tags from an existing Amazon S3 Batch Operations job",
+    "AccessLevel": "Tagging",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256",
+       "s3:ExistingJobPriority",
+       "s3:ExistingJobOperation"
+      ],
+      "DependentActions": []
+     },
+     "job": {
+      "Name": "job",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_DeleteJobTagging.html"
+   },
+   "DeleteMultiRegionAccessPoint": {
+    "Name": "DeleteMultiRegionAccessPoint",
+    "Description": "Grants permission to delete the multi region access point named in the URI",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureversion",
+       "s3:signatureAge",
+       "s3:TlsVersion"
+      ],
+      "DependentActions": []
+     },
+     "multiregionaccesspoint": {
+      "Name": "multiregionaccesspoint",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_DeleteMultiRegionAccessPoint.html"
+   },
+   "DeleteObject": {
+    "Name": "DeleteObject",
+    "Description": "Grants permission to remove the null version of an object and insert a delete marker, which becomes the current version of the object",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "object": {
+      "Name": "object",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteObject.html"
+   },
+   "DeleteObjectTagging": {
+    "Name": "DeleteObjectTagging",
+    "Description": "Grants permission to use the tagging subresource to remove the entire tag set from the specified object",
+    "AccessLevel": "Tagging",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:ExistingObjectTag/\u003ckey\u003e",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "object": {
+      "Name": "object",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteObjectTagging.html"
+   },
+   "DeleteObjectVersion": {
+    "Name": "DeleteObjectVersion",
+    "Description": "Grants permission to remove a specific version of an object",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:versionid",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "object": {
+      "Name": "object",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteObject.html"
+   },
+   "DeleteObjectVersionTagging": {
+    "Name": "DeleteObjectVersionTagging",
+    "Description": "Grants permission to remove the entire tag set for a specific version of the object",
+    "AccessLevel": "Tagging",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:ExistingObjectTag/\u003ckey\u003e",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:versionid",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "object": {
+      "Name": "object",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteObjectTagging.html"
+   },
+   "DeleteStorageLensConfiguration": {
+    "Name": "DeleteStorageLensConfiguration",
+    "Description": "Grants permission to delete an existing Amazon S3 Storage Lens configuration",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "storagelensconfiguration": {
+      "Name": "storagelensconfiguration",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_DeleteStorageLensConfiguration.html"
+   },
+   "DeleteStorageLensConfigurationTagging": {
+    "Name": "DeleteStorageLensConfigurationTagging",
+    "Description": "Grants permission to remove tags from an existing Amazon S3 Storage Lens configuration",
+    "AccessLevel": "Tagging",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "storagelensconfiguration": {
+      "Name": "storagelensconfiguration",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_DeleteStorageLensConfigurationTagging.html"
+   },
+   "DescribeJob": {
+    "Name": "DescribeJob",
+    "Description": "Grants permission to retrieve the configuration parameters and status for a batch operations job",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "job": {
+      "Name": "job",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_DescribeJob.html"
+   },
+   "DescribeMultiRegionAccessPointOperation": {
+    "Name": "DescribeMultiRegionAccessPointOperation",
+    "Description": "Grants permission to retrieve the configurations for a multi region access point",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureversion",
+       "s3:signatureAge",
+       "s3:TlsVersion"
+      ],
+      "DependentActions": []
+     },
+     "multiregionaccesspointrequestarn": {
+      "Name": "multiregionaccesspointrequestarn",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_DescribeMultiRegionAccessPointOperation.html"
+   },
+   "GetAccelerateConfiguration": {
+    "Name": "GetAccelerateConfiguration",
+    "Description": "Grants permission to uses the accelerate subresource to return the Transfer Acceleration state of a bucket, which is either Enabled or Suspended",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAccelerateConfiguration.html"
+   },
+   "GetAccessPoint": {
+    "Name": "GetAccessPoint",
+    "Description": "Grants permission to return configuration information about the specified access point",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_GetAccessPoint.html"
+   },
+   "GetAccessPointConfigurationForObjectLambda": {
+    "Name": "GetAccessPointConfigurationForObjectLambda",
+    "Description": "Grants permission to retrieve the configuration of the object lambda enabled access point",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointArn",
+       "s3:DataAccessPointAccount",
+       "s3:AccessPointNetworkOrigin",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "objectlambdaaccesspoint": {
+      "Name": "objectlambdaaccesspoint",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_GetAccessPointConfigurationForObjectLambda.html"
+   },
+   "GetAccessPointForObjectLambda": {
+    "Name": "GetAccessPointForObjectLambda",
+    "Description": "Grants permission to create an object lambda enabled accesspoint",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "objectlambdaaccesspoint": {
+      "Name": "objectlambdaaccesspoint",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_GetAccessPointForObjectLambda.html"
+   },
+   "GetAccessPointPolicy": {
+    "Name": "GetAccessPointPolicy",
+    "Description": "Grants permission to returns the access point policy associated with the specified access point",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "accesspoint": {
+      "Name": "accesspoint",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_GetAccessPointPolicy.html"
+   },
+   "GetAccessPointPolicyForObjectLambda": {
+    "Name": "GetAccessPointPolicyForObjectLambda",
+    "Description": "Grants permission to returns the access point policy associated with the specified object lambda enabled access point",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "objectlambdaaccesspoint": {
+      "Name": "objectlambdaaccesspoint",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_GetAccessPointPolicyForObjectLambda.html"
+   },
+   "GetAccessPointPolicyStatus": {
+    "Name": "GetAccessPointPolicyStatus",
+    "Description": "Grants permission to return the policy status for a specific access point policy",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "accesspoint": {
+      "Name": "accesspoint",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_GetAccessPointPolicyStatus.html"
+   },
+   "GetAccessPointPolicyStatusForObjectLambda": {
+    "Name": "GetAccessPointPolicyStatusForObjectLambda",
+    "Description": "Grants permission to return the policy status for a specific object lambda access point policy",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "objectlambdaaccesspoint": {
+      "Name": "objectlambdaaccesspoint",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_GetAccessPointPolicyStatusForObjectLambda.html"
+   },
+   "GetAccountPublicAccessBlock": {
+    "Name": "GetAccountPublicAccessBlock",
+    "Description": "Grants permission to retrieve the PublicAccessBlock configuration for an AWS account",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_GetPublicAccessBlock.html"
+   },
+   "GetAnalyticsConfiguration": {
+    "Name": "GetAnalyticsConfiguration",
+    "Description": "Grants permission to get an analytics configuration from an Amazon S3 bucket, identified by the analytics configuration ID",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAnalyticsConfiguration.html"
+   },
+   "GetBucketAcl": {
+    "Name": "GetBucketAcl",
+    "Description": "Grants permission to use the acl subresource to return the access control list (ACL) of an Amazon S3 bucket",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAcl.html"
+   },
+   "GetBucketCORS": {
+    "Name": "GetBucketCORS",
+    "Description": "Grants permission to return the CORS configuration information set for an Amazon S3 bucket",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketCors.html"
+   },
+   "GetBucketLocation": {
+    "Name": "GetBucketLocation",
+    "Description": "Grants permission to return the Region that an Amazon S3 bucket resides in",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLocation.html"
+   },
+   "GetBucketLogging": {
+    "Name": "GetBucketLogging",
+    "Description": "Grants permission to return the logging status of an Amazon S3 bucket and the permissions users have to view or modify that status",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLogging.html"
+   },
+   "GetBucketNotification": {
+    "Name": "GetBucketNotification",
+    "Description": "Grants permission to get the notification configuration of an Amazon S3 bucket",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketNotification.html"
+   },
+   "GetBucketObjectLockConfiguration": {
+    "Name": "GetBucketObjectLockConfiguration",
+    "Description": "Grants permission to get the Object Lock configuration of an Amazon S3 bucket",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:signatureversion"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectLockConfiguration.html"
+   },
+   "GetBucketOwnershipControls": {
+    "Name": "GetBucketOwnershipControls",
+    "Description": "Grants permission to retrieve ownership controls on a bucket",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketOwnershipControls.html"
+   },
+   "GetBucketPolicy": {
+    "Name": "GetBucketPolicy",
+    "Description": "Grants permission to return the policy of the specified bucket",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketPolicy.html"
+   },
+   "GetBucketPolicyStatus": {
+    "Name": "GetBucketPolicyStatus",
+    "Description": "Grants permission to retrieve the policy status for a specific Amazon S3 bucket, which indicates whether the bucket is public",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketPolicyStatus.html"
+   },
+   "GetBucketPublicAccessBlock": {
+    "Name": "GetBucketPublicAccessBlock",
+    "Description": "Grants permission to retrieve the PublicAccessBlock configuration for an Amazon S3 bucket",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetPublicAccessBlock.html"
+   },
+   "GetBucketRequestPayment": {
+    "Name": "GetBucketRequestPayment",
+    "Description": "Grants permission to return the request payment configuration for an Amazon S3 bucket",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketRequestPayment.html"
+   },
+   "GetBucketTagging": {
+    "Name": "GetBucketTagging",
+    "Description": "Grants permission to return the tag set associated with an Amazon S3 bucket",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketTagging.html"
+   },
+   "GetBucketVersioning": {
+    "Name": "GetBucketVersioning",
+    "Description": "Grants permission to return the versioning state of an Amazon S3 bucket",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketVersioning.html"
+   },
+   "GetBucketWebsite": {
+    "Name": "GetBucketWebsite",
+    "Description": "Grants permission to return the website configuration for an Amazon S3 bucket",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketWebsite.html"
+   },
+   "GetEncryptionConfiguration": {
+    "Name": "GetEncryptionConfiguration",
+    "Description": "Grants permission to return the default encryption configuration an Amazon S3 bucket",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketEncryption.html"
+   },
+   "GetIntelligentTieringConfiguration": {
+    "Name": "GetIntelligentTieringConfiguration",
+    "Description": "Grants permission to get an or list all Amazon S3 Intelligent Tiering configuration in a S3 Bucket",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketIntelligentTieringConfiguration.html"
+   },
+   "GetInventoryConfiguration": {
+    "Name": "GetInventoryConfiguration",
+    "Description": "Grants permission to return an inventory configuration from an Amazon S3 bucket, identified by the inventory configuration ID",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketInventoryConfiguration.html"
+   },
+   "GetJobTagging": {
+    "Name": "GetJobTagging",
+    "Description": "Grants permission to return the tag set of an existing Amazon S3 Batch Operations job",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "job": {
+      "Name": "job",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_GetJobTagging.html"
+   },
+   "GetLifecycleConfiguration": {
+    "Name": "GetLifecycleConfiguration",
+    "Description": "Grants permission to return the lifecycle configuration information set on an Amazon S3 bucket",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLifecycleConfiguration.html"
+   },
+   "GetMetricsConfiguration": {
+    "Name": "GetMetricsConfiguration",
+    "Description": "Grants permission to get a metrics configuration from an Amazon S3 bucket",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketMetricsConfiguration.html"
+   },
+   "GetMultiRegionAccessPoint": {
+    "Name": "GetMultiRegionAccessPoint",
+    "Description": "Grants permission to return configuration information about the specified multi region access point",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureversion",
+       "s3:signatureAge",
+       "s3:TlsVersion"
+      ],
+      "DependentActions": []
+     },
+     "multiregionaccesspoint": {
+      "Name": "multiregionaccesspoint",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_GetMultiRegionAccessPoint.html"
+   },
+   "GetMultiRegionAccessPointPolicy": {
+    "Name": "GetMultiRegionAccessPointPolicy",
+    "Description": "Grants permission to returns the access point policy associated with the specified multi region access point",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureversion",
+       "s3:signatureAge",
+       "s3:TlsVersion"
+      ],
+      "DependentActions": []
+     },
+     "multiregionaccesspoint": {
+      "Name": "multiregionaccesspoint",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_GetMultiRegionAccessPointPolicy.html"
+   },
+   "GetMultiRegionAccessPointPolicyStatus": {
+    "Name": "GetMultiRegionAccessPointPolicyStatus",
+    "Description": "Grants permission to return the policy status for a specific multi region access point policy",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureversion",
+       "s3:signatureAge",
+       "s3:TlsVersion"
+      ],
+      "DependentActions": []
+     },
+     "multiregionaccesspoint": {
+      "Name": "multiregionaccesspoint",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_GetMultiRegionAccessPointPolicyStatus.html"
+   },
+   "GetObject": {
+    "Name": "GetObject",
+    "Description": "Grants permission to retrieve objects from Amazon S3",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:ExistingObjectTag/\u003ckey\u003e",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "object": {
+      "Name": "object",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObject.html"
+   },
+   "GetObjectAcl": {
+    "Name": "GetObjectAcl",
+    "Description": "Grants permission to return the access control list (ACL) of an object",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:ExistingObjectTag/\u003ckey\u003e",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "object": {
+      "Name": "object",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectAcl.html"
+   },
+   "GetObjectAttributes": {
+    "Name": "GetObjectAttributes",
+    "Description": "Grants permission to retrieve attributes related to a specific object",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:ExistingObjectTag/\u003ckey\u003e",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "object": {
+      "Name": "object",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectAttributes.html"
+   },
+   "GetObjectLegalHold": {
+    "Name": "GetObjectLegalHold",
+    "Description": "Grants permission to get an object's current Legal Hold status",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "object": {
+      "Name": "object",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectLegalHold.html"
+   },
+   "GetObjectRetention": {
+    "Name": "GetObjectRetention",
+    "Description": "Grants permission to retrieve the retention settings for an object",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "object": {
+      "Name": "object",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectRetention.html"
+   },
+   "GetObjectTagging": {
+    "Name": "GetObjectTagging",
+    "Description": "Grants permission to return the tag set of an object",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:ExistingObjectTag/\u003ckey\u003e",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "object": {
+      "Name": "object",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectTagging.html"
+   },
+   "GetObjectTorrent": {
+    "Name": "GetObjectTorrent",
+    "Description": "Grants permission to return torrent files from an Amazon S3 bucket",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "object": {
+      "Name": "object",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectTorrent.html"
+   },
+   "GetObjectVersion": {
+    "Name": "GetObjectVersion",
+    "Description": "Grants permission to retrieve a specific version of an object",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:ExistingObjectTag/\u003ckey\u003e",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:versionid",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "object": {
+      "Name": "object",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObject.html"
+   },
+   "GetObjectVersionAcl": {
+    "Name": "GetObjectVersionAcl",
+    "Description": "Grants permission to return the access control list (ACL) of a specific object version",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:ExistingObjectTag/\u003ckey\u003e",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:versionid",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "object": {
+      "Name": "object",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectAcl.html"
+   },
+   "GetObjectVersionAttributes": {
+    "Name": "GetObjectVersionAttributes",
+    "Description": "Grants permission to retrieve attributes related to a specific version of an object",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:ExistingObjectTag/\u003ckey\u003e",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:versionid",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "object": {
+      "Name": "object",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectAttributes.html"
+   },
+   "GetObjectVersionForReplication": {
+    "Name": "GetObjectVersionForReplication",
+    "Description": "Grants permission to replicate both unencrypted objects and objects encrypted with SSE-S3 or SSE-KMS",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "object": {
+      "Name": "object",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication-config-for-kms-objects.html"
+   },
+   "GetObjectVersionTagging": {
+    "Name": "GetObjectVersionTagging",
+    "Description": "Grants permission to return the tag set for a specific version of the object",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:ExistingObjectTag/\u003ckey\u003e",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:versionid",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "object": {
+      "Name": "object",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/setting-repl-config-perm-overview.html"
+   },
+   "GetObjectVersionTorrent": {
+    "Name": "GetObjectVersionTorrent",
+    "Description": "Grants permission to get Torrent files about a different version using the versionId subresource",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:versionid",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "object": {
+      "Name": "object",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectTorrent.html"
+   },
+   "GetReplicationConfiguration": {
+    "Name": "GetReplicationConfiguration",
+    "Description": "Grants permission to get the replication configuration information set on an Amazon S3 bucket",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketReplication.html"
+   },
+   "GetStorageLensConfiguration": {
+    "Name": "GetStorageLensConfiguration",
+    "Description": "Grants permission to get an Amazon S3 Storage Lens configuration",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "storagelensconfiguration": {
+      "Name": "storagelensconfiguration",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_GetStorageLensConfiguration.html"
+   },
+   "GetStorageLensConfigurationTagging": {
+    "Name": "GetStorageLensConfigurationTagging",
+    "Description": "Grants permission to get the tag set of an existing Amazon S3 Storage Lens configuration",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "storagelensconfiguration": {
+      "Name": "storagelensconfiguration",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_GetStorageLensConfigurationTagging.html"
+   },
+   "GetStorageLensDashboard": {
+    "Name": "GetStorageLensDashboard",
+    "Description": "Grants permission to get an Amazon S3 Storage Lens dashboard",
+    "AccessLevel": "Read",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "storagelensconfiguration": {
+      "Name": "storagelensconfiguration",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage_lens_dashboard.html"
+   },
+   "InitiateReplication": {
+    "Name": "InitiateReplication",
+    "Description": "Grants permission to initiate the replication process by setting replication status of an object to pending",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:ResourceAccount"
+      ],
+      "DependentActions": []
+     },
+     "object": {
+      "Name": "object",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/setting-repl-config-perm-overview.html"
+   },
+   "ListAccessPoints": {
+    "Name": "ListAccessPoints",
+    "Description": "Grants permission to list access points",
+    "AccessLevel": "List",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_ListAccessPoints.html"
+   },
+   "ListAccessPointsForObjectLambda": {
+    "Name": "ListAccessPointsForObjectLambda",
+    "Description": "Grants permission to list object lambda enabled accesspoints",
+    "AccessLevel": "List",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_ListAccessPointsForObjectLambda.html"
+   },
+   "ListAllMyBuckets": {
+    "Name": "ListAllMyBuckets",
+    "Description": "Grants permission to list all buckets owned by the authenticated sender of the request",
+    "AccessLevel": "List",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListBuckets.html"
+   },
+   "ListBucket": {
+    "Name": "ListBucket",
+    "Description": "Grants permission to list some or all of the objects in an Amazon S3 bucket (up to 1000)",
+    "AccessLevel": "List",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:authType",
+       "s3:delimiter",
+       "s3:max-keys",
+       "s3:prefix",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html"
+   },
+   "ListBucketMultipartUploads": {
+    "Name": "ListBucketMultipartUploads",
+    "Description": "Grants permission to list in-progress multipart uploads",
+    "AccessLevel": "List",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListMultipartUploads.html"
+   },
+   "ListBucketVersions": {
+    "Name": "ListBucketVersions",
+    "Description": "Grants permission to list metadata about all the versions of objects in an Amazon S3 bucket",
+    "AccessLevel": "List",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:authType",
+       "s3:delimiter",
+       "s3:max-keys",
+       "s3:prefix",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectVersions.html"
+   },
+   "ListJobs": {
+    "Name": "ListJobs",
+    "Description": "Grants permission to list current jobs and jobs that have ended recently",
+    "AccessLevel": "List",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_ListJobs.html"
+   },
+   "ListMultiRegionAccessPoints": {
+    "Name": "ListMultiRegionAccessPoints",
+    "Description": "Grants permission to list multi region access points",
+    "AccessLevel": "List",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureversion",
+       "s3:signatureAge",
+       "s3:TlsVersion"
+      ],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_ListMultiRegionAccessPoints.html"
+   },
+   "ListMultipartUploadParts": {
+    "Name": "ListMultipartUploadParts",
+    "Description": "Grants permission to list the parts that have been uploaded for a specific multipart upload",
+    "AccessLevel": "List",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "object": {
+      "Name": "object",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListParts.html"
+   },
+   "ListStorageLensConfigurations": {
+    "Name": "ListStorageLensConfigurations",
+    "Description": "Grants permission to list Amazon S3 Storage Lens configurations",
+    "AccessLevel": "List",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_ListStorageLensConfigurations.html"
+   },
+   "ObjectOwnerOverrideToBucketOwner": {
+    "Name": "ObjectOwnerOverrideToBucketOwner",
+    "Description": "Grants permission to change replica ownership",
+    "AccessLevel": "Permissions management",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "object": {
+      "Name": "object",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication-change-owner.html#repl-ownership-add-role-permission"
+   },
+   "PutAccelerateConfiguration": {
+    "Name": "PutAccelerateConfiguration",
+    "Description": "Grants permission to use the accelerate subresource to set the Transfer Acceleration state of an existing S3 bucket",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketAccelerateConfiguration.html"
+   },
+   "PutAccessPointConfigurationForObjectLambda": {
+    "Name": "PutAccessPointConfigurationForObjectLambda",
+    "Description": "Grants permission to set the configuration of the object lambda enabled access point",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointArn",
+       "s3:DataAccessPointAccount",
+       "s3:AccessPointNetworkOrigin",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "objectlambdaaccesspoint": {
+      "Name": "objectlambdaaccesspoint",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_PutAccessPointConfigurationForObjectLambda.html"
+   },
+   "PutAccessPointPolicy": {
+    "Name": "PutAccessPointPolicy",
+    "Description": "Grants permission to associate an access policy with a specified access point",
+    "AccessLevel": "Permissions management",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "accesspoint": {
+      "Name": "accesspoint",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_PutAccessPointPolicy.html"
+   },
+   "PutAccessPointPolicyForObjectLambda": {
+    "Name": "PutAccessPointPolicyForObjectLambda",
+    "Description": "Grants permission to associate an access policy with a specified object lambda enabled access point",
+    "AccessLevel": "Permissions management",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "objectlambdaaccesspoint": {
+      "Name": "objectlambdaaccesspoint",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_PutAccessPointPolicyForObjectLambda.html"
+   },
+   "PutAccessPointPublicAccessBlock": {
+    "Name": "PutAccessPointPublicAccessBlock",
+    "Description": "Grants permission to associate public access block configurations with a specified access point, while creating a access point",
+    "AccessLevel": "Permissions management",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html#access-control-block-public-access-examples-access-point"
+   },
+   "PutAccountPublicAccessBlock": {
+    "Name": "PutAccountPublicAccessBlock",
+    "Description": "Grants permission to create or modify the PublicAccessBlock configuration for an AWS account",
+    "AccessLevel": "Permissions management",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_PutPublicAccessBlock.html"
+   },
+   "PutAnalyticsConfiguration": {
+    "Name": "PutAnalyticsConfiguration",
+    "Description": "Grants permission to set an analytics configuration for the bucket, specified by the analytics configuration ID",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketAnalyticsConfiguration.html"
+   },
+   "PutBucketAcl": {
+    "Name": "PutBucketAcl",
+    "Description": "Grants permission to set the permissions on an existing bucket using access control lists (ACLs)",
+    "AccessLevel": "Permissions management",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-acl",
+       "s3:x-amz-content-sha256",
+       "s3:x-amz-grant-full-control",
+       "s3:x-amz-grant-read",
+       "s3:x-amz-grant-read-acp",
+       "s3:x-amz-grant-write",
+       "s3:x-amz-grant-write-acp"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketAcl.html"
+   },
+   "PutBucketCORS": {
+    "Name": "PutBucketCORS",
+    "Description": "Grants permission to set the CORS configuration for an Amazon S3 bucket",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketCors.html"
+   },
+   "PutBucketLogging": {
+    "Name": "PutBucketLogging",
+    "Description": "Grants permission to set the logging parameters for an Amazon S3 bucket",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketLogging.html"
+   },
+   "PutBucketNotification": {
+    "Name": "PutBucketNotification",
+    "Description": "Grants permission to receive notifications when certain events happen in an Amazon S3 bucket",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketNotification.html"
+   },
+   "PutBucketObjectLockConfiguration": {
+    "Name": "PutBucketObjectLockConfiguration",
+    "Description": "Grants permission to put Object Lock configuration on a specific bucket",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:TlsVersion",
+       "s3:signatureversion"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObjectLockConfiguration.html"
+   },
+   "PutBucketOwnershipControls": {
+    "Name": "PutBucketOwnershipControls",
+    "Description": "Grants permission to add, replace or delete ownership controls on a bucket",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketOwnershipControls.html"
+   },
+   "PutBucketPolicy": {
+    "Name": "PutBucketPolicy",
+    "Description": "Grants permission to add or replace a bucket policy on a bucket",
+    "AccessLevel": "Permissions management",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketPolicy.html"
+   },
+   "PutBucketPublicAccessBlock": {
+    "Name": "PutBucketPublicAccessBlock",
+    "Description": "Grants permission to create or modify the PublicAccessBlock configuration for a specific Amazon S3 bucket",
+    "AccessLevel": "Permissions management",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutPublicAccessBlock.html"
+   },
+   "PutBucketRequestPayment": {
+    "Name": "PutBucketRequestPayment",
+    "Description": "Grants permission to set the request payment configuration of a bucket",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketRequestPayment.html"
+   },
+   "PutBucketTagging": {
+    "Name": "PutBucketTagging",
+    "Description": "Grants permission to add a set of tags to an existing Amazon S3 bucket",
+    "AccessLevel": "Tagging",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketTagging.html"
+   },
+   "PutBucketVersioning": {
+    "Name": "PutBucketVersioning",
+    "Description": "Grants permission to set the versioning state of an existing Amazon S3 bucket",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketVersioning.html"
+   },
+   "PutBucketWebsite": {
+    "Name": "PutBucketWebsite",
+    "Description": "Grants permission to set the configuration of the website that is specified in the website subresource",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketWebsite.html"
+   },
+   "PutEncryptionConfiguration": {
+    "Name": "PutEncryptionConfiguration",
+    "Description": "Grants permission to set the encryption configuration for an Amazon S3 bucket",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketEncryption.html"
+   },
+   "PutIntelligentTieringConfiguration": {
+    "Name": "PutIntelligentTieringConfiguration",
+    "Description": "Grants permission to create new or update or delete an existing Amazon S3 Intelligent Tiering configuration",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketIntelligentTieringConfiguration.html"
+   },
+   "PutInventoryConfiguration": {
+    "Name": "PutInventoryConfiguration",
+    "Description": "Grants permission to add an inventory configuration to the bucket, identified by the inventory ID",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketInventoryConfiguration.html"
+   },
+   "PutJobTagging": {
+    "Name": "PutJobTagging",
+    "Description": "Grants permission to replace tags on an existing Amazon S3 Batch Operations job",
+    "AccessLevel": "Tagging",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256",
+       "s3:ExistingJobPriority",
+       "s3:ExistingJobOperation",
+       "aws:TagKeys",
+       "aws:RequestTag/${TagKey}"
+      ],
+      "DependentActions": []
+     },
+     "job": {
+      "Name": "job",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_PutJobTagging.html"
+   },
+   "PutLifecycleConfiguration": {
+    "Name": "PutLifecycleConfiguration",
+    "Description": "Grants permission to create a new lifecycle configuration for the bucket or replace an existing lifecycle configuration",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketLifecycleConfiguration.html"
+   },
+   "PutMetricsConfiguration": {
+    "Name": "PutMetricsConfiguration",
+    "Description": "Grants permission to set or update a metrics configuration for the CloudWatch request metrics from an Amazon S3 bucket",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketMetricsConfiguration.html"
+   },
+   "PutMultiRegionAccessPointPolicy": {
+    "Name": "PutMultiRegionAccessPointPolicy",
+    "Description": "Grants permission to associate an access policy with a specified multi region access point",
+    "AccessLevel": "Permissions management",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureversion",
+       "s3:signatureAge",
+       "s3:TlsVersion"
+      ],
+      "DependentActions": []
+     },
+     "multiregionaccesspoint": {
+      "Name": "multiregionaccesspoint",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_PutMultiRegionAccessPointPolicy.html"
+   },
+   "PutObject": {
+    "Name": "PutObject",
+    "Description": "Grants permission to add an object to a bucket",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:RequestObjectTag/\u003ckey\u003e",
+       "s3:RequestObjectTagKeys",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-acl",
+       "s3:x-amz-content-sha256",
+       "s3:x-amz-copy-source",
+       "s3:x-amz-grant-full-control",
+       "s3:x-amz-grant-read",
+       "s3:x-amz-grant-read-acp",
+       "s3:x-amz-grant-write",
+       "s3:x-amz-grant-write-acp",
+       "s3:x-amz-metadata-directive",
+       "s3:x-amz-server-side-encryption",
+       "s3:x-amz-server-side-encryption-aws-kms-key-id",
+       "s3:x-amz-server-side-encryption-customer-algorithm",
+       "s3:x-amz-storage-class",
+       "s3:x-amz-website-redirect-location",
+       "s3:object-lock-mode",
+       "s3:object-lock-retain-until-date",
+       "s3:object-lock-remaining-retention-days",
+       "s3:object-lock-legal-hold"
+      ],
+      "DependentActions": []
+     },
+     "object": {
+      "Name": "object",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObject.html"
+   },
+   "PutObjectAcl": {
+    "Name": "PutObjectAcl",
+    "Description": "Grants permission to set the access control list (ACL) permissions for new or existing objects in an S3 bucket",
+    "AccessLevel": "Permissions management",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:ExistingObjectTag/\u003ckey\u003e",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-acl",
+       "s3:x-amz-content-sha256",
+       "s3:x-amz-grant-full-control",
+       "s3:x-amz-grant-read",
+       "s3:x-amz-grant-read-acp",
+       "s3:x-amz-grant-write",
+       "s3:x-amz-grant-write-acp",
+       "s3:x-amz-storage-class"
+      ],
+      "DependentActions": []
+     },
+     "object": {
+      "Name": "object",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObjectAcl.html"
+   },
+   "PutObjectLegalHold": {
+    "Name": "PutObjectLegalHold",
+    "Description": "Grants permission to apply a Legal Hold configuration to the specified object",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256",
+       "s3:object-lock-legal-hold"
+      ],
+      "DependentActions": []
+     },
+     "object": {
+      "Name": "object",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObjectLegalHold.html"
+   },
+   "PutObjectRetention": {
+    "Name": "PutObjectRetention",
+    "Description": "Grants permission to place an Object Retention configuration on an object",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256",
+       "s3:object-lock-mode",
+       "s3:object-lock-retain-until-date",
+       "s3:object-lock-remaining-retention-days"
+      ],
+      "DependentActions": []
+     },
+     "object": {
+      "Name": "object",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObjectRetention.html"
+   },
+   "PutObjectTagging": {
+    "Name": "PutObjectTagging",
+    "Description": "Grants permission to set the supplied tag-set to an object that already exists in a bucket",
+    "AccessLevel": "Tagging",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:ExistingObjectTag/\u003ckey\u003e",
+       "s3:RequestObjectTag/\u003ckey\u003e",
+       "s3:RequestObjectTagKeys",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "object": {
+      "Name": "object",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObjectTagging.html"
+   },
+   "PutObjectVersionAcl": {
+    "Name": "PutObjectVersionAcl",
+    "Description": "Grants permission to use the acl subresource to set the access control list (ACL) permissions for an object that already exists in a bucket",
+    "AccessLevel": "Permissions management",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:ExistingObjectTag/\u003ckey\u003e",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:versionid",
+       "s3:x-amz-acl",
+       "s3:x-amz-content-sha256",
+       "s3:x-amz-grant-full-control",
+       "s3:x-amz-grant-read",
+       "s3:x-amz-grant-read-acp",
+       "s3:x-amz-grant-write",
+       "s3:x-amz-grant-write-acp",
+       "s3:x-amz-storage-class"
+      ],
+      "DependentActions": []
+     },
+     "object": {
+      "Name": "object",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObjectAcl.html"
+   },
+   "PutObjectVersionTagging": {
+    "Name": "PutObjectVersionTagging",
+    "Description": "Grants permission to set the supplied tag-set for a specific version of an object",
+    "AccessLevel": "Tagging",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:ExistingObjectTag/\u003ckey\u003e",
+       "s3:RequestObjectTag/\u003ckey\u003e",
+       "s3:RequestObjectTagKeys",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:versionid",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "object": {
+      "Name": "object",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObjectTagging.html"
+   },
+   "PutReplicationConfiguration": {
+    "Name": "PutReplicationConfiguration",
+    "Description": "Grants permission to create a new replication configuration or replace an existing one",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "bucket": {
+      "Name": "bucket",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": [
+       "iam:PassRole"
+      ]
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketReplication.html"
+   },
+   "PutStorageLensConfiguration": {
+    "Name": "PutStorageLensConfiguration",
+    "Description": "Grants permission to create or update an Amazon S3 Storage Lens configuration",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256",
+       "aws:TagKeys",
+       "aws:RequestTag/${TagKey}"
+      ],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_PutStorageLensConfiguration.html"
+   },
+   "PutStorageLensConfigurationTagging": {
+    "Name": "PutStorageLensConfigurationTagging",
+    "Description": "Grants permission to put or replace tags on an existing Amazon S3 Storage Lens configuration",
+    "AccessLevel": "Tagging",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256",
+       "aws:TagKeys",
+       "aws:RequestTag/${TagKey}"
+      ],
+      "DependentActions": []
+     },
+     "storagelensconfiguration": {
+      "Name": "storagelensconfiguration",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_PutStorageLensConfigurationTagging.html"
+   },
+   "ReplicateDelete": {
+    "Name": "ReplicateDelete",
+    "Description": "Grants permission to replicate delete markers to the destination bucket",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "object": {
+      "Name": "object",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/setting-repl-config-perm-overview.html"
+   },
+   "ReplicateObject": {
+    "Name": "ReplicateObject",
+    "Description": "Grants permission to replicate objects and object tags to the destination bucket",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256",
+       "s3:x-amz-server-side-encryption",
+       "s3:x-amz-server-side-encryption-aws-kms-key-id",
+       "s3:x-amz-server-side-encryption-customer-algorithm"
+      ],
+      "DependentActions": []
+     },
+     "object": {
+      "Name": "object",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/setting-repl-config-perm-overview.html"
+   },
+   "ReplicateTags": {
+    "Name": "ReplicateTags",
+    "Description": "Grants permission to replicate object tags to the destination bucket",
+    "AccessLevel": "Tagging",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "object": {
+      "Name": "object",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/setting-repl-config-perm-overview.html"
+   },
+   "RestoreObject": {
+    "Name": "RestoreObject",
+    "Description": "Grants permission to restore an archived copy of an object back into Amazon S3",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:DataAccessPointAccount",
+       "s3:DataAccessPointArn",
+       "s3:AccessPointNetworkOrigin",
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256"
+      ],
+      "DependentActions": []
+     },
+     "object": {
+      "Name": "object",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_RestoreObject.html"
+   },
+   "UpdateJobPriority": {
+    "Name": "UpdateJobPriority",
+    "Description": "Grants permission to update the priority of an existing job",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256",
+       "s3:RequestJobPriority",
+       "s3:ExistingJobPriority",
+       "s3:ExistingJobOperation"
+      ],
+      "DependentActions": []
+     },
+     "job": {
+      "Name": "job",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_UpdateJobPriority.html"
+   },
+   "UpdateJobStatus": {
+    "Name": "UpdateJobStatus",
+    "Description": "Grants permission to update the status for the specified job",
+    "AccessLevel": "Write",
+    "ResourceTypes": {
+     "": {
+      "Name": "",
+      "Required": false,
+      "ConditionKeys": [
+       "s3:authType",
+       "s3:ResourceAccount",
+       "s3:signatureAge",
+       "s3:signatureversion",
+       "s3:TlsVersion",
+       "s3:x-amz-content-sha256",
+       "s3:ExistingJobPriority",
+       "s3:ExistingJobOperation",
+       "s3:JobSuspendedCause"
+      ],
+      "DependentActions": []
+     },
+     "job": {
+      "Name": "job",
+      "Required": true,
+      "ConditionKeys": [],
+      "DependentActions": []
+     }
+    },
+    "APIDocLink": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_UpdateJobStatus.html"
+   }
+  },
+  "ResourceTypes": {
+   "accesspoint": {
+    "Name": "accesspoint",
+    "ARN": "arn:${Partition}:s3:${Region}:${Account}:accesspoint/${AccessPointName}",
+    "Conditions": []
+   },
+   "bucket": {
+    "Name": "bucket",
+    "ARN": "arn:${Partition}:s3:::${BucketName}",
+    "Conditions": []
+   },
+   "job": {
+    "Name": "job",
+    "ARN": "arn:${Partition}:s3:${Region}:${Account}:job/${JobId}",
+    "Conditions": []
+   },
+   "multiregionaccesspoint": {
+    "Name": "multiregionaccesspoint",
+    "ARN": "arn:${Partition}:s3::${Account}:accesspoint/${AccessPointAlias}",
+    "Conditions": []
+   },
+   "multiregionaccesspointrequestarn": {
+    "Name": "multiregionaccesspointrequestarn",
+    "ARN": "arn:${Partition}:s3:us-west-2:${Account}:async-request/mrap/${Operation}/${Token}",
+    "Conditions": []
+   },
+   "object": {
+    "Name": "object",
+    "ARN": "arn:${Partition}:s3:::${BucketName}/${ObjectName}",
+    "Conditions": []
+   },
+   "objectlambdaaccesspoint": {
+    "Name": "objectlambdaaccesspoint",
+    "ARN": "arn:${Partition}:s3-object-lambda:${Region}:${Account}:accesspoint/${AccessPointName}",
+    "Conditions": []
+   },
+   "storagelensconfiguration": {
+    "Name": "storagelensconfiguration",
+    "ARN": "arn:${Partition}:s3:${Region}:${Account}:storage-lens/${ConfigId}",
+    "Conditions": [
+     "aws:ResourceTag/${TagKey}"
+    ]
+   }
+  },
+  "ConditionKeys": {
+   "aws:RequestTag/${TagKey}": {
+    "Name": "aws:RequestTag/${TagKey}",
+    "Description": "Filters access by the tags that are passed in the request",
+    "Type": "String"
+   },
+   "aws:ResourceTag/${TagKey}": {
+    "Name": "aws:ResourceTag/${TagKey}",
+    "Description": "Filters access by the tags associated with the resource",
+    "Type": "String"
+   },
+   "aws:TagKeys": {
+    "Name": "aws:TagKeys",
+    "Description": "Filters access by the tag keys that are passed in the request",
+    "Type": "ArrayOfString"
+   },
+   "s3:AccessPointNetworkOrigin": {
+    "Name": "s3:AccessPointNetworkOrigin",
+    "Description": "Filters access by the network origin (Internet or VPC)",
+    "Type": "String"
+   },
+   "s3:DataAccessPointAccount": {
+    "Name": "s3:DataAccessPointAccount",
+    "Description": "Filters access by the AWS Account ID that owns the access point",
+    "Type": "String"
+   },
+   "s3:DataAccessPointArn": {
+    "Name": "s3:DataAccessPointArn",
+    "Description": "Filters access by an access point Amazon Resource Name (ARN)",
+    "Type": "String"
+   },
+   "s3:ExistingJobOperation": {
+    "Name": "s3:ExistingJobOperation",
+    "Description": "Filters access by operation to updating the job priority",
+    "Type": "String"
+   },
+   "s3:ExistingJobPriority": {
+    "Name": "s3:ExistingJobPriority",
+    "Description": "Filters access by priority range to cancelling existing jobs",
+    "Type": "Numeric"
+   },
+   "s3:ExistingObjectTag/\u003ckey\u003e": {
+    "Name": "s3:ExistingObjectTag/\u003ckey\u003e",
+    "Description": "Filters access by existing object tag key and value",
+    "Type": "String"
+   },
+   "s3:JobSuspendedCause": {
+    "Name": "s3:JobSuspendedCause",
+    "Description": "Filters access by a specific job suspended cause (for example, AWAITING_CONFIRMATION) to cancelling suspended jobs",
+    "Type": "String"
+   },
+   "s3:RequestJobOperation": {
+    "Name": "s3:RequestJobOperation",
+    "Description": "Filters access by operation to creating jobs",
+    "Type": "String"
+   },
+   "s3:RequestJobPriority": {
+    "Name": "s3:RequestJobPriority",
+    "Description": "Filters access by priority range to creating new jobs",
+    "Type": "Numeric"
+   },
+   "s3:RequestObjectTag/\u003ckey\u003e": {
+    "Name": "s3:RequestObjectTag/\u003ckey\u003e",
+    "Description": "Filters access by the tag keys and values to be added to objects",
+    "Type": "String"
+   },
+   "s3:RequestObjectTagKeys": {
+    "Name": "s3:RequestObjectTagKeys",
+    "Description": "Filters access by the tag keys to be added to objects",
+    "Type": "ArrayOfString"
+   },
+   "s3:ResourceAccount": {
+    "Name": "s3:ResourceAccount",
+    "Description": "Filters access by the resource owner AWS account ID",
+    "Type": "String"
+   },
+   "s3:TlsVersion": {
+    "Name": "s3:TlsVersion",
+    "Description": "Filters access by the TLS version used by the client",
+    "Type": "Numeric"
+   },
+   "s3:authType": {
+    "Name": "s3:authType",
+    "Description": "Filters access by authentication method",
+    "Type": "String"
+   },
+   "s3:delimiter": {
+    "Name": "s3:delimiter",
+    "Description": "Filters access by delimiter parameter",
+    "Type": "String"
+   },
+   "s3:locationconstraint": {
+    "Name": "s3:locationconstraint",
+    "Description": "Filters access by a specific Region",
+    "Type": "String"
+   },
+   "s3:max-keys": {
+    "Name": "s3:max-keys",
+    "Description": "Filters access by maximum number of keys returned in a ListBucket request",
+    "Type": "Numeric"
+   },
+   "s3:object-lock-legal-hold": {
+    "Name": "s3:object-lock-legal-hold",
+    "Description": "Filters access by object legal hold status",
+    "Type": "String"
+   },
+   "s3:object-lock-mode": {
+    "Name": "s3:object-lock-mode",
+    "Description": "Filters access by object retention mode (COMPLIANCE or GOVERNANCE)",
+    "Type": "String"
+   },
+   "s3:object-lock-remaining-retention-days": {
+    "Name": "s3:object-lock-remaining-retention-days",
+    "Description": "Filters access by remaining object retention days",
+    "Type": "Numeric"
+   },
+   "s3:object-lock-retain-until-date": {
+    "Name": "s3:object-lock-retain-until-date",
+    "Description": "Filters access by object retain-until date",
+    "Type": "Date"
+   },
+   "s3:prefix": {
+    "Name": "s3:prefix",
+    "Description": "Filters access by key name prefix",
+    "Type": "String"
+   },
+   "s3:signatureAge": {
+    "Name": "s3:signatureAge",
+    "Description": "Filters access by the age in milliseconds of the request signature",
+    "Type": "Numeric"
+   },
+   "s3:signatureversion": {
+    "Name": "s3:signatureversion",
+    "Description": "Filters access by the version of AWS Signature used on the request",
+    "Type": "String"
+   },
+   "s3:versionid": {
+    "Name": "s3:versionid",
+    "Description": "Filters access by a specific object version",
+    "Type": "String"
+   },
+   "s3:x-amz-acl": {
+    "Name": "s3:x-amz-acl",
+    "Description": "Filters access by canned ACL in the request's x-amz-acl header",
+    "Type": "String"
+   },
+   "s3:x-amz-content-sha256": {
+    "Name": "s3:x-amz-content-sha256",
+    "Description": "Filters access by unsigned content in your bucket",
+    "Type": "String"
+   },
+   "s3:x-amz-copy-source": {
+    "Name": "s3:x-amz-copy-source",
+    "Description": "Filters access by copy source bucket, prefix, or object in the copy object requests",
+    "Type": "String"
+   },
+   "s3:x-amz-grant-full-control": {
+    "Name": "s3:x-amz-grant-full-control",
+    "Description": "Filters access by x-amz-grant-full-control (full control) header",
+    "Type": "String"
+   },
+   "s3:x-amz-grant-read": {
+    "Name": "s3:x-amz-grant-read",
+    "Description": "Filters access by x-amz-grant-read (read access) header",
+    "Type": "String"
+   },
+   "s3:x-amz-grant-read-acp": {
+    "Name": "s3:x-amz-grant-read-acp",
+    "Description": "Filters access by the x-amz-grant-read-acp (read permissions for the ACL) header",
+    "Type": "String"
+   },
+   "s3:x-amz-grant-write": {
+    "Name": "s3:x-amz-grant-write",
+    "Description": "Filters access by the x-amz-grant-write (write access) header",
+    "Type": "String"
+   },
+   "s3:x-amz-grant-write-acp": {
+    "Name": "s3:x-amz-grant-write-acp",
+    "Description": "Filters access by the x-amz-grant-write-acp (write permissions for the ACL) header",
+    "Type": "String"
+   },
+   "s3:x-amz-metadata-directive": {
+    "Name": "s3:x-amz-metadata-directive",
+    "Description": "Filters access by object metadata behavior (COPY or REPLACE) when objects are copied",
+    "Type": "String"
+   },
+   "s3:x-amz-object-ownership": {
+    "Name": "s3:x-amz-object-ownership",
+    "Description": "Filters access by Object Ownership",
+    "Type": "String"
+   },
+   "s3:x-amz-server-side-encryption": {
+    "Name": "s3:x-amz-server-side-encryption",
+    "Description": "Filters access by server-side encryption",
+    "Type": "String"
+   },
+   "s3:x-amz-server-side-encryption-aws-kms-key-id": {
+    "Name": "s3:x-amz-server-side-encryption-aws-kms-key-id",
+    "Description": "Filters access by AWS KMS customer managed CMK for server-side encryption",
+    "Type": "String"
+   },
+   "s3:x-amz-server-side-encryption-customer-algorithm": {
+    "Name": "s3:x-amz-server-side-encryption-customer-algorithm",
+    "Description": "Filters access by customer specified algorithm for server-side encryption",
+    "Type": "String"
+   },
+   "s3:x-amz-storage-class": {
+    "Name": "s3:x-amz-storage-class",
+    "Description": "Filters access by storage class",
+    "Type": "String"
+   },
+   "s3:x-amz-website-redirect-location": {
+    "Name": "s3:x-amz-website-redirect-location",
+    "Description": "Filters access by a specific website redirect location for buckets that are configured as static websites",
+    "Type": "String"
+   }
+  }
+ }
+}

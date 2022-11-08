@@ -6,6 +6,7 @@ import (
 	"embed"
 	"encoding/json"
 	"fmt"
+	"io"
 	"io/fs"
 	"net/http"
 	"os"
@@ -14,7 +15,6 @@ import (
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
-	"github.com/hupe1980/awsrecon/pkg/common"
 )
 
 const (
@@ -68,8 +68,14 @@ func NewDefinitions() (*Definitions, error) {
 	return NewDefinitionsFromFS("resource/iam-definition.json", embedFS, false)
 }
 
-func NewDefinitionsFromFS(filename string, fs fs.ReadFileFS, gzipFile bool) (*Definitions, error) {
-	data, err := fs.ReadFile(filename)
+func NewDefinitionsFromFS(filename string, fs fs.FS, gzipFile bool) (*Definitions, error) {
+	file, err := fs.Open(filename)
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+
+	data, err := io.ReadAll(file)
 	if err != nil {
 		return nil, err
 	}
@@ -131,7 +137,11 @@ func NewDefinitionFromReference() (*Definitions, error) {
 	})
 
 	//TODO
-	//filenames = []string{"https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazons3.html", "https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazondynamodb.html", "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsamplify.html"}
+	// filenames = []string{
+	// 	"https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazons3.html",
+	// 	"https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazondynamodb.html",
+	// 	"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsresourceaccessmanager.html",
+	// }
 
 	for _, filename := range filenames {
 		// nolint gosec no user input
@@ -194,41 +204,6 @@ func NewDefinitionFromReference() (*Definitions, error) {
 	}
 
 	return d, nil
-}
-
-func (d *Definitions) ServicePrefixes() []string {
-	return common.MapKeys(d.definitions)
-}
-
-type GetActionsInput struct {
-	ServicePrefix string
-	AccessLevel   string
-	NamePattern   string // supports wildcards: '*', '?'
-}
-
-func (d *Definitions) GetActions(input *GetActionsInput) []Action {
-	actions := []Action{}
-
-	prefixes := []string{input.ServicePrefix}
-	if input.ServicePrefix == "" {
-		prefixes = common.MapKeys(d.definitions)
-	}
-
-	for _, servicePrefix := range prefixes {
-		for _, action := range d.definitions[servicePrefix].Actions {
-			if input.AccessLevel != "" && input.AccessLevel != action.AccessLevel {
-				continue
-			}
-
-			if input.NamePattern != "" && !common.WildcardMatch(input.NamePattern, action.Name) {
-				continue
-			}
-
-			actions = append(actions, Action(fmt.Sprintf("%s:%s", servicePrefix, action.Name)))
-		}
-	}
-
-	return actions
 }
 
 func (d *Definitions) Save(filename string, gzipFile bool) error {
