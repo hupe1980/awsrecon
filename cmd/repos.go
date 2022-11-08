@@ -34,10 +34,20 @@ func newReposCmd(globalOpts *globalOptions) *cobra.Command {
 
 			repos := recon.Run()
 
-			output := output.New([]string{"Service", "Region", "Name", "CloneURL"})
+			output := output.New([]string{
+				"Service",
+				"Region",
+				"Name",
+				"CloneURL",
+			})
 
 			for _, r := range repos {
-				output.Add([]string{r.AWSService, r.Region, r.Name, r.CloneURLHTTP})
+				output.Add([]string{
+					r.AWSService,
+					r.Region,
+					r.Name,
+					r.CloneURLHTTP,
+				})
 			}
 
 			if globalOpts.output != "" {
