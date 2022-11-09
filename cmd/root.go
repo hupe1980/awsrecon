@@ -43,6 +43,7 @@ func newRootCmd(version string) *cobra.Command {
 		newEndpointsCmd(globalOpts),
 		newEnvsCmd(globalOpts),
 		newFileSystemsCmd(globalOpts),
+		newFunctionsCmd(globalOpts),
 		newInstancesCmd(globalOpts),
 		newLogsCmd(globalOpts),
 		newPrincipalsCmd(globalOpts),
