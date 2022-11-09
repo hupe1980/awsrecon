@@ -5,6 +5,7 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/hupe1980/awsrecon/pkg/common"
 	"github.com/hupe1980/awsrecon/pkg/config"
 	"github.com/hupe1980/awsrecon/pkg/output"
 	"github.com/hupe1980/awsrecon/pkg/recon"
@@ -13,6 +14,7 @@ import (
 
 type endpointsOptions struct {
 	ignoreServices []string
+	onlyEndpoints  bool
 }
 
 func newEndpointsCmd(globalOpts *globalOptions) *cobra.Command {
@@ -33,6 +35,20 @@ func newEndpointsCmd(globalOpts *globalOptions) *cobra.Command {
 			})
 
 			endpoints := recon.Run()
+
+			if opts.onlyEndpoints {
+				uniqueEndpoints := common.NewSet[string]()
+
+				for _, e := range endpoints {
+					uniqueEndpoints.Put(e.Endpoint)
+				}
+
+				uniqueEndpoints.Each(func(e string) {
+					fmt.Println(e)
+				})
+
+				return nil
+			}
 
 			output := output.New([]string{
 				"Service",
@@ -75,6 +91,7 @@ func newEndpointsCmd(globalOpts *globalOptions) *cobra.Command {
 	}
 
 	cmd.PersistentFlags().StringSliceVarP(&opts.ignoreServices, "ignore-service", "", nil, "ignore services when enumeration")
+	cmd.PersistentFlags().BoolVarP(&opts.onlyEndpoints, "only-endpoints", "", false, "show only the endpoints")
 
 	return cmd
 }
