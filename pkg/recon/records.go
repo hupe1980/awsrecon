@@ -48,7 +48,7 @@ func NewRecordsRecon(cfg *config.Config, optFns ...func(o *RecordsOptions)) *Rec
 	}
 
 	r.recon = newRecon[Record](func() {
-		r.runEnumerate(func() {
+		r.runEnumerateService("route53", func() {
 			r.enumerateRecords()
 		})
 	})

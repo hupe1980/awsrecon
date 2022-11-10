@@ -44,7 +44,7 @@ func NewBucketsRecon(cfg *config.Config, optFns ...func(o *BucketsOptions)) *Buc
 	}
 
 	r.recon = newRecon[Bucket](func() {
-		r.runEnumerate(func() {
+		r.runEnumerateService("s3", func() {
 			r.enumerateBuckets()
 		})
 	})

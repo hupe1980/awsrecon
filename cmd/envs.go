@@ -15,6 +15,7 @@ type envsOptions struct {
 	entropy              float64
 	verify               bool
 	highEntropyThreshold float64
+	ignoreServices       []string
 }
 
 func newEnvsCmd(globalOpts *globalOptions) *cobra.Command {
@@ -34,6 +35,7 @@ func newEnvsCmd(globalOpts *globalOptions) *cobra.Command {
 				o.Entropy = opts.entropy
 				o.Verify = opts.verify
 				o.HighEntropyThreshold = opts.highEntropyThreshold
+				o.IgnoreServices = opts.ignoreServices
 			})
 
 			envs := recon.Run()
@@ -77,6 +79,7 @@ func newEnvsCmd(globalOpts *globalOptions) *cobra.Command {
 	cmd.Flags().Float64VarP(&opts.entropy, "entropy", "e", 0, "minimum entropy")
 	cmd.Flags().BoolVarP(&opts.verify, "verify", "", false, "verify secrets")
 	cmd.Flags().Float64VarP(&opts.highEntropyThreshold, "high-entropy-threshold", "", 3.5, "high entropy threshold")
+	cmd.Flags().StringSliceVarP(&opts.ignoreServices, "ignore-service", "", nil, "ignore services when enumeration")
 
 	return cmd
 }

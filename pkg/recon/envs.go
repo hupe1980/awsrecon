@@ -29,6 +29,7 @@ type EnvsOptions struct {
 	Entropy              float64
 	Verify               bool
 	HighEntropyThreshold float64
+	IgnoreServices       []string
 }
 
 type EnvsRecon struct {
@@ -60,15 +61,15 @@ func NewEnvsRecon(cfg *config.Config, optFns ...func(o *EnvsOptions)) *EnvsRecon
 	}
 
 	r.recon = newRecon[Env](func() {
-		r.runEnumeratePerRegion(cfg.Regions, func(region string) {
+		r.runEnumerateServicePerRegion("codebuild", cfg.Regions, func(region string) {
 			r.enumerateCodebuildEnvsPerRegion(region)
 		})
 
-		r.runEnumeratePerRegion(cfg.Regions, func(region string) {
+		r.runEnumerateServicePerRegion("ecs", cfg.Regions, func(region string) {
 			r.enumerateECSEnvsPerRegion(region)
 		})
 
-		r.runEnumeratePerRegion(cfg.Regions, func(region string) {
+		r.runEnumerateServicePerRegion("lambda", cfg.Regions, func(region string) {
 			r.enumerateLambdaEnvsPerRegion(region)
 		})
 	})

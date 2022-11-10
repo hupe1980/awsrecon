@@ -90,8 +90,8 @@ func newEndpointsCmd(globalOpts *globalOptions) *cobra.Command {
 		},
 	}
 
-	cmd.PersistentFlags().StringSliceVarP(&opts.ignoreServices, "ignore-service", "", nil, "ignore services when enumeration")
-	cmd.PersistentFlags().BoolVarP(&opts.onlyEndpoints, "only-endpoints", "", false, "show only the endpoints")
+	cmd.Flags().StringSliceVarP(&opts.ignoreServices, "ignore-service", "", nil, "ignore services when enumeration")
+	cmd.Flags().BoolVarP(&opts.onlyEndpoints, "only-endpoints", "", false, "show only the endpoints")
 
 	return cmd
 }

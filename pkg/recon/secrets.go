@@ -28,6 +28,7 @@ type SecretsOptions struct {
 	WithDecryption       bool
 	Verify               bool
 	HighEntropyThreshold float64
+	IgnoreServices       []string
 }
 
 type SecretsRecon struct {
@@ -58,11 +59,11 @@ func NewSecretsRecon(cfg *config.Config, optFns ...func(o *SecretsOptions)) *Sec
 	}
 
 	r.recon = newRecon[Secret](func() {
-		r.runEnumeratePerRegion(cfg.Regions, func(region string) {
+		r.runEnumerateServicePerRegion("secretsmanager", cfg.Regions, func(region string) {
 			r.enumerateSecretManagerSecretsPerRegion(region)
 		})
 
-		r.runEnumeratePerRegion(cfg.Regions, func(region string) {
+		r.runEnumerateServicePerRegion("ssm", cfg.Regions, func(region string) {
 			r.enumerateSSMSecretsPerRegion(region)
 		})
 	})

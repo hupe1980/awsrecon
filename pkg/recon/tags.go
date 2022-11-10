@@ -56,7 +56,7 @@ func NewTagsRecon(cfg *config.Config, optFns ...func(o *TagsOptions)) *TagsRecon
 	}
 
 	r.recon = newRecon[Tag](func() {
-		r.runEnumeratePerRegion(cfg.Regions, func(region string) {
+		r.runEnumerateServicePerRegion("resourcegroupstaggingapi", cfg.Regions, func(region string) {
 			r.enumerateTagsPerRegion(region)
 		})
 	})

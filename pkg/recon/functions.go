@@ -40,7 +40,7 @@ func NewFunctionsRecon(cfg *config.Config, optFns ...func(o *FunctionsOptions)) 
 	}
 
 	r.recon = newRecon[Function](func() {
-		r.runEnumeratePerRegion(cfg.Regions, func(region string) {
+		r.runEnumerateServicePerRegion("lambda", cfg.Regions, func(region string) {
 			r.enumerateFunctionsPerRegion(region)
 		})
 	})

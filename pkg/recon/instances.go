@@ -76,7 +76,7 @@ func NewInstancesRecon(cfg *config.Config, optFns ...func(o *InstancesOptions)) 
 	}
 
 	r.recon = newRecon[Instance](func() {
-		r.runEnumeratePerRegion(cfg.Regions, func(region string) {
+		r.runEnumerateServicePerRegion("ec2", cfg.Regions, func(region string) {
 			r.enumerateInstancesPerRegion(region)
 		})
 	})

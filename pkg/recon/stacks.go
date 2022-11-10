@@ -79,7 +79,7 @@ func NewStacksRecon(cfg *config.Config, optFns ...func(o *StacksOptions)) *Stack
 	}
 
 	r.recon = newRecon[Stack](func() {
-		r.runEnumeratePerRegion(cfg.Regions, func(region string) {
+		r.runEnumerateServicePerRegion("cloudformation", cfg.Regions, func(region string) {
 			r.enumerateStacksPerRegion(region)
 		})
 	})

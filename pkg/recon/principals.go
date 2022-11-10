@@ -38,15 +38,15 @@ func NewPrincipalsRecon(cfg *config.Config) (*PrincipalsRecon, error) {
 	}
 
 	r.recon = newRecon[Principal](func() {
-		r.runEnumerate(func() {
+		r.runEnumerateService("iam", func() {
 			r.enumerateUsers()
 		})
 
-		r.runEnumerate(func() {
+		r.runEnumerateService("iam", func() {
 			r.enumerateGroups()
 		})
 
-		r.runEnumerate(func() {
+		r.runEnumerateService("iam", func() {
 			r.enumerateRoles()
 		})
 	})

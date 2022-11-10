@@ -47,7 +47,7 @@ func NewReposRecon(cfg *config.Config, optFns ...func(o *ReposOptions)) *ReposRe
 	}
 
 	r.recon = newRecon[Repo](func() {
-		r.runEnumeratePerRegion(cfg.Regions, func(region string) {
+		r.runEnumerateServicePerRegion("codecommit", cfg.Regions, func(region string) {
 			r.enumerateReposPerRegion(region)
 		})
 	})

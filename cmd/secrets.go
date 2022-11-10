@@ -16,6 +16,7 @@ type secretsOptions struct {
 	decrypt              bool
 	verify               bool
 	highEntropyThreshold float64
+	ignoreServices       []string
 }
 
 func newSecretsCmd(globalOpts *globalOptions) *cobra.Command {
@@ -34,6 +35,9 @@ func newSecretsCmd(globalOpts *globalOptions) *cobra.Command {
 			recon := recon.NewSecretsRecon(cfg, func(o *recon.SecretsOptions) {
 				o.Entropy = opts.entropy
 				o.WithDecryption = opts.decrypt
+				o.Verify = opts.verify
+				o.HighEntropyThreshold = opts.highEntropyThreshold
+				o.IgnoreServices = opts.ignoreServices
 			})
 
 			secrets := recon.Run()
@@ -78,6 +82,7 @@ func newSecretsCmd(globalOpts *globalOptions) *cobra.Command {
 	cmd.Flags().BoolVarP(&opts.decrypt, "decrypt", "d", false, "decrypt secret")
 	cmd.Flags().BoolVarP(&opts.verify, "verify", "", false, "verify secrets")
 	cmd.Flags().Float64VarP(&opts.highEntropyThreshold, "high-entropy-threshold", "", 3.5, "high entropy threshold")
+	cmd.Flags().StringSliceVarP(&opts.ignoreServices, "ignore-service", "", nil, "ignore services when enumeration")
 
 	return cmd
 }

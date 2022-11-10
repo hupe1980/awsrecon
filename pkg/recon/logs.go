@@ -63,7 +63,7 @@ func NewLogsRecon(cfg *config.Config, optFns ...func(o *LogsOptions)) *LogsRecon
 	}
 
 	r.recon = newRecon[Log](func() {
-		r.runEnumeratePerRegion(cfg.Regions, func(region string) {
+		r.runEnumerateServicePerRegion("cloudwatch", cfg.Regions, func(region string) {
 			r.enumerateLogsPerRegion(region)
 		})
 	})

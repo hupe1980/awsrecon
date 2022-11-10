@@ -64,7 +64,13 @@ func (r *recon[T]) Run() []T {
 		}
 	}()
 
-	r.runEnumerate(r.enumerateFunc)
+	r.wg.Add(1)
+
+	go func() {
+		defer r.wg.Done()
+
+		r.enumerateFunc()
+	}()
 
 	r.wait()
 
@@ -75,26 +81,6 @@ func (r *recon[T]) Errors() []error {
 	r.wait()
 
 	return r.errors
-}
-
-func (r *recon[T]) runEnumerate(fn func()) {
-	r.wg.Add(1)
-
-	go func(fn func()) {
-		defer r.wg.Done()
-		fn()
-	}(fn)
-}
-
-func (r *recon[T]) runEnumeratePerRegion(regions []string, fn func(region string)) {
-	for _, region := range regions {
-		r.wg.Add(1)
-
-		go func(region string, fn func(region string)) {
-			defer r.wg.Done()
-			fn(region)
-		}(region, fn)
-	}
 }
 
 func (r *recon[T]) runEnumerateService(service string, fn func()) {
