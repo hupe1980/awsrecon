@@ -46,14 +46,20 @@ type LogsRecon struct {
 
 func NewLogsRecon(cfg *config.Config, optFns ...func(o *LogsOptions)) *LogsRecon {
 	opts := LogsOptions{
-		StartTime:        time.Now().Add(time.Hour * -24).UnixMilli(),
-		EndTime:          math.MaxInt64,
 		GroupNamePrefix:  DefaultGroupNamePrefix,
 		StreamNamePrefix: DefaultStreamNamePrefix,
 	}
 
 	for _, fn := range optFns {
 		fn(&opts)
+	}
+
+	if opts.StartTime == 0 {
+		opts.StartTime = time.Now().Add(time.Hour * -24).UnixMilli()
+	}
+
+	if opts.EndTime == 0 {
+		opts.EndTime = math.MaxInt64
 	}
 
 	r := &LogsRecon{
