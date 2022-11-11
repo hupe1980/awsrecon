@@ -27,11 +27,17 @@ func newFileSystemsCmd(globalOpts *globalOptions) *cobra.Command {
 				return err
 			}
 
+			progress := output.NewProgress()
+
 			recon := recon.NewFileSystemsRecon(cfg, func(o *recon.FileSystemsOptions) {
 				o.IgnoreServices = opts.ignoreServices
+				o.BeforeHook = progress.BeforeHook()
+				o.AfterRunHook = progress.AfterRunHook()
 			})
 
 			fileSystems := recon.Run()
+
+			progress.Wait()
 
 			output := output.New([]string{
 				"Service",

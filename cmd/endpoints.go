@@ -30,11 +30,17 @@ func newEndpointsCmd(globalOpts *globalOptions) *cobra.Command {
 				return err
 			}
 
+			progress := output.NewProgress()
+
 			recon := recon.NewEndpointsRecon(cfg, func(o *recon.EndpointsOptions) {
 				o.IgnoreServices = opts.ignoreServices
+				o.BeforeHook = progress.BeforeHook()
+				o.AfterRunHook = progress.AfterRunHook()
 			})
 
 			endpoints := recon.Run()
+
+			progress.Wait()
 
 			if opts.onlyEndpoints {
 				uniqueEndpoints := common.NewSet[string]()

@@ -31,14 +31,20 @@ func newInstancesCmd(globalOpts *globalOptions) *cobra.Command {
 				return err
 			}
 
+			progress := output.NewProgress()
+
 			recon := recon.NewInstancesRecon(cfg, func(o *recon.InstancesOptions) {
 				o.InstanceStates = opts.instanceStates
 				o.Verify = opts.verify
 				o.HighEntropyThreshold = opts.highEntropyThreshold
 				o.MyIP = opts.myIP
+				o.BeforeHook = progress.BeforeHook()
+				o.AfterRunHook = progress.AfterRunHook()
 			})
 
 			instances := recon.Run()
+
+			progress.Wait()
 
 			output := output.New([]string{
 				"Service",

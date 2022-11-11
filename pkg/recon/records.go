@@ -22,7 +22,9 @@ type Record struct {
 }
 
 type RecordsOptions struct {
-	Verify bool
+	Verify       bool
+	BeforeHook   BeforeHookFunc
+	AfterRunHook AfterRunHookFunc
 }
 
 type RecordsRecon struct {
@@ -51,6 +53,9 @@ func NewRecordsRecon(cfg *config.Config, optFns ...func(o *RecordsOptions)) *Rec
 		r.runEnumerateService("route53", func() {
 			r.enumerateRecords()
 		})
+	}, func(o *reconOptions) {
+		o.BeforeHook = opts.BeforeHook
+		o.AfterRunHook = opts.AfterRunHook
 	})
 
 	return r

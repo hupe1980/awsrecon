@@ -25,12 +25,19 @@ func newPrincipalsCmd(globalOpts *globalOptions) *cobra.Command {
 				return err
 			}
 
-			recon, err := recon.NewPrincipalsRecon(cfg)
+			progress := output.NewProgress()
+
+			recon, err := recon.NewPrincipalsRecon(cfg, func(o *recon.PrincipalsOptions) {
+				o.BeforeHook = progress.BeforeHook()
+				o.AfterRunHook = progress.AfterRunHook()
+			})
 			if err != nil {
 				return err
 			}
 
 			principals := recon.Run()
+
+			progress.Wait()
 
 			output := output.New([]string{
 				"Service",

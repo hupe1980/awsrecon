@@ -31,14 +31,20 @@ func newEnvsCmd(globalOpts *globalOptions) *cobra.Command {
 				return err
 			}
 
+			progress := output.NewProgress()
+
 			recon := recon.NewEnvsRecon(cfg, func(o *recon.EnvsOptions) {
 				o.Entropy = opts.entropy
 				o.Verify = opts.verify
 				o.HighEntropyThreshold = opts.highEntropyThreshold
 				o.IgnoreServices = opts.ignoreServices
+				o.BeforeHook = progress.BeforeHook()
+				o.AfterRunHook = progress.AfterRunHook()
 			})
 
 			envs := recon.Run()
+
+			progress.Wait()
 
 			output := output.New([]string{
 				"Service",

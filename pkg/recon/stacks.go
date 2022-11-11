@@ -51,6 +51,8 @@ type StacksOptions struct {
 	Verify                   bool
 	HighEntropyThreshold     float64
 	IgnoreCDKAssetParameters bool
+	BeforeHook               BeforeHookFunc
+	AfterRunHook             AfterRunHookFunc
 }
 
 type StacksRecon struct {
@@ -82,6 +84,9 @@ func NewStacksRecon(cfg *config.Config, optFns ...func(o *StacksOptions)) *Stack
 		r.runEnumerateServicePerRegion("cloudformation", cfg.Regions, func(region string) {
 			r.enumerateStacksPerRegion(region)
 		})
+	}, func(o *reconOptions) {
+		o.BeforeHook = opts.BeforeHook
+		o.AfterRunHook = opts.AfterRunHook
 	})
 
 	return r

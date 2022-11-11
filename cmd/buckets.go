@@ -27,11 +27,17 @@ func newBucketsCmd(globalOpts *globalOptions) *cobra.Command {
 				return err
 			}
 
+			progress := output.NewProgress()
+
 			recon := recon.NewBucketsRecon(cfg, func(o *recon.BucketsOptions) {
 				o.Buckets = opts.buckets
+				o.BeforeHook = progress.BeforeHook()
+				o.AfterRunHook = progress.AfterRunHook()
 			})
 
 			buckets := recon.Run()
+
+			progress.Wait()
 
 			output := output.New([]string{
 				"Service",

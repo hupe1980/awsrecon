@@ -35,6 +35,8 @@ type LogsOptions struct {
 	StartTime        int64
 	EndTime          int64
 	Verify           bool
+	BeforeHook       BeforeHookFunc
+	AfterRunHook     AfterRunHookFunc
 }
 
 type LogsRecon struct {
@@ -72,6 +74,9 @@ func NewLogsRecon(cfg *config.Config, optFns ...func(o *LogsOptions)) *LogsRecon
 		r.runEnumerateServicePerRegion("cloudwatch", cfg.Regions, func(region string) {
 			r.enumerateLogsPerRegion(region)
 		})
+	}, func(o *reconOptions) {
+		o.BeforeHook = opts.BeforeHook
+		o.AfterRunHook = opts.AfterRunHook
 	})
 
 	return r

@@ -29,6 +29,8 @@ type SecretsOptions struct {
 	Verify               bool
 	HighEntropyThreshold float64
 	IgnoreServices       []string
+	BeforeHook           BeforeHookFunc
+	AfterRunHook         AfterRunHookFunc
 }
 
 type SecretsRecon struct {
@@ -66,6 +68,10 @@ func NewSecretsRecon(cfg *config.Config, optFns ...func(o *SecretsOptions)) *Sec
 		r.runEnumerateServicePerRegion("ssm", cfg.Regions, func(region string) {
 			r.enumerateSSMSecretsPerRegion(region)
 		})
+	}, func(o *reconOptions) {
+		o.IgnoreServices = opts.IgnoreServices
+		o.BeforeHook = opts.BeforeHook
+		o.AfterRunHook = opts.AfterRunHook
 	})
 
 	return r

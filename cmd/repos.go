@@ -26,13 +26,19 @@ func newReposCmd(globalOpts *globalOptions) *cobra.Command {
 				return err
 			}
 
+			progress := output.NewProgress()
+
 			recon := recon.NewReposRecon(cfg, func(o *recon.ReposOptions) {
 				o.Entropy = opts.entropy
 				o.Verify = opts.verify
 				o.HighEntropyThreshold = opts.highEntropyThreshold
+				o.BeforeHook = progress.BeforeHook()
+				o.AfterRunHook = progress.AfterRunHook()
 			})
 
 			repos := recon.Run()
+
+			progress.Wait()
 
 			output := output.New([]string{
 				"Service",

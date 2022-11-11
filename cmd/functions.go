@@ -26,11 +26,17 @@ func newFunctionsCmd(globalOpts *globalOptions) *cobra.Command {
 				return err
 			}
 
+			progress := output.NewProgress()
+
 			recon := recon.NewFunctionsRecon(cfg, func(o *recon.FunctionsOptions) {
 				o.Names = opts.names
+				o.BeforeHook = progress.BeforeHook()
+				o.AfterRunHook = progress.AfterRunHook()
 			})
 
 			functions := recon.Run()
+
+			progress.Wait()
 
 			output := output.New([]string{
 				"Service",

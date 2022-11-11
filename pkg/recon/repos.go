@@ -20,6 +20,8 @@ type ReposOptions struct {
 	Entropy              float64
 	Verify               bool
 	HighEntropyThreshold float64
+	BeforeHook           BeforeHookFunc
+	AfterRunHook         AfterRunHookFunc
 }
 
 type ReposRecon struct {
@@ -50,6 +52,9 @@ func NewReposRecon(cfg *config.Config, optFns ...func(o *ReposOptions)) *ReposRe
 		r.runEnumerateServicePerRegion("codecommit", cfg.Regions, func(region string) {
 			r.enumerateReposPerRegion(region)
 		})
+	}, func(o *reconOptions) {
+		o.BeforeHook = opts.BeforeHook
+		o.AfterRunHook = opts.AfterRunHook
 	})
 
 	return r

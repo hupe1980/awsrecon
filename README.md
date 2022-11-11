@@ -3,6 +3,8 @@
 [![Go Reference](https://pkg.go.dev/badge/github.com/hupe1980/awsrecon.svg)](https://pkg.go.dev/github.com/hupe1980/awsrecon)
 > AWSrecon is a tool for reconnaissance AWS cloud environments. It helps security professionals find possible vulnerabilities and exploitable attack paths in AWS cloud infrastructures.
 
+## Features
+
 - Enumerates internal/external endpoints as attacking starting point or for lateral movement 
 - Mines secrets in envs, tags, stacks and more
 - Detects dangling dns entries (subdomain takeover)

@@ -10,6 +10,12 @@ import (
 	"github.com/hupe1980/awsrecon/pkg/config"
 )
 
+type PrincipalsOptions struct {
+	IgnoreServices []string
+	BeforeHook     BeforeHookFunc
+	AfterRunHook   AfterRunHookFunc
+}
+
 type Principal struct {
 	AWSService       string
 	Type             string
@@ -26,7 +32,13 @@ type PrincipalsRecon struct {
 	engine    *permission.Engine
 }
 
-func NewPrincipalsRecon(cfg *config.Config) (*PrincipalsRecon, error) {
+func NewPrincipalsRecon(cfg *config.Config, optFns ...func(o *PrincipalsOptions)) (*PrincipalsRecon, error) {
+	opts := PrincipalsOptions{}
+
+	for _, fn := range optFns {
+		fn(&opts)
+	}
+
 	e, err := permission.NewEngine()
 	if err != nil {
 		return nil, err
@@ -38,17 +50,21 @@ func NewPrincipalsRecon(cfg *config.Config) (*PrincipalsRecon, error) {
 	}
 
 	r.recon = newRecon[Principal](func() {
-		r.runEnumerateService("iam", func() {
+		r.runEnumerateService("user", func() {
 			r.enumerateUsers()
 		})
 
-		r.runEnumerateService("iam", func() {
+		r.runEnumerateService("group", func() {
 			r.enumerateGroups()
 		})
 
-		r.runEnumerateService("iam", func() {
+		r.runEnumerateService("role", func() {
 			r.enumerateRoles()
 		})
+	}, func(o *reconOptions) {
+		o.IgnoreServices = opts.IgnoreServices
+		o.BeforeHook = opts.BeforeHook
+		o.AfterRunHook = opts.AfterRunHook
 	})
 
 	return r, nil

@@ -30,14 +30,20 @@ func newStacksCmd(globalOpts *globalOptions) *cobra.Command {
 				return err
 			}
 
+			progress := output.NewProgress()
+
 			recon := recon.NewStacksRecon(cfg, func(o *recon.StacksOptions) {
 				o.Entropy = opts.entropy
 				o.Verify = opts.verify
 				o.HighEntropyThreshold = opts.highEntropyThreshold
 				o.IgnoreCDKAssetParameters = opts.ignoreCDKAssetParameters
+				o.BeforeHook = progress.BeforeHook()
+				o.AfterRunHook = progress.AfterRunHook()
 			})
 
 			stacks := recon.Run()
+
+			progress.Wait()
 
 			output := output.New([]string{
 				"Service",

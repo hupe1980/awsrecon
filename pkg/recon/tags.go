@@ -29,6 +29,8 @@ type TagsOptions struct {
 	Entropy              float64
 	Verify               bool
 	HighEntropyThreshold float64
+	BeforeHook           BeforeHookFunc
+	AfterRunHook         AfterRunHookFunc
 }
 
 type TagsRecon struct {
@@ -56,9 +58,12 @@ func NewTagsRecon(cfg *config.Config, optFns ...func(o *TagsOptions)) *TagsRecon
 	}
 
 	r.recon = newRecon[Tag](func() {
-		r.runEnumerateServicePerRegion("resourcegroupstaggingapi", cfg.Regions, func(region string) {
+		r.runEnumerateServicePerRegion("tags", cfg.Regions, func(region string) {
 			r.enumerateTagsPerRegion(region)
 		})
+	}, func(o *reconOptions) {
+		o.BeforeHook = opts.BeforeHook
+		o.AfterRunHook = opts.AfterRunHook
 	})
 
 	return r

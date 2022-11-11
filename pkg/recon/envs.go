@@ -30,6 +30,8 @@ type EnvsOptions struct {
 	Verify               bool
 	HighEntropyThreshold float64
 	IgnoreServices       []string
+	BeforeHook           BeforeHookFunc
+	AfterRunHook         AfterRunHookFunc
 }
 
 type EnvsRecon struct {
@@ -72,6 +74,10 @@ func NewEnvsRecon(cfg *config.Config, optFns ...func(o *EnvsOptions)) *EnvsRecon
 		r.runEnumerateServicePerRegion("lambda", cfg.Regions, func(region string) {
 			r.enumerateLambdaEnvsPerRegion(region)
 		})
+	}, func(o *reconOptions) {
+		o.IgnoreServices = opts.IgnoreServices
+		o.BeforeHook = opts.BeforeHook
+		o.AfterRunHook = opts.AfterRunHook
 	})
 
 	return r

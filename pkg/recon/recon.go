@@ -1,6 +1,7 @@
 package recon
 
 import (
+	"context"
 	"sync"
 
 	"github.com/hupe1980/awsrecon/pkg/common"
@@ -8,9 +9,15 @@ import (
 
 var AWSRegions = []string{"us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-3", "ap-northeast-2", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "ca-central-1", "eu-central-1", "eu-west-1", "eu-west-2", "eu-south-1", "eu-west-3", "eu-north-1", "me-south-1", "sa-east-1"}
 
+type BeforeHookFunc = func(ctx context.Context, service string, regions []string) context.Context
+
+type AfterRunHookFunc = func(ctx context.Context, service string, region string) context.Context
+
 type reconOptions struct {
 	IgnoreServices []string
 	MaxConcurrency int
+	BeforeHook     BeforeHookFunc
+	AfterRunHook   AfterRunHookFunc
 }
 
 type recon[T any] struct {
@@ -88,11 +95,21 @@ func (r *recon[T]) runEnumerateService(service string, fn func()) {
 		return
 	}
 
+	ctx := context.TODO()
+
+	if r.opts.BeforeHook != nil {
+		ctx = r.opts.BeforeHook(ctx, service, []string{"global"})
+	}
+
 	r.wg.Add(1)
 
 	go func(fn func()) {
 		defer r.wg.Done()
 		fn()
+
+		if r.opts.AfterRunHook != nil {
+			ctx = r.opts.AfterRunHook(ctx, service, "global")
+		}
 	}(fn)
 }
 
@@ -101,12 +118,23 @@ func (r *recon[T]) runEnumerateServicePerRegion(service string, regions []string
 		return
 	}
 
+	ctx := context.TODO()
+
+	if r.opts.BeforeHook != nil {
+		ctx = r.opts.BeforeHook(ctx, service, regions)
+	}
+
 	for _, region := range regions {
 		r.wg.Add(1)
 
 		go func(region string, fn func(region string)) {
 			defer r.wg.Done()
+
 			fn(region)
+
+			if r.opts.AfterRunHook != nil {
+				ctx = r.opts.AfterRunHook(ctx, service, region)
+			}
 		}(region, fn)
 	}
 }

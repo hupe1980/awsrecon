@@ -50,6 +50,8 @@ type InstancesOptions struct {
 	Verify               bool
 	HighEntropyThreshold float64
 	MyIP                 net.IP
+	BeforeHook           BeforeHookFunc
+	AfterRunHook         AfterRunHookFunc
 }
 
 type InstancesRecon struct {
@@ -79,6 +81,9 @@ func NewInstancesRecon(cfg *config.Config, optFns ...func(o *InstancesOptions)) 
 		r.runEnumerateServicePerRegion("ec2", cfg.Regions, func(region string) {
 			r.enumerateInstancesPerRegion(region)
 		})
+	}, func(o *reconOptions) {
+		o.BeforeHook = opts.BeforeHook
+		o.AfterRunHook = opts.AfterRunHook
 	})
 
 	return r

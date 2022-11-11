@@ -32,6 +32,8 @@ func newLogsCmd(globalOpts *globalOptions) *cobra.Command {
 				return err
 			}
 
+			progress := output.NewProgress()
+
 			recon := recon.NewLogsRecon(cfg, func(o *recon.LogsOptions) {
 				o.Verify = opts.verify
 				o.GroupNamePrefix = opts.groupNamePrefix
@@ -39,9 +41,13 @@ func newLogsCmd(globalOpts *globalOptions) *cobra.Command {
 				o.FilterPattern = opts.filterPattern
 				o.StartTime = opts.startTime
 				o.EndTime = opts.endTime
+				o.BeforeHook = progress.BeforeHook()
+				o.AfterRunHook = progress.AfterRunHook()
 			})
 
 			logs := recon.Run()
+
+			progress.Wait()
 
 			output := output.New([]string{
 				"Service",

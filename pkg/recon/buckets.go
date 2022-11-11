@@ -22,7 +22,9 @@ type Bucket struct {
 }
 
 type BucketsOptions struct {
-	Buckets []string
+	Buckets      []string
+	BeforeHook   BeforeHookFunc
+	AfterRunHook AfterRunHookFunc
 }
 
 type BucketsRecon struct {
@@ -47,6 +49,9 @@ func NewBucketsRecon(cfg *config.Config, optFns ...func(o *BucketsOptions)) *Buc
 		r.runEnumerateService("s3", func() {
 			r.enumerateBuckets()
 		})
+	}, func(o *reconOptions) {
+		o.BeforeHook = opts.BeforeHook
+		o.AfterRunHook = opts.AfterRunHook
 	})
 
 	return r

@@ -18,7 +18,9 @@ type Function struct {
 }
 
 type FunctionsOptions struct {
-	Names []string
+	Names        []string
+	BeforeHook   BeforeHookFunc
+	AfterRunHook AfterRunHookFunc
 }
 
 type FunctionsRecon struct {
@@ -43,6 +45,9 @@ func NewFunctionsRecon(cfg *config.Config, optFns ...func(o *FunctionsOptions)) 
 		r.runEnumerateServicePerRegion("lambda", cfg.Regions, func(region string) {
 			r.enumerateFunctionsPerRegion(region)
 		})
+	}, func(o *reconOptions) {
+		o.BeforeHook = opts.BeforeHook
+		o.AfterRunHook = opts.AfterRunHook
 	})
 
 	return r

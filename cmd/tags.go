@@ -30,13 +30,19 @@ func newTagsCmd(globalOpts *globalOptions) *cobra.Command {
 				return err
 			}
 
+			progress := output.NewProgress()
+
 			recon := recon.NewTagsRecon(cfg, func(o *recon.TagsOptions) {
 				o.Entropy = opts.entropy
 				o.Verify = opts.verify
 				o.HighEntropyThreshold = opts.highEntropyThreshold
+				o.BeforeHook = progress.BeforeHook()
+				o.AfterRunHook = progress.AfterRunHook()
 			})
 
 			tags := recon.Run()
+
+			progress.Wait()
 
 			output := output.New([]string{
 				"Service",

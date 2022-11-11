@@ -32,15 +32,21 @@ func newSecretsCmd(globalOpts *globalOptions) *cobra.Command {
 				return err
 			}
 
+			progress := output.NewProgress()
+
 			recon := recon.NewSecretsRecon(cfg, func(o *recon.SecretsOptions) {
 				o.Entropy = opts.entropy
 				o.WithDecryption = opts.decrypt
 				o.Verify = opts.verify
 				o.HighEntropyThreshold = opts.highEntropyThreshold
 				o.IgnoreServices = opts.ignoreServices
+				o.BeforeHook = progress.BeforeHook()
+				o.AfterRunHook = progress.AfterRunHook()
 			})
 
 			secrets := recon.Run()
+
+			progress.Wait()
 
 			output := output.New([]string{
 				"Service",

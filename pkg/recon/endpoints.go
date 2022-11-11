@@ -41,6 +41,8 @@ const (
 
 type EndpointsOptions struct {
 	IgnoreServices []string
+	BeforeHook     BeforeHookFunc
+	AfterRunHook   AfterRunHookFunc
 }
 
 type Endpoint struct {
@@ -161,6 +163,8 @@ func NewEndpointsRecon(cfg *config.Config, optFns ...func(o *EndpointsOptions)) 
 		})
 	}, func(o *reconOptions) {
 		o.IgnoreServices = opts.IgnoreServices
+		o.BeforeHook = opts.BeforeHook
+		o.AfterRunHook = opts.AfterRunHook
 	})
 
 	return r

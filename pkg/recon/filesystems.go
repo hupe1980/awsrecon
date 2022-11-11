@@ -18,6 +18,8 @@ type FileSystem struct {
 
 type FileSystemsOptions struct {
 	IgnoreServices []string
+	BeforeHook     BeforeHookFunc
+	AfterRunHook   AfterRunHookFunc
 }
 
 type FileSystemsRecon struct {
@@ -48,6 +50,10 @@ func NewFileSystemsRecon(cfg *config.Config, optFns ...func(o *FileSystemsOption
 		r.runEnumerateServicePerRegion("fsx", cfg.Regions, func(region string) {
 			r.enumerateFSXFileSystemsPerRegion(region)
 		})
+	}, func(o *reconOptions) {
+		o.IgnoreServices = opts.IgnoreServices
+		o.BeforeHook = opts.BeforeHook
+		o.AfterRunHook = opts.AfterRunHook
 	})
 
 	return r

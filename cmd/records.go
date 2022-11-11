@@ -27,11 +27,17 @@ func newRecordsCmd(globalOpts *globalOptions) *cobra.Command {
 				return err
 			}
 
+			progress := output.NewProgress()
+
 			recon := recon.NewRecordsRecon(cfg, func(o *recon.RecordsOptions) {
 				o.Verify = opts.verify
+				o.BeforeHook = progress.BeforeHook()
+				o.AfterRunHook = progress.AfterRunHook()
 			})
 
 			records := recon.Run()
+
+			progress.Wait()
 
 			output := output.New([]string{
 				"Service",
