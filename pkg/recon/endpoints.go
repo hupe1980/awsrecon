@@ -598,7 +598,7 @@ func (rec *EndpointsRecon) enumerateDocDBClusterPerRegion(region string) {
 				Endpoint:   aws.ToString(cluster.Endpoint),
 				Port:       aws.ToInt32(cluster.Port),
 				Protocol:   "https",
-				Visibility: VisibilityUnknown,
+				Visibility: VisibiltyPrivate,
 				Hints:      hints,
 			})
 
@@ -611,7 +611,7 @@ func (rec *EndpointsRecon) enumerateDocDBClusterPerRegion(region string) {
 					Endpoint:   aws.ToString(cluster.ReaderEndpoint),
 					Port:       aws.ToInt32(cluster.Port),
 					Protocol:   "https",
-					Visibility: VisibilityUnknown,
+					Visibility: VisibiltyPrivate,
 					Hints:      hints,
 				})
 			}
