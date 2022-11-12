@@ -10,6 +10,7 @@ import (
 	codebuildTypes "github.com/aws/aws-sdk-go-v2/service/codebuild/types"
 	"github.com/aws/aws-sdk-go-v2/service/ecs"
 	"github.com/aws/aws-sdk-go-v2/service/lambda"
+	"github.com/aws/aws-sdk-go-v2/service/lightsail"
 	"github.com/aws/aws-sdk-go-v2/service/sagemaker"
 	"github.com/hupe1980/awsrecon/pkg/audit"
 	"github.com/hupe1980/awsrecon/pkg/audit/secret"
@@ -42,6 +43,7 @@ type EnvsRecon struct {
 	codebuildClient *codebuild.Client
 	ecsClient       *ecs.Client
 	lambdaClient    *lambda.Client
+	lightsailClient *lightsail.Client
 	sagemakerClient *sagemaker.Client
 	engine          *secret.Engine
 	opts            EnvsOptions
@@ -63,6 +65,7 @@ func NewEnvsRecon(cfg *config.Config, optFns ...func(o *EnvsOptions)) *EnvsRecon
 		codebuildClient: codebuild.NewFromConfig(cfg.AWSConfig),
 		ecsClient:       ecs.NewFromConfig(cfg.AWSConfig),
 		lambdaClient:    lambda.NewFromConfig(cfg.AWSConfig),
+		lightsailClient: lightsail.NewFromConfig(cfg.AWSConfig),
 		sagemakerClient: sagemaker.NewFromConfig(cfg.AWSConfig),
 		engine:          secret.NewEngine(opts.Verify),
 		opts:            opts,
@@ -83,6 +86,10 @@ func NewEnvsRecon(cfg *config.Config, optFns ...func(o *EnvsOptions)) *EnvsRecon
 
 		r.runEnumerateServicePerRegion("lambda", cfg.Regions, func(region string) {
 			r.enumerateLambdaEnvsPerRegion(region)
+		})
+
+		r.runEnumerateServicePerRegion("lightsail", cfg.Regions, func(region string) {
+			r.enumerateLightsailEnvsPerRegion(region)
 		})
 
 		r.runEnumerateServicePerRegion("sagemaker-processing", cfg.Regions, func(region string) {
@@ -317,6 +324,40 @@ func (rec *EnvsRecon) enumerateLambdaEnvsPerRegion(region string) {
 						Hints:      hints,
 					})
 				}
+			}
+		}
+	}
+}
+
+func (rec *EnvsRecon) enumerateLightsailEnvsPerRegion(region string) {
+	output, err := rec.lightsailClient.GetContainerServices(context.TODO(), &lightsail.GetContainerServicesInput{}, func(o *lightsail.Options) {
+		o.Region = region
+	})
+	if err != nil {
+		rec.addError(err)
+		return
+	}
+
+	for _, item := range output.ContainerServices {
+		for _, container := range item.CurrentDeployment.Containers {
+			for key, value := range container.Environment {
+				entropy := audit.ShannonEntropy(value)
+
+				if entropy < rec.opts.Entropy {
+					continue
+				}
+
+				hints := rec.getHints(fmt.Sprintf("%s=%s", key, value), entropy)
+
+				rec.addResult(Env{
+					AWSService: "Lightsail",
+					Name:       aws.ToString(item.ContainerServiceName),
+					Region:     region,
+					Key:        key,
+					Value:      value,
+					Entropy:    entropy,
+					Hints:      hints,
+				})
 			}
 		}
 	}
