@@ -826,6 +826,8 @@ func (rec *EndpointsRecon) enumerateLambdaFunctionsPerRegion(region string) {
 		for _, function := range page.Functions {
 			output, err := rec.lambdaClient.GetFunctionUrlConfig(context.TODO(), &lambda.GetFunctionUrlConfigInput{
 				FunctionName: function.FunctionArn,
+			}, func(o *lambda.Options) {
+				o.Region = region
 			})
 			if err != nil {
 				rec.addError(err)
