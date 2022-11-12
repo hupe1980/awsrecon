@@ -3,6 +3,7 @@ package output
 import (
 	"context"
 	"fmt"
+	"os"
 
 	"github.com/hupe1980/awsrecon/pkg/recon"
 	"github.com/vbauerster/mpb/v8"
@@ -25,7 +26,7 @@ type Progress struct {
 
 func NewProgress() *Progress {
 	return &Progress{
-		progress: mpb.New(),
+		progress: mpb.New(mpb.ContainerOptional(mpb.WithOutput(os.Stderr), true)),
 	}
 }
 
