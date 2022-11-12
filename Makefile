@@ -31,7 +31,7 @@ download-iam:
 .PHONY: run
 ## run: Runs awsrecon
 run:
-	go run main.go -h
+	go run -race main.go -h
 
 .PHONY: help
 ## help: Prints this help message
