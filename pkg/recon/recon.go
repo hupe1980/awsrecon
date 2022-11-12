@@ -103,14 +103,14 @@ func (r *recon[T]) runEnumerateService(service string, fn func()) {
 
 	r.wg.Add(1)
 
-	go func(fn func()) {
+	go func(ctx context.Context, fn func()) {
 		defer r.wg.Done()
 		fn()
 
 		if r.opts.AfterRunHook != nil {
-			ctx = r.opts.AfterRunHook(ctx, service, "global")
+			r.opts.AfterRunHook(ctx, service, "global")
 		}
-	}(fn)
+	}(ctx, fn)
 }
 
 func (r *recon[T]) runEnumerateServicePerRegion(service string, regions []string, fn func(region string)) {
@@ -127,15 +127,15 @@ func (r *recon[T]) runEnumerateServicePerRegion(service string, regions []string
 	for _, region := range regions {
 		r.wg.Add(1)
 
-		go func(region string, fn func(region string)) {
+		go func(ctx context.Context, region string, fn func(region string)) {
 			defer r.wg.Done()
 
 			fn(region)
 
 			if r.opts.AfterRunHook != nil {
-				ctx = r.opts.AfterRunHook(ctx, service, region)
+				r.opts.AfterRunHook(ctx, service, region)
 			}
-		}(region, fn)
+		}(ctx, region, fn)
 	}
 }
 
