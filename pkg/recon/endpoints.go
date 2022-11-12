@@ -16,6 +16,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/appsync"
 	appsyncTypes "github.com/aws/aws-sdk-go-v2/service/appsync/types"
 	"github.com/aws/aws-sdk-go-v2/service/cloudfront"
+	"github.com/aws/aws-sdk-go-v2/service/docdb"
 	"github.com/aws/aws-sdk-go-v2/service/eks"
 	"github.com/aws/aws-sdk-go-v2/service/elasticloadbalancing"
 	"github.com/aws/aws-sdk-go-v2/service/elasticloadbalancingv2"
@@ -64,6 +65,7 @@ type EndpointsRecon struct {
 	apprunnerClient    *apprunner.Client
 	appsyncClient      *appsync.Client
 	cloudfrontClient   *cloudfront.Client
+	docdbClient        *docdb.Client
 	eksClient          *eks.Client
 	elbClient          *elasticloadbalancing.Client
 	elbv2Client        *elasticloadbalancingv2.Client
@@ -89,6 +91,7 @@ func NewEndpointsRecon(cfg *config.Config, optFns ...func(o *EndpointsOptions)) 
 		apprunnerClient:    apprunner.NewFromConfig(cfg.AWSConfig),
 		appsyncClient:      appsync.NewFromConfig(cfg.AWSConfig),
 		cloudfrontClient:   cloudfront.NewFromConfig(cfg.AWSConfig),
+		docdbClient:        docdb.NewFromConfig(cfg.AWSConfig),
 		eksClient:          eks.NewFromConfig(cfg.AWSConfig),
 		elbClient:          elasticloadbalancing.NewFromConfig(cfg.AWSConfig),
 		elbv2Client:        elasticloadbalancingv2.NewFromConfig(cfg.AWSConfig),
@@ -120,6 +123,10 @@ func NewEndpointsRecon(cfg *config.Config, optFns ...func(o *EndpointsOptions)) 
 
 		r.runEnumerateService("cloudfront", func() {
 			r.enumerateCloudfrontDistributions()
+		})
+
+		r.runEnumerateServicePerRegion("docdb", cfg.Regions, func(region string) {
+			r.enumerateDocDBClusterPerRegion(region)
 		})
 
 		r.runEnumerateServicePerRegion("eks", cfg.Regions, func(region string) {
@@ -558,6 +565,60 @@ func (rec *EndpointsRecon) enumerateCloudfrontDistributions() {
 	}
 }
 
+func (rec *EndpointsRecon) enumerateDocDBClusterPerRegion(region string) {
+	p := docdb.NewDescribeDBClustersPaginator(rec.docdbClient, &docdb.DescribeDBClustersInput{})
+	for p.HasMorePages() {
+		page, err := p.NextPage(context.TODO(), func(o *docdb.Options) {
+			o.Region = region
+		})
+		if err != nil {
+			rec.addError(err)
+			return
+		}
+
+		for _, cluster := range page.DBClusters {
+			var hints []string
+			if cluster.StorageEncrypted {
+				hints = append(hints, "Encrypted")
+			} else {
+				hints = append(hints, "NotEncrypted")
+			}
+
+			if cluster.DeletionProtection {
+				hints = append(hints, "DeletionProtection")
+			} else {
+				hints = append(hints, "NoDeletionProtection")
+			}
+
+			rec.addResult(Endpoint{
+				AWSService: "DocDB",
+				Region:     region,
+				Name:       aws.ToString(cluster.DBClusterIdentifier),
+				Type:       "Endpoint",
+				Endpoint:   aws.ToString(cluster.Endpoint),
+				Port:       aws.ToInt32(cluster.Port),
+				Protocol:   "https",
+				Visibility: VisibilityUnknown,
+				Hints:      hints,
+			})
+
+			if cluster.ReaderEndpoint != nil {
+				rec.addResult(Endpoint{
+					AWSService: "DocDB",
+					Region:     region,
+					Name:       aws.ToString(cluster.DBClusterIdentifier),
+					Type:       "ReaderEndpoint",
+					Endpoint:   aws.ToString(cluster.ReaderEndpoint),
+					Port:       aws.ToInt32(cluster.Port),
+					Protocol:   "https",
+					Visibility: VisibilityUnknown,
+					Hints:      hints,
+				})
+			}
+		}
+	}
+}
+
 func (rec *EndpointsRecon) enumerateEKSClusterPerRegion(region string) {
 	p := eks.NewListClustersPaginator(rec.eksClient, &eks.ListClustersInput{})
 	for p.HasMorePages() {
@@ -905,8 +966,16 @@ func (rec *EndpointsRecon) enumerateRDSEndpointsPerRegion(region string) {
 				}
 
 				var hints []string
-				if aws.ToString(instance.KmsKeyId) != "" {
+				if instance.StorageEncrypted {
 					hints = append(hints, "Encrypted")
+				} else {
+					hints = append(hints, "NotEncrypted")
+				}
+
+				if instance.DeletionProtection {
+					hints = append(hints, "DeletionProtection")
+				} else {
+					hints = append(hints, "NoDeletionProtection")
 				}
 
 				rec.addResult(Endpoint{

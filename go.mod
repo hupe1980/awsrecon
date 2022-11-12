@@ -23,7 +23,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/internal/v4a v1.0.14 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.9.9 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/checksum v1.1.18 // indirect
-	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.9.18 // indirect
+	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.9.19 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/s3shared v1.13.17 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sso v1.11.23 // indirect
 	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.13.6 // indirect
@@ -51,6 +51,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/cloudwatchlogs v1.16.0
 	github.com/aws/aws-sdk-go-v2/service/codebuild v1.19.19
 	github.com/aws/aws-sdk-go-v2/service/codecommit v1.13.19
+	github.com/aws/aws-sdk-go-v2/service/docdb v1.19.14
 	github.com/aws/aws-sdk-go-v2/service/ec2 v1.63.2
 	github.com/aws/aws-sdk-go-v2/service/ecs v1.18.24
 	github.com/aws/aws-sdk-go-v2/service/efs v1.17.18
