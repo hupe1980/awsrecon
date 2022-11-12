@@ -16,7 +16,7 @@ func newPrincipalsCmd(globalOpts *globalOptions) *cobra.Command {
 	// opts := &principalsOptions{}
 	cmd := &cobra.Command{
 		Use:           "principals",
-		Short:         "Enumerate principals",
+		Short:         "Enumerate iam principals",
 		SilenceUsage:  true,
 		SilenceErrors: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
