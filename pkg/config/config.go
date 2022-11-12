@@ -51,7 +51,7 @@ func NewConfig(profile string, regions []string, userAgent string) (*Config, err
 			aro.TokenProvider = stscreds.StdinTokenProvider
 		}),
 		config.WithRetryer(func() aws.Retryer {
-			return retry.AddWithMaxAttempts(retry.NewStandard(), 5)
+			return retry.AddWithMaxAttempts(retry.NewStandard(), 3)
 		}),
 		config.WithAPIOptions([]func(*smithymiddleware.Stack) error{
 			smithyhttp.SetHeaderValue("User-Agent", userAgent),
