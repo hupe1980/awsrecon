@@ -42,6 +42,8 @@ func newEnvsCmd(globalOpts *globalOptions) *cobra.Command {
 				o.AfterRunHook = progress.AfterRunHook()
 			})
 
+			PrintInfof("Enumerating environment variables for account %s", cfg.Account)
+
 			envs := recon.Run()
 
 			progress.Wait()
@@ -72,11 +74,17 @@ func newEnvsCmd(globalOpts *globalOptions) *cobra.Command {
 				})
 			}
 
+			output.PrintTable()
+
 			if globalOpts.output != "" {
-				return output.SaveAsCSV(globalOpts.output)
+				if err := output.SaveAsCSV(globalOpts.output); err != nil {
+					return err
+				}
+
+				PrintInfof("Output written to %s", globalOpts.output)
 			}
 
-			output.PrintTable()
+			PrintInfof("%d environment variables enumerated.", len(envs))
 
 			return nil
 		},

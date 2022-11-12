@@ -42,6 +42,8 @@ func newInstancesCmd(globalOpts *globalOptions) *cobra.Command {
 				o.AfterRunHook = progress.AfterRunHook()
 			})
 
+			PrintInfof("Enumerating instances for account %s", cfg.Account)
+
 			instances := recon.Run()
 
 			progress.Wait()
@@ -95,11 +97,17 @@ func newInstancesCmd(globalOpts *globalOptions) *cobra.Command {
 				})
 			}
 
+			output.PrintTable()
+
 			if globalOpts.output != "" {
-				return output.SaveAsCSV(globalOpts.output)
+				if err := output.SaveAsCSV(globalOpts.output); err != nil {
+					return err
+				}
+
+				PrintInfof("Output written to %s", globalOpts.output)
 			}
 
-			output.PrintTable()
+			PrintInfof("%d instances enumerated.", len(instances))
 
 			return nil
 		},

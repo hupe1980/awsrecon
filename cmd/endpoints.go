@@ -38,6 +38,8 @@ func newEndpointsCmd(globalOpts *globalOptions) *cobra.Command {
 				o.AfterRunHook = progress.AfterRunHook()
 			})
 
+			PrintInfof("Enumerating endpoints for account %s", cfg.Account)
+
 			endpoints := recon.Run()
 
 			progress.Wait()
@@ -86,11 +88,17 @@ func newEndpointsCmd(globalOpts *globalOptions) *cobra.Command {
 				})
 			}
 
+			output.PrintTable()
+
 			if globalOpts.output != "" {
-				return output.SaveAsCSV(globalOpts.output)
+				if err := output.SaveAsCSV(globalOpts.output); err != nil {
+					return err
+				}
+
+				PrintInfof("Output written to %s", globalOpts.output)
 			}
 
-			output.PrintTable()
+			PrintInfof("%d endpoints enumerated.", len(endpoints))
 
 			return nil
 		},

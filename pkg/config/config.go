@@ -24,6 +24,12 @@ type Config struct {
 	// The Amazon Web Services account ID number of the account that owns or contains the calling entity
 	Account string
 
+	// ARN associated with the calling entity
+	CallerIdentityARN string
+
+	// The unique identifier of the calling entity
+	UserID string
+
 	// The SharedConfigProfile that is used
 	Profile string
 
@@ -70,9 +76,11 @@ func NewConfig(profile string, regions []string, userAgent string) (*Config, err
 	}
 
 	return &Config{
-		Account:   *output.Account,
-		Profile:   profile,
-		Regions:   regions,
-		AWSConfig: awsCfg,
+		Account:           aws.ToString(output.Account),
+		CallerIdentityARN: aws.ToString(output.Arn),
+		UserID:            aws.ToString(output.UserId),
+		Profile:           profile,
+		Regions:           regions,
+		AWSConfig:         awsCfg,
 	}, nil
 }

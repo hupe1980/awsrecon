@@ -35,6 +35,8 @@ func newRecordsCmd(globalOpts *globalOptions) *cobra.Command {
 				o.AfterRunHook = progress.AfterRunHook()
 			})
 
+			PrintInfof("Enumerating records for account %s", cfg.Account)
+
 			records := recon.Run()
 
 			progress.Wait()
@@ -61,11 +63,17 @@ func newRecordsCmd(globalOpts *globalOptions) *cobra.Command {
 				})
 			}
 
+			output.PrintTable()
+
 			if globalOpts.output != "" {
-				return output.SaveAsCSV(globalOpts.output)
+				if err := output.SaveAsCSV(globalOpts.output); err != nil {
+					return err
+				}
+
+				PrintInfof("Output written to %s", globalOpts.output)
 			}
 
-			output.PrintTable()
+			PrintInfof("%d records enumerated.", len(records))
 
 			return nil
 		},

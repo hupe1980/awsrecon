@@ -40,6 +40,8 @@ func newTagsCmd(globalOpts *globalOptions) *cobra.Command {
 				o.AfterRunHook = progress.AfterRunHook()
 			})
 
+			PrintInfof("Enumerating tags for account %s", cfg.Account)
+
 			tags := recon.Run()
 
 			progress.Wait()
@@ -70,11 +72,17 @@ func newTagsCmd(globalOpts *globalOptions) *cobra.Command {
 				})
 			}
 
+			output.PrintTable()
+
 			if globalOpts.output != "" {
-				return output.SaveAsCSV(globalOpts.output)
+				if err := output.SaveAsCSV(globalOpts.output); err != nil {
+					return err
+				}
+
+				PrintInfof("Output written to %s", globalOpts.output)
 			}
 
-			output.PrintTable()
+			PrintInfof("%d tags enumerated.", len(tags))
 
 			return nil
 		},

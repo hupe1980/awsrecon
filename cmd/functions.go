@@ -34,6 +34,8 @@ func newFunctionsCmd(globalOpts *globalOptions) *cobra.Command {
 				o.AfterRunHook = progress.AfterRunHook()
 			})
 
+			PrintInfof("Enumerating functions for account %s", cfg.Account)
+
 			functions := recon.Run()
 
 			progress.Wait()
@@ -56,11 +58,17 @@ func newFunctionsCmd(globalOpts *globalOptions) *cobra.Command {
 				})
 			}
 
+			output.PrintTable()
+
 			if globalOpts.output != "" {
-				return output.SaveAsCSV(globalOpts.output)
+				if err := output.SaveAsCSV(globalOpts.output); err != nil {
+					return err
+				}
+
+				PrintInfof("Output written to %s", globalOpts.output)
 			}
 
-			output.PrintTable()
+			PrintInfof("%d functions enumerated.", len(functions))
 
 			return nil
 		},

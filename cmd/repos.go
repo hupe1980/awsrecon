@@ -36,6 +36,8 @@ func newReposCmd(globalOpts *globalOptions) *cobra.Command {
 				o.AfterRunHook = progress.AfterRunHook()
 			})
 
+			PrintInfof("Enumerating repos for account %s", cfg.Account)
+
 			repos := recon.Run()
 
 			progress.Wait()
@@ -56,11 +58,17 @@ func newReposCmd(globalOpts *globalOptions) *cobra.Command {
 				})
 			}
 
+			output.PrintTable()
+
 			if globalOpts.output != "" {
-				return output.SaveAsCSV(globalOpts.output)
+				if err := output.SaveAsCSV(globalOpts.output); err != nil {
+					return err
+				}
+
+				PrintInfof("Output written to %s", globalOpts.output)
 			}
 
-			output.PrintTable()
+			PrintInfof("%d repos enumerated.", len(repos))
 
 			return nil
 		},

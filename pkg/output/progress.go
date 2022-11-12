@@ -32,7 +32,7 @@ func NewProgress() *Progress {
 
 func (p *Progress) BeforeHook() recon.BeforeHookFunc {
 	return func(ctx context.Context, service string, regions []string) context.Context {
-		name := fmt.Sprintf("enumerate %s", service)
+		name := fmt.Sprintf("[i] Enumerating %s", service)
 
 		bar := p.progress.AddBar(int64(len(regions)),
 			mpb.PrependDecorators(

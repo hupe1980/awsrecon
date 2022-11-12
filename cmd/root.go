@@ -9,6 +9,8 @@ import (
 )
 
 func Execute(version string) {
+	PrintLogo()
+
 	rootCmd := newRootCmd(version)
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
@@ -56,4 +58,15 @@ func newRootCmd(version string) *cobra.Command {
 	)
 
 	return cmd
+}
+
+func PrintLogo() {
+	fmt.Fprint(os.Stderr, ` _____ _ _ _ _____                     
+|  _  | | | |   __|___ ___ ___ ___ ___ 
+|     | | | |__   |  _| -_|  _| . |   |
+|__|__|_____|_____|_| |___|___|___|_|_|`, "\n\n")
+}
+
+func PrintInfof(format string, a ...any) {
+	fmt.Fprintf(os.Stderr, "[i] %s\n", fmt.Sprintf(format, a...))
 }

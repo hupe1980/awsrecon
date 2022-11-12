@@ -45,6 +45,8 @@ func newLogsCmd(globalOpts *globalOptions) *cobra.Command {
 				o.AfterRunHook = progress.AfterRunHook()
 			})
 
+			PrintInfof("Enumerating logs for account %s", cfg.Account)
+
 			logs := recon.Run()
 
 			progress.Wait()
@@ -73,11 +75,17 @@ func newLogsCmd(globalOpts *globalOptions) *cobra.Command {
 				})
 			}
 
+			output.PrintTable()
+
 			if globalOpts.output != "" {
-				return output.SaveAsCSV(globalOpts.output)
+				if err := output.SaveAsCSV(globalOpts.output); err != nil {
+					return err
+				}
+
+				PrintInfof("Output written to %s", globalOpts.output)
 			}
 
-			output.PrintTable()
+			PrintInfof("%d logs enumerated.", len(logs))
 
 			return nil
 		},

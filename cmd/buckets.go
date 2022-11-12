@@ -35,6 +35,8 @@ func newBucketsCmd(globalOpts *globalOptions) *cobra.Command {
 				o.AfterRunHook = progress.AfterRunHook()
 			})
 
+			PrintInfof("Enumerating buckets for account %s", cfg.Account)
+
 			buckets := recon.Run()
 
 			progress.Wait()
@@ -86,11 +88,17 @@ func newBucketsCmd(globalOpts *globalOptions) *cobra.Command {
 				})
 			}
 
+			output.PrintTable()
+
 			if globalOpts.output != "" {
-				return output.SaveAsCSV(globalOpts.output)
+				if err := output.SaveAsCSV(globalOpts.output); err != nil {
+					return err
+				}
+
+				PrintInfof("Output written to %s", globalOpts.output)
 			}
 
-			output.PrintTable()
+			PrintInfof("%d buckets enumerated.", len(buckets))
 
 			return nil
 		},

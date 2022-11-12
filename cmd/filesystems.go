@@ -35,6 +35,8 @@ func newFileSystemsCmd(globalOpts *globalOptions) *cobra.Command {
 				o.AfterRunHook = progress.AfterRunHook()
 			})
 
+			PrintInfof("Enumerating filesystems for account %s", cfg.Account)
+
 			fileSystems := recon.Run()
 
 			progress.Wait()
@@ -59,11 +61,17 @@ func newFileSystemsCmd(globalOpts *globalOptions) *cobra.Command {
 				})
 			}
 
+			output.PrintTable()
+
 			if globalOpts.output != "" {
-				return output.SaveAsCSV(globalOpts.output)
+				if err := output.SaveAsCSV(globalOpts.output); err != nil {
+					return err
+				}
+
+				PrintInfof("Output written to %s", globalOpts.output)
 			}
 
-			output.PrintTable()
+			PrintInfof("%d filesystems enumerated.", len(fileSystems))
 
 			return nil
 		},

@@ -41,6 +41,8 @@ func newStacksCmd(globalOpts *globalOptions) *cobra.Command {
 				o.AfterRunHook = progress.AfterRunHook()
 			})
 
+			PrintInfof("Enumerating stacks for account %s", cfg.Account)
+
 			stacks := recon.Run()
 
 			progress.Wait()
@@ -97,11 +99,17 @@ func newStacksCmd(globalOpts *globalOptions) *cobra.Command {
 				}
 			}
 
+			output.PrintTable()
+
 			if globalOpts.output != "" {
-				return output.SaveAsCSV(globalOpts.output)
+				if err := output.SaveAsCSV(globalOpts.output); err != nil {
+					return err
+				}
+
+				PrintInfof("Output written to %s", globalOpts.output)
 			}
 
-			output.PrintTable()
+			PrintInfof("%d stacks enumerated.", len(stacks))
 
 			return nil
 		},
