@@ -39,6 +39,7 @@ Usage:
   awsrecon [command]
 
 Available Commands:
+  access-keys  Enumerate iam access-keys
   buckets      Enumerate s3 buckets
   completion   Generate the autocompletion script for the specified shell
   download-iam Download iam definitions
@@ -70,6 +71,7 @@ Use "awsrecon [command] --help" for more information about a command.
 ## Available Commands
 |Name|Description
 |-|-
+|[access-keys](/docs/access-keys.md)|Enumerate iam access-keys|
 |[buckets](/docs/buckets.md)|Enumerate s3 buckets|
 |[endpoints](/docs/endpoints.md)|Enumerate endpoints|
 |[envs](/docs/envs.md)|Enumerate environment variables|

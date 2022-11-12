@@ -41,6 +41,7 @@ func newRootCmd(version string) *cobra.Command {
 	cmd.PersistentFlags().StringVarP(&globalOpts.output, "output", "o", "", "output filename")
 
 	cmd.AddCommand(
+		newAccessKeysCmd(globalOpts),
 		newBucketsCmd(globalOpts),
 		newEndpointsCmd(globalOpts),
 		newEnvsCmd(globalOpts),
