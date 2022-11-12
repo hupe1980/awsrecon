@@ -49,7 +49,7 @@ Available Commands:
   help         Help about any command
   instances    Enumerate ec2 instances
   logs         Enumerate cloudwatch logs
-  principals   Enumerate principals
+  principals   Enumerate iam principals
   records      Enumerate dns records
   repos        Enumerate codecommit repositories
   secrets      Enumerate secrets
@@ -66,6 +66,23 @@ Flags:
 
 Use "awsrecon [command] --help" for more information about a command.
 ```
+
+## Available Commands
+|Name|Description
+|-|-
+|[buckets](/docs/buckets.md)|Enumerate s3 buckets|
+|[endpoints](/docs/endpoints.md)|Enumerate endpoints|
+|[envs](/docs/envs.md)|Enumerate environment variables|
+|[filesystems](/docs/filesystems.md)|Enumerate filesystems|
+|[functions](/docs/functions.md)|Enumerate lambda functions|
+|[instances](/docs/instances.md)|Enumerate ec2 instances|
+|[logs](/docs/logs.md)|Enumerate cloudwatch logs|
+|[principals](/docs/principals.md)|Enumerate iam principals|
+|[records](/docs/records.md)|Enumerate dns records|
+|[repos](/docs/repos.md)|Enumerate codecommit repos|
+|[secrets](/docs/secrets.md)|Enumerate secrets|
+|[stacks](/docs/stacks.md)|Enumerate cloudformation stacks|
+|[tags](/docs/tags.md)|Enumerate tags|
 
 ## License
 [MIT](LICENCE)
