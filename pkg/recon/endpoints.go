@@ -201,6 +201,11 @@ func (rec *EndpointsRecon) enumerateAPIGatewayAPIsPerRegion(region string) {
 					continue
 				}
 
+				// TODO: Enumerate custom domain
+				if api.DisableExecuteApiEndpoint {
+					continue
+				}
+
 				getStages, err := rec.apigatewayClient.GetStages(context.TODO(), &apigateway.GetStagesInput{
 					RestApiId: api.Id,
 				}, func(o *apigateway.Options) {
