@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
+	"github.com/aws/aws-sdk-go-v2/service/apprunner"
 	"github.com/aws/aws-sdk-go-v2/service/codebuild"
 	codebuildTypes "github.com/aws/aws-sdk-go-v2/service/codebuild/types"
 	"github.com/aws/aws-sdk-go-v2/service/ecs"
@@ -37,6 +38,7 @@ type EnvsOptions struct {
 
 type EnvsRecon struct {
 	*recon[Env]
+	apprunnerClient *apprunner.Client
 	codebuildClient *codebuild.Client
 	ecsClient       *ecs.Client
 	lambdaClient    *lambda.Client
@@ -57,6 +59,7 @@ func NewEnvsRecon(cfg *config.Config, optFns ...func(o *EnvsOptions)) *EnvsRecon
 	}
 
 	r := &EnvsRecon{
+		apprunnerClient: apprunner.NewFromConfig(cfg.AWSConfig),
 		codebuildClient: codebuild.NewFromConfig(cfg.AWSConfig),
 		ecsClient:       ecs.NewFromConfig(cfg.AWSConfig),
 		lambdaClient:    lambda.NewFromConfig(cfg.AWSConfig),
@@ -66,6 +69,10 @@ func NewEnvsRecon(cfg *config.Config, optFns ...func(o *EnvsOptions)) *EnvsRecon
 	}
 
 	r.recon = newRecon[Env](func() {
+		r.runEnumerateServicePerRegion("apprunner", cfg.Regions, func(region string) {
+			r.enumerateApprunnerEnvsPerRegion(region)
+		})
+
 		r.runEnumerateServicePerRegion("codebuild", cfg.Regions, func(region string) {
 			r.enumerateCodebuildEnvsPerRegion(region)
 		})
@@ -96,6 +103,53 @@ func NewEnvsRecon(cfg *config.Config, optFns ...func(o *EnvsOptions)) *EnvsRecon
 	})
 
 	return r
+}
+
+func (rec *EnvsRecon) enumerateApprunnerEnvsPerRegion(region string) {
+	p := apprunner.NewListServicesPaginator(rec.apprunnerClient, &apprunner.ListServicesInput{})
+	for p.HasMorePages() {
+		page, err := p.NextPage(context.TODO(), func(o *apprunner.Options) {
+			o.Region = region
+		})
+		if err != nil {
+			rec.addError(err)
+			return
+		}
+
+		for _, item := range page.ServiceSummaryList {
+			output, err := rec.apprunnerClient.DescribeService(context.TODO(), &apprunner.DescribeServiceInput{
+				ServiceArn: item.ServiceArn,
+			}, func(o *apprunner.Options) {
+				o.Region = region
+			})
+			if err != nil {
+				rec.addError(err)
+				continue
+			}
+
+			if len(output.Service.SourceConfiguration.ImageRepository.ImageConfiguration.RuntimeEnvironmentVariables) > 0 {
+				for key, value := range output.Service.SourceConfiguration.ImageRepository.ImageConfiguration.RuntimeEnvironmentVariables {
+					entropy := audit.ShannonEntropy(value)
+
+					if entropy < rec.opts.Entropy {
+						continue
+					}
+
+					hints := rec.getHints(fmt.Sprintf("%s=%s", key, value), entropy)
+
+					rec.addResult(Env{
+						AWSService: "Apprunner",
+						Name:       aws.ToString(output.Service.ServiceName),
+						Region:     region,
+						Key:        key,
+						Value:      value,
+						Entropy:    entropy,
+						Hints:      hints,
+					})
+				}
+			}
+		}
+	}
 }
 
 func (rec *EnvsRecon) enumerateCodebuildEnvsPerRegion(region string) {
