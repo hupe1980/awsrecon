@@ -9,6 +9,7 @@ import (
 	codebuildTypes "github.com/aws/aws-sdk-go-v2/service/codebuild/types"
 	"github.com/aws/aws-sdk-go-v2/service/ecs"
 	"github.com/aws/aws-sdk-go-v2/service/lambda"
+	"github.com/aws/aws-sdk-go-v2/service/sagemaker"
 	"github.com/hupe1980/awsrecon/pkg/audit"
 	"github.com/hupe1980/awsrecon/pkg/audit/secret"
 	"github.com/hupe1980/awsrecon/pkg/buildspec"
@@ -39,6 +40,7 @@ type EnvsRecon struct {
 	codebuildClient *codebuild.Client
 	ecsClient       *ecs.Client
 	lambdaClient    *lambda.Client
+	sagemakerClient *sagemaker.Client
 	engine          *secret.Engine
 	opts            EnvsOptions
 }
@@ -58,6 +60,7 @@ func NewEnvsRecon(cfg *config.Config, optFns ...func(o *EnvsOptions)) *EnvsRecon
 		codebuildClient: codebuild.NewFromConfig(cfg.AWSConfig),
 		ecsClient:       ecs.NewFromConfig(cfg.AWSConfig),
 		lambdaClient:    lambda.NewFromConfig(cfg.AWSConfig),
+		sagemakerClient: sagemaker.NewFromConfig(cfg.AWSConfig),
 		engine:          secret.NewEngine(opts.Verify),
 		opts:            opts,
 	}
@@ -73,6 +76,18 @@ func NewEnvsRecon(cfg *config.Config, optFns ...func(o *EnvsOptions)) *EnvsRecon
 
 		r.runEnumerateServicePerRegion("lambda", cfg.Regions, func(region string) {
 			r.enumerateLambdaEnvsPerRegion(region)
+		})
+
+		r.runEnumerateServicePerRegion("sagemaker-processing", cfg.Regions, func(region string) {
+			r.enumerateSagemakerProcessingJobEnvsPerRegion(region)
+		})
+
+		r.runEnumerateServicePerRegion("sagemaker-transform", cfg.Regions, func(region string) {
+			r.enumerateSagemakerTransformJobEnvsPerRegion(region)
+		})
+
+		r.runEnumerateServicePerRegion("sagemaker-training", cfg.Regions, func(region string) {
+			r.enumerateSagemakerTrainingJobEnvsPerRegion(region)
 		})
 	}, func(o *reconOptions) {
 		o.IgnoreServices = opts.IgnoreServices
@@ -241,6 +256,153 @@ func (rec *EnvsRecon) enumerateLambdaEnvsPerRegion(region string) {
 					rec.addResult(Env{
 						AWSService: "Lambda",
 						Name:       aws.ToString(function.FunctionName),
+						Region:     region,
+						Key:        key,
+						Value:      value,
+						Entropy:    entropy,
+						Hints:      hints,
+					})
+				}
+			}
+		}
+	}
+}
+
+func (rec *EnvsRecon) enumerateSagemakerProcessingJobEnvsPerRegion(region string) {
+	p := sagemaker.NewListProcessingJobsPaginator(rec.sagemakerClient, &sagemaker.ListProcessingJobsInput{})
+	for p.HasMorePages() {
+		page, err := p.NextPage(context.TODO(), func(o *sagemaker.Options) {
+			o.Region = region
+		})
+		if err != nil {
+			rec.addError(err)
+			return
+		}
+
+		for _, item := range page.ProcessingJobSummaries {
+			output, err := rec.sagemakerClient.DescribeProcessingJob(context.TODO(), &sagemaker.DescribeProcessingJobInput{
+				ProcessingJobName: item.ProcessingJobName,
+			}, func(o *sagemaker.Options) {
+				o.Region = region
+			})
+			if err != nil {
+				rec.addError(err)
+				continue
+			}
+
+			if len(output.Environment) > 0 {
+				for key, value := range output.Environment {
+					name := fmt.Sprintf("[Processing Job] %s", aws.ToString(output.ProcessingJobName))
+
+					entropy := audit.ShannonEntropy(value)
+
+					if entropy < rec.opts.Entropy {
+						continue
+					}
+
+					hints := rec.getHints(fmt.Sprintf("%s=%s", key, value), entropy)
+
+					rec.addResult(Env{
+						AWSService: "Sagemaker",
+						Name:       name,
+						Region:     region,
+						Key:        key,
+						Value:      value,
+						Entropy:    entropy,
+						Hints:      hints,
+					})
+				}
+			}
+		}
+	}
+}
+
+func (rec *EnvsRecon) enumerateSagemakerTransformJobEnvsPerRegion(region string) {
+	p := sagemaker.NewListTransformJobsPaginator(rec.sagemakerClient, &sagemaker.ListTransformJobsInput{})
+	for p.HasMorePages() {
+		page, err := p.NextPage(context.TODO(), func(o *sagemaker.Options) {
+			o.Region = region
+		})
+		if err != nil {
+			rec.addError(err)
+			return
+		}
+
+		for _, item := range page.TransformJobSummaries {
+			output, err := rec.sagemakerClient.DescribeTransformJob(context.TODO(), &sagemaker.DescribeTransformJobInput{
+				TransformJobName: item.TransformJobName,
+			}, func(o *sagemaker.Options) {
+				o.Region = region
+			})
+			if err != nil {
+				rec.addError(err)
+				continue
+			}
+
+			if len(output.Environment) > 0 {
+				for key, value := range output.Environment {
+					name := fmt.Sprintf("[Transform Job] %s", aws.ToString(output.TransformJobName))
+
+					entropy := audit.ShannonEntropy(value)
+
+					if entropy < rec.opts.Entropy {
+						continue
+					}
+
+					hints := rec.getHints(fmt.Sprintf("%s=%s", key, value), entropy)
+
+					rec.addResult(Env{
+						AWSService: "Sagemaker",
+						Name:       name,
+						Region:     region,
+						Key:        key,
+						Value:      value,
+						Entropy:    entropy,
+						Hints:      hints,
+					})
+				}
+			}
+		}
+	}
+}
+
+func (rec *EnvsRecon) enumerateSagemakerTrainingJobEnvsPerRegion(region string) {
+	p := sagemaker.NewListTrainingJobsPaginator(rec.sagemakerClient, &sagemaker.ListTrainingJobsInput{})
+	for p.HasMorePages() {
+		page, err := p.NextPage(context.TODO(), func(o *sagemaker.Options) {
+			o.Region = region
+		})
+		if err != nil {
+			rec.addError(err)
+			return
+		}
+
+		for _, item := range page.TrainingJobSummaries {
+			output, err := rec.sagemakerClient.DescribeTrainingJob(context.TODO(), &sagemaker.DescribeTrainingJobInput{
+				TrainingJobName: item.TrainingJobName,
+			}, func(o *sagemaker.Options) {
+				o.Region = region
+			})
+			if err != nil {
+				rec.addError(err)
+				continue
+			}
+
+			if len(output.Environment) > 0 {
+				for key, value := range output.Environment {
+					name := fmt.Sprintf("[Training Job] %s", aws.ToString(output.TrainingJobName))
+
+					entropy := audit.ShannonEntropy(value)
+
+					if entropy < rec.opts.Entropy {
+						continue
+					}
+
+					hints := rec.getHints(fmt.Sprintf("%s=%s", key, value), entropy)
+
+					rec.addResult(Env{
+						AWSService: "Sagemaker",
+						Name:       name,
 						Region:     region,
 						Key:        key,
 						Value:      value,

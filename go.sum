@@ -95,6 +95,8 @@ github.com/aws/aws-sdk-go-v2/service/route53 v1.22.3 h1:35r4Cz4EDdaog3XEe9nXsefr
 github.com/aws/aws-sdk-go-v2/service/route53 v1.22.3/go.mod h1:OI1l8r9umXvVMbD35wBk2YsVPYmJIwtt03Ph1x8HPtc=
 github.com/aws/aws-sdk-go-v2/service/s3 v1.28.0 h1:2TDTNMeOdEBVhuHPS6at9eqAPdco4A1iwRO5tov9Ylg=
 github.com/aws/aws-sdk-go-v2/service/s3 v1.28.0/go.mod h1:fmgDANqTUCxciViKl9hb/zD5LFbvPINFRgWhDbR+vZo=
+github.com/aws/aws-sdk-go-v2/service/sagemaker v1.54.0 h1:jFgUbmNSv6YoRCOQ0QqLtWU2IQh5RywBoNMDXoHxfO8=
+github.com/aws/aws-sdk-go-v2/service/sagemaker v1.54.0/go.mod h1:umigFBRAb3i0OTRXRYDLlCawnJPYCWLhod55+tZHOFA=
 github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.16.3 h1:d5S+OhXne5O3cIo999RARy/N1dgXW2ldWgD53qbEAP4=
 github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.16.3/go.mod h1:+X/VSQcuvHPWPRlM64HoWUJAPwsD86KpU9Z52lrsodM=
 github.com/aws/aws-sdk-go-v2/service/ssm v1.31.2 h1:yxazp4xlXCvS8sObRSy5KRS79kIUIwMlcaDjF+lZdyk=
