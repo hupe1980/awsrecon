@@ -528,6 +528,16 @@ func (rec *EndpointsRecon) enumerateCloudfrontDistributions() {
 
 				if origin.CustomHeaders != nil && aws.ToInt32(origin.CustomHeaders.Quantity) > 0 {
 					originHints = append(originHints, "CustomHeaders")
+
+					for _, h := range origin.CustomHeaders.Items {
+						name := strings.ToLower(aws.ToString(h.HeaderName))
+
+						if name == "x-api-key" {
+							originHints = append(originHints, "X-API-KEY")
+						} else if name == "authorization" {
+							originHints = append(originHints, "Authorization")
+						}
+					}
 				} else {
 					originHints = append(originHints, "NoCustomHeaders")
 				}
