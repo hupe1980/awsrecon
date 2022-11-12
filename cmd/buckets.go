@@ -11,7 +11,7 @@ import (
 )
 
 type bucketsOptions struct {
-	buckets []string
+	names []string
 }
 
 func newBucketsCmd(globalOpts *globalOptions) *cobra.Command {
@@ -30,7 +30,7 @@ func newBucketsCmd(globalOpts *globalOptions) *cobra.Command {
 			progress := output.NewProgress()
 
 			recon := recon.NewBucketsRecon(cfg, func(o *recon.BucketsOptions) {
-				o.Buckets = opts.buckets
+				o.Names = opts.names
 				o.BeforeHook = progress.BeforeHook()
 				o.AfterRunHook = progress.AfterRunHook()
 			})
@@ -96,7 +96,7 @@ func newBucketsCmd(globalOpts *globalOptions) *cobra.Command {
 		},
 	}
 
-	cmd.Flags().StringSliceVarP(&opts.buckets, "bucket", "b", nil, "bucket name")
+	cmd.Flags().StringSliceVarP(&opts.names, "name", "n", nil, "bucket name")
 
 	return cmd
 }

@@ -22,7 +22,7 @@ type Bucket struct {
 }
 
 type BucketsOptions struct {
-	Buckets      []string
+	Names        []string
 	BeforeHook   BeforeHookFunc
 	AfterRunHook AfterRunHookFunc
 }
@@ -65,8 +65,8 @@ func (rec *BucketsRecon) enumerateBuckets() {
 	}
 
 	for _, item := range list.Buckets {
-		if len(rec.opts.Buckets) > 0 {
-			if !common.SliceContains(rec.opts.Buckets, aws.ToString(item.Name)) {
+		if len(rec.opts.Names) > 0 {
+			if !common.SliceContains(rec.opts.Names, aws.ToString(item.Name)) {
 				continue
 			}
 		}
