@@ -503,6 +503,8 @@ func (rec *EndpointsRecon) enumerateCloudfrontDistributions() {
 				hints = append(hints, "GeoRestriction")
 			}
 
+			hints = append(hints, fmt.Sprintf("Min%s", item.ViewerCertificate.MinimumProtocolVersion))
+
 			hints = append(hints, string(item.PriceClass))
 
 			rec.addResult(Endpoint{
