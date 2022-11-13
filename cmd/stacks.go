@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"sort"
 	"strings"
 
 	"github.com/hupe1980/awsrecon/pkg/config"
@@ -48,9 +49,9 @@ func newStacksCmd(globalOpts *globalOptions) *cobra.Command {
 			progress.Wait()
 
 			output := output.New([]string{
-				"Service",
-				"Region",
+				//"Service",
 				"Name",
+				"Region",
 				"Type",
 				"Key",
 				"Value",
@@ -58,12 +59,16 @@ func newStacksCmd(globalOpts *globalOptions) *cobra.Command {
 				"Hints",
 			})
 
+			sort.Slice(stacks, func(i, j int) bool {
+				return stacks[i].Name < stacks[j].Name
+			})
+
 			for _, stack := range stacks {
 				for _, p := range stack.Parameters {
 					output.Add([]string{
-						stack.AWSService,
-						stack.Region,
+						//stack.AWSService,
 						stack.Name,
+						stack.Region,
 						"Param",
 						p.Key,
 						p.Value,
@@ -74,9 +79,9 @@ func newStacksCmd(globalOpts *globalOptions) *cobra.Command {
 
 				for _, r := range stack.Resources {
 					output.Add([]string{
-						stack.AWSService,
-						stack.Region,
+						//stack.AWSService,
 						stack.Name,
+						stack.Region,
 						r.Type,
 						r.Name,
 						"",
@@ -87,9 +92,9 @@ func newStacksCmd(globalOpts *globalOptions) *cobra.Command {
 
 				for _, o := range stack.Outputs {
 					output.Add([]string{
-						stack.AWSService,
-						stack.Region,
+						//stack.AWSService,
 						stack.Name,
+						stack.Region,
 						"Output",
 						o.Key,
 						o.Value,
