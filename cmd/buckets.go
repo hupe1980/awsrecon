@@ -42,10 +42,10 @@ func newBucketsCmd(globalOpts *globalOptions) *cobra.Command {
 			progress.Wait()
 
 			output := output.New([]string{
-				"Service",
-				"Region",
-				"Location",
+				//"Service",
+				//"Region",
 				"Name",
+				"Location",
 				"Block\nPublic\nAcls",
 				"Block\nPublic\nPolicy",
 				"Ignore\nPublic\nAcls",
@@ -69,10 +69,10 @@ func newBucketsCmd(globalOpts *globalOptions) *cobra.Command {
 				}
 
 				output.Add([]string{
-					b.AWSService,
-					b.Region,
-					b.Audit.Location(),
+					//b.AWSService,
+					//b.Region,
 					b.Name,
+					b.Audit.Location(),
 					pab.BlockPublicAcls,
 					pab.BlockPublicPolicy,
 					pab.IgnorePublicAcls,
