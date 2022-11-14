@@ -45,6 +45,9 @@ func newFileSystemsCmd(globalOpts *globalOptions) *cobra.Command {
 				"Service",
 				"Region",
 				"Name",
+				"DNS",
+				"IP",
+				"Mount",
 				"Hints",
 			})
 
@@ -57,6 +60,9 @@ func newFileSystemsCmd(globalOpts *globalOptions) *cobra.Command {
 					fs.AWSService,
 					fs.Region,
 					fs.Name,
+					fs.DNS,
+					fs.IP,
+					fs.Mount,
 					strings.Join(fs.Hints, ",\n"),
 				})
 			}

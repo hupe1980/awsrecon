@@ -8,6 +8,7 @@
 - Enumerates internal/external endpoints as attacking starting point or for lateral movement 
 - Mines secrets in envs, tags, stacks and more
 - Detects dangling dns entries (subdomain takeover)
+- Lists potentially mountable file systems
 - Lists iam policies that have the potential for privilege escalation or data exfiltration (coming soon)
 - Gives hints for further investigations
 - ...
