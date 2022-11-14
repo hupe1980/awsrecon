@@ -16,6 +16,7 @@ Global Flags:
       --region strings      AWS regions (default all aws regions)
   -A, --user-agent string   user-agent to use (default "awsrecon")
 ```
+## Output
 ```
  _____ _ _ _ _____
 |  _  | | | |   __|___ ___ ___ ___ ___
@@ -35,4 +36,6 @@ Global Flags:
 |Service|Region|Name|Key|Value|Entropy|Hints
 |-|-|-|-|-|-|-
 |Lambda|us-west-1|demo-function|SLACK_BOT_TOKEN|xoxb-510...-525...-CUq...|4.251560|SlackBotToken, HighEntropy
-
+```
+[i] 1 environment variables enumerated.
+```
