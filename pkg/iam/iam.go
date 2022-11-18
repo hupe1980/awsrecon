@@ -96,7 +96,19 @@ func (value *PricipalValue[T]) UnmarshalJSON(b []byte) error {
 		p["AWS"] = []T{T(v)}
 	case map[string]interface{}:
 		for k, v := range v {
-			p[k] = []T{T(fmt.Sprintf("%v", v))}
+			switch vv := v.(type) {
+			case string:
+				p[k] = []T{T(fmt.Sprintf("%v", vv))}
+			case []interface{}:
+				var items []T
+				for _, item := range vv {
+					items = append(items, T(fmt.Sprintf("%v", item)))
+				}
+
+				p[k] = items
+			default:
+				return fmt.Errorf("invalid %s principal subvalue element: only string or []string are allowed", value)
+			}
 		}
 	default:
 		return fmt.Errorf("invalid %s principal value element: only string or map[string]string are allowed", value)
@@ -119,4 +131,19 @@ func ConvertToPolicyDocument(encoded string) (*PolicyDocument, error) {
 	}
 
 	return &doc, nil
+}
+
+type ExternalIDCondition struct {
+	StringEquals struct {
+		StsExternalID string `json:"sts:ExternalId"`
+	} `json:"StringEquals"`
+}
+
+func ConvertToExternalIDCondition(rawCondition []byte) (*ExternalIDCondition, error) {
+	var eIDCond ExternalIDCondition
+	if err := json.Unmarshal(rawCondition, &eIDCond); err != nil {
+		return nil, err
+	}
+
+	return &eIDCond, nil
 }

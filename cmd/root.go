@@ -52,6 +52,7 @@ func newRootCmd(version string) *cobra.Command {
 		newPrincipalsCmd(globalOpts),
 		newRecordsCmd(globalOpts),
 		newReposCmd(globalOpts),
+		newRoleTrustsCmd(globalOpts),
 		newSecretsCmd(globalOpts),
 		newStacksCmd(globalOpts),
 		newTagsCmd(globalOpts),

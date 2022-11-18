@@ -54,6 +54,7 @@ Available Commands:
   principals   Enumerate iam principals
   records      Enumerate dns records
   repos        Enumerate codecommit repositories
+  role-trusts  Enumerate iam role-trusts
   secrets      Enumerate secrets
   stacks       Enumerate cloudformation stacks
   tags         Enumerate tags
@@ -83,6 +84,7 @@ Use "awsrecon [command] --help" for more information about a command.
 |[principals](/docs/principals.md)|Enumerate iam principals|
 |[records](/docs/records.md)|Enumerate dns records|
 |[repos](/docs/repos.md)|Enumerate codecommit repos|
+|[role-trusts](/docs/role-trusts.md)|Enumerate iam role-trusts|
 |[secrets](/docs/secrets.md)|Enumerate secrets|
 |[stacks](/docs/stacks.md)|Enumerate cloudformation stacks|
 |[tags](/docs/tags.md)|Enumerate tags|
