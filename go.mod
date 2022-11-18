@@ -74,6 +74,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.16.3
 	github.com/aws/aws-sdk-go-v2/service/ssm v1.31.2
 	github.com/aws/aws-sdk-go-v2/service/sts v1.16.19
+	github.com/aws/aws-sdk-go-v2/service/transfer v1.24.0
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/inconshreveable/mousetrap v1.0.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect

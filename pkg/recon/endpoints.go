@@ -29,6 +29,8 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/opensearch"
 	"github.com/aws/aws-sdk-go-v2/service/rds"
 	"github.com/aws/aws-sdk-go-v2/service/redshift"
+	"github.com/aws/aws-sdk-go-v2/service/transfer"
+	transferTypes "github.com/aws/aws-sdk-go-v2/service/transfer/types"
 	"github.com/hupe1980/awsrecon/pkg/config"
 )
 
@@ -76,6 +78,7 @@ type EndpointsRecon struct {
 	opensearchClient   *opensearch.Client
 	rdsClient          *rds.Client
 	redshiftClient     *redshift.Client
+	transferClient     *transfer.Client
 }
 
 func NewEndpointsRecon(cfg *config.Config, optFns ...func(o *EndpointsOptions)) *EndpointsRecon {
@@ -102,6 +105,7 @@ func NewEndpointsRecon(cfg *config.Config, optFns ...func(o *EndpointsOptions)) 
 		opensearchClient:   opensearch.NewFromConfig(cfg.AWSConfig),
 		rdsClient:          rds.NewFromConfig(cfg.AWSConfig),
 		redshiftClient:     redshift.NewFromConfig(cfg.AWSConfig),
+		transferClient:     transfer.NewFromConfig(cfg.AWSConfig),
 	}
 
 	r.recon = newRecon[Endpoint](func() {
@@ -149,8 +153,12 @@ func NewEndpointsRecon(cfg *config.Config, optFns ...func(o *EndpointsOptions)) 
 			r.enumerateLambdaFunctionsPerRegion(region)
 		})
 
-		r.runEnumerateServicePerRegion("lightsail", cfg.Regions, func(region string) {
-			r.enumerateLightsailEndpointsPerRegion(region)
+		r.runEnumerateServicePerRegion("lightsail-cs", cfg.Regions, func(region string) {
+			r.enumerateLightsailContainersEndpointsPerRegion(region)
+		})
+
+		r.runEnumerateServicePerRegion("lightsail-inst", cfg.Regions, func(region string) {
+			r.enumerateLightsailInstancesEndpointsPerRegion(region)
 		})
 
 		r.runEnumerateServicePerRegion("mq", cfg.Regions, func(region string) {
@@ -167,6 +175,10 @@ func NewEndpointsRecon(cfg *config.Config, optFns ...func(o *EndpointsOptions)) 
 
 		r.runEnumerateServicePerRegion("redshift", cfg.Regions, func(region string) {
 			r.enumerateRedshiftEndpointsPerRegion(region)
+		})
+
+		r.runEnumerateServicePerRegion("transfer", cfg.Regions, func(region string) {
+			r.enumerateTransferEndpointsPerRegion(region)
 		})
 	}, func(o *reconOptions) {
 		o.IgnoreServices = opts.IgnoreServices
@@ -931,7 +943,7 @@ func (rec *EndpointsRecon) enumerateLambdaFunctionsPerRegion(region string) {
 	}
 }
 
-func (rec *EndpointsRecon) enumerateLightsailEndpointsPerRegion(region string) {
+func (rec *EndpointsRecon) enumerateLightsailContainersEndpointsPerRegion(region string) {
 	output, err := rec.lightsailClient.GetContainerServices(context.TODO(), &lightsail.GetContainerServicesInput{}, func(o *lightsail.Options) {
 		o.Region = region
 	})
@@ -942,13 +954,36 @@ func (rec *EndpointsRecon) enumerateLightsailEndpointsPerRegion(region string) {
 
 	for _, item := range output.ContainerServices {
 		rec.addResult(Endpoint{
-			AWSService: "Lightsail",
+			AWSService: "Lightsail [CS]",
 			Name:       aws.ToString(item.ContainerServiceName),
 			Region:     region,
 			Type:       "URL",
 			Endpoint:   aws.ToString(item.Url),
 			Port:       443,
 			Protocol:   "https",
+			Visibility: VisibilityPublic,
+		})
+	}
+}
+
+func (rec *EndpointsRecon) enumerateLightsailInstancesEndpointsPerRegion(region string) {
+	output, err := rec.lightsailClient.GetInstances(context.TODO(), &lightsail.GetInstancesInput{}, func(o *lightsail.Options) {
+		o.Region = region
+	})
+	if err != nil {
+		rec.addError(err)
+		return
+	}
+
+	for _, item := range output.Instances {
+		rec.addResult(Endpoint{
+			AWSService: "Lightsail [Inst]",
+			Name:       aws.ToString(item.Name),
+			Region:     region,
+			Type:       "IP",
+			Endpoint:   fmt.Sprintf("http://%s", aws.ToString(item.PublicIpAddress)),
+			Port:       80,
+			Protocol:   "http",
 			Visibility: VisibilityPublic,
 		})
 	}
@@ -1027,6 +1062,53 @@ func (rec *EndpointsRecon) enumerateRedshiftEndpointsPerRegion(region string) {
 				Port:       cluster.Endpoint.Port,
 				Protocol:   "https",
 				Visibility: visibility,
+			})
+		}
+	}
+}
+
+func (rec *EndpointsRecon) enumerateTransferEndpointsPerRegion(region string) {
+	p := transfer.NewListServersPaginator(rec.transferClient, &transfer.ListServersInput{})
+	for p.HasMorePages() {
+		page, err := p.NextPage(context.TODO(), func(o *transfer.Options) {
+			o.Region = region
+		})
+		if err != nil {
+			rec.addError(err)
+			return
+		}
+
+		for _, server := range page.Servers {
+			var hints []string
+
+			switch server.IdentityProviderType {
+			case transferTypes.IdentityProviderTypeApiGateway:
+				hints = append(hints, "ApiGatewayIdentityProvider")
+			case transferTypes.IdentityProviderTypeAwsDirectoryService:
+				hints = append(hints, "DirectoryServiceIdentityProvider")
+			case transferTypes.IdentityProviderTypeAwsLambda:
+				hints = append(hints, "LambdaIdentityProvider")
+			case transferTypes.IdentityProviderTypeServiceManaged:
+				hints = append(hints, "ServiceManagedIdentityProvider")
+			}
+
+			visibility := VisibiltyPrivate
+			if server.EndpointType == transferTypes.EndpointTypePublic {
+				visibility = VisibilityPublic
+			}
+
+			serverID := aws.ToString(server.ServerId)
+
+			rec.addResult(Endpoint{
+				AWSService: fmt.Sprintf("Transfer [%s]", server.Domain),
+				Region:     region,
+				Name:       serverID,
+				Type:       "Endpoint",
+				Endpoint:   fmt.Sprintf("%s.server.transfer.%s.amazonaws.com", serverID, region),
+				Port:       22,
+				Protocol:   "sftp",
+				Visibility: visibility,
+				Hints:      hints,
 			})
 		}
 	}
