@@ -8,6 +8,7 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/iam"
+	"github.com/hupe1980/awsrecon/pkg/common"
 	"github.com/hupe1980/awsrecon/pkg/config"
 	reconIam "github.com/hupe1980/awsrecon/pkg/iam"
 )
@@ -33,7 +34,7 @@ type RoleTrustsOptions struct {
 
 type RoleTrustsRecon struct {
 	*recon[RoleTrust]
-	iamClient *iam.Client
+	iamClient iam.ListRolesAPIClient
 	opts      RoleTrustsOptions
 	account   string
 }
@@ -89,23 +90,30 @@ func (rec *RoleTrustsRecon) enumerateRoleTrusts() {
 				continue
 			}
 
-			externalID, err := getExternalID(doc)
-			if err != nil {
-				rec.addError(err)
-				continue
-			}
-
 			roleARN := aws.ToString(role.Arn)
+
+			var roleHints []string
 
 		statementLoop:
 			for _, statement := range doc.Statements {
+				externalID, err := getExternalID(statement)
+				if err != nil {
+					rec.addError(err)
+					continue
+				}
+
 				if statement.Effect == reconIam.EffectDeny {
-					continue // TODO Consider behavior on deny
+					if !common.SliceContains(roleHints, "HasDeny") {
+						roleHints = append(roleHints, "HasDeny")
+					}
+
+					continue // TODO Consider further behavior on deny
 				}
 
 				for k, v := range statement.Principal {
 					for _, principal := range v {
 						var hints []string
+						copy(hints, roleHints)
 
 						switch k {
 						case "Service":
@@ -149,9 +157,9 @@ func (rec *RoleTrustsRecon) enumerateRoleTrusts() {
 	}
 }
 
-func getExternalID(doc *reconIam.PolicyDocument) (string, error) {
-	if doc.Statements[0].Condition != nil {
-		cond, err := reconIam.ConvertToExternalIDCondition(doc.Statements[0].Condition)
+func getExternalID(statement reconIam.Statement) (string, error) {
+	if statement.Condition != nil {
+		cond, err := reconIam.ConvertToExternalIDCondition(statement.Condition)
 		if err != nil {
 			return "", err
 		}
