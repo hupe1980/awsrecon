@@ -15,7 +15,7 @@ type MockRoleTrustsIAMClient struct {
 	ListRolesError  error
 }
 
-func (m *MockRoleTrustsIAMClient) ListRoles(ctx context.Context, params *iam.ListRolesInput, optFns ...func(*iam.Options)) (*iam.ListRolesOutput, error) {
+func (m *MockRoleTrustsIAMClient) ListRoles(_ context.Context, _ *iam.ListRolesInput, _ ...func(*iam.Options)) (*iam.ListRolesOutput, error) {
 	return m.ListRolesOutput, m.ListRolesError
 }
 

@@ -22,7 +22,7 @@ func (s Scanner) Keywords() []string {
 	}
 }
 
-func (s Scanner) Scan(ctx context.Context, verify bool, data string) ([]scanner.Result, error) {
+func (s Scanner) Scan(_ context.Context, _ bool, data string) ([]scanner.Result, error) {
 	results := []scanner.Result{}
 
 	matches := accessKeyRegex.FindAllString(data, -1)

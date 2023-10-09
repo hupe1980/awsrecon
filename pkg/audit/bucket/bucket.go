@@ -293,6 +293,7 @@ func (b *Audit) getBucketEncryption() error {
 	b.serverSideEncryptionStatus = "Disabled"
 
 	if len(output.ServerSideEncryptionConfiguration.Rules) == 1 {
+		// nolint exhaustive not relevant
 		switch output.ServerSideEncryptionConfiguration.Rules[0].ApplyServerSideEncryptionByDefault.SSEAlgorithm {
 		case s3Types.ServerSideEncryptionAes256:
 			b.serverSideEncryptionStatus = "AES256"

@@ -23,11 +23,7 @@ func newDownloadIAMCmd(globalOpts *globalOptions) *cobra.Command {
 				return err
 			}
 
-			if err = def.Save(globalOpts.output, opts.gzipFile); err != nil {
-				return err
-			}
-
-			return nil
+			return def.Save(globalOpts.output, opts.gzipFile)
 		},
 	}
 
