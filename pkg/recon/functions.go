@@ -85,9 +85,11 @@ func (rec *FunctionsRecon) enumerateFunctionsPerRegion(region string) {
 func isRuntimeEOL(r lambdaTypes.Runtime) bool {
 	// nolint exhaustive not relevant
 	switch r {
-	case lambdaTypes.RuntimePython27:
+	case lambdaTypes.RuntimePython27, lambdaTypes.RuntimePython36:
 		return true
-	case lambdaTypes.RuntimePython36, lambdaTypes.RuntimeNodejs10x, lambdaTypes.RuntimeNodejs810, lambdaTypes.RuntimeNodejs610, lambdaTypes.RuntimeNodejs43:
+	case lambdaTypes.RuntimeNodejs12x, lambdaTypes.RuntimeNodejs10x, lambdaTypes.RuntimeNodejs810, lambdaTypes.RuntimeNodejs610, lambdaTypes.RuntimeNodejs43:
+		return true
+	case lambdaTypes.RuntimeRuby25:
 		return true
 	}
 
